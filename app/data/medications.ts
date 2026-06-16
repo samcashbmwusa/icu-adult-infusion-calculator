@@ -10,6 +10,7 @@ export const medications = [
     doubleDose: "6 مغ + 44 مل نورمال سالين أو D5W",
     finalVolume: "50 مل",
   },
+
   {
     slug: "adrenaline",
     name: "أدرينالين",
@@ -20,6 +21,7 @@ export const medications = [
     singleDose: "3 مغ + 47 مل نورمال سالين",
     finalVolume: "50 مل",
   },
+
   {
     slug: "dopamine",
     name: "دوبامين",
@@ -31,6 +33,7 @@ export const medications = [
     doubleDose: "400 مغ + 40 مل نورمال سالين",
     finalVolume: "50 مل",
   },
+
   {
     slug: "dobutamine",
     name: "دوبيوتامين",
@@ -41,6 +44,7 @@ export const medications = [
     singleDose: "250 مغ + 45 مل نورمال سالين",
     finalVolume: "50 مل",
   },
+
   {
     slug: "aggrastat",
     name: "أغراستات",
@@ -52,6 +56,7 @@ export const medications = [
     finalVolume: "125 مل",
     requiresWeightCalculator: true,
   },
+
   {
     slug: "amiodarone",
     name: "أميودارون",
@@ -61,8 +66,12 @@ export const medications = [
     warning: "يعطى حسب بروتوكول التسريب.",
     singleDose: "300 مغ + 150 مل D5W",
     finalVolume: "150 مل",
-    notes: ["أول 6 ساعات: 30 مل/ساعة", "آخر 18 ساعة: 15 مل/ساعة"],
+    notes: [
+      "أول 6 ساعات: 30 مل/ساعة",
+      "آخر 18 ساعة: 15 مل/ساعة",
+    ],
   },
+
   {
     slug: "insulin",
     name: "إنسولين",
@@ -73,6 +82,7 @@ export const medications = [
     singleDose: "50 وحدة + 50 مل نورمال سالين",
     finalVolume: "50 مل",
   },
+
   {
     slug: "heparin",
     name: "هيبارين",
@@ -83,6 +93,18 @@ export const medications = [
     singleDose: "50 وحدة + 50 مل نورمال سالين",
     finalVolume: "50 مل",
   },
+
+  {
+    slug: "nitroglycerin",
+    name: "نيتروغليسيرين",
+    info: "20 مل من الأمبولة + 30 مل نورمال سالين",
+    diluent: "نورمال سالين",
+    status: "ready",
+    warning: "لا يعطى Push IV مباشرة. يعطى بواسطة مضخة تسريب فقط.",
+    singleDose: "20 مل من الأمبولة + 30 مل نورمال سالين",
+    finalVolume: "50 مل",
+  },
+
   {
     slug: "magnesium-sulfate",
     name: "مغنيسيوم سلفات",
@@ -93,6 +115,7 @@ export const medications = [
     singleDose: "1 غرام + 100 مل نورمال سالين",
     finalVolume: "100 مل",
   },
+
   {
     slug: "potassium-chloride",
     name: "بوتاسيوم كلورايد",
@@ -103,17 +126,64 @@ export const medications = [
     singleDose: "10 mEq + 100 مل نورمال سالين",
     finalVolume: "100 مل",
   },
+
   {
-    slug: "vasopressin",
-    name: "فازوبرسين",
+    slug: "furosemide",
+    name: "فوروسيميد",
     info: "سيتم إضافة التحضير لاحقاً",
     diluent: "سيتم التحديث لاحقاً",
     status: "pending",
     warning: "سيتم إضافة التحذيرات لاحقاً.",
   },
+
   {
-    slug: "nitroglycerin",
-    name: "نيتروغليسيرين",
+    slug: "labetalol",
+    name: "لابيتالول",
+    info: "سيتم إضافة التحضير لاحقاً",
+    diluent: "سيتم التحديث لاحقاً",
+    status: "pending",
+    warning: "سيتم إضافة التحذيرات لاحقاً.",
+  },
+
+  {
+    slug: "precedex",
+    name: "بريسيدكس",
+    info: "سيتم إضافة التحضير لاحقاً",
+    diluent: "سيتم التحديث لاحقاً",
+    status: "pending",
+    warning: "سيتم إضافة التحذيرات لاحقاً.",
+  },
+
+  {
+    slug: "midazolam",
+    name: "ميدازولام",
+    info: "سيتم إضافة التحضير لاحقاً",
+    diluent: "سيتم التحديث لاحقاً",
+    status: "pending",
+    warning: "سيتم إضافة التحذيرات لاحقاً.",
+  },
+
+  {
+    slug: "propofol",
+    name: "بروبوفول",
+    info: "سيتم إضافة التحضير لاحقاً",
+    diluent: "سيتم التحديث لاحقاً",
+    status: "pending",
+    warning: "سيتم إضافة التحذيرات لاحقاً.",
+  },
+
+  {
+    slug: "fentanyl",
+    name: "فينتانيل",
+    info: "سيتم إضافة التحضير لاحقاً",
+    diluent: "سيتم التحديث لاحقاً",
+    status: "pending",
+    warning: "سيتم إضافة التحذيرات لاحقاً.",
+  },
+
+  {
+    slug: "morphine",
+    name: "مورفين",
     info: "سيتم إضافة التحضير لاحقاً",
     diluent: "سيتم التحديث لاحقاً",
     status: "pending",
