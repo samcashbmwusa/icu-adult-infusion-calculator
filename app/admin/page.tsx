@@ -1,3 +1,13 @@
-Username: admin
-Password: ICU2026
-License: JUH-001
+export default function AdminPage() {
+  return (
+    <main dir="rtl" className="min-h-screen bg-slate-900 text-white p-6">
+      <h1 className="text-3xl font-bold mb-4">لوحة الإدارة</h1>
+
+      <div className="rounded-2xl bg-slate-800 border border-slate-700 p-6">
+        <p className="text-slate-300">
+          سيتم إضافة إدارة المستخدمين والتراخيص لاحقاً.
+        </p>
+      </div>
+    </main>
+  );
+}
