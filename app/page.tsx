@@ -18,7 +18,7 @@ export default function Home() {
       license === "JUH-001"
     ) {
       document.cookie = "icu_auth=true; path=/; max-age=86400";
-      router.push("/medications");
+      router.push("/dashboard");
     } else {
       setError("بيانات الدخول غير صحيحة");
     }
@@ -35,38 +35,29 @@ export default function Home() {
         </div>
 
         <div className="space-y-5">
-          <div>
-            <label className="block text-sm font-medium mb-2">اسم المستخدم</label>
-            <input
-              type="text"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              placeholder="أدخل اسم المستخدم"
-              className="w-full rounded-lg bg-slate-900 border border-slate-600 px-4 py-3 outline-none focus:border-blue-500"
-            />
-          </div>
+          <input
+            type="text"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            placeholder="اسم المستخدم"
+            className="w-full rounded-lg bg-slate-900 border border-slate-600 px-4 py-3 outline-none focus:border-blue-500"
+          />
 
-          <div>
-            <label className="block text-sm font-medium mb-2">كلمة المرور</label>
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="أدخل كلمة المرور"
-              className="w-full rounded-lg bg-slate-900 border border-slate-600 px-4 py-3 outline-none focus:border-blue-500"
-            />
-          </div>
+          <input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="كلمة المرور"
+            className="w-full rounded-lg bg-slate-900 border border-slate-600 px-4 py-3 outline-none focus:border-blue-500"
+          />
 
-          <div>
-            <label className="block text-sm font-medium mb-2">رمز الترخيص</label>
-            <input
-              type="text"
-              value={license}
-              onChange={(e) => setLicense(e.target.value)}
-              placeholder="مثال: JUH-001"
-              className="w-full rounded-lg bg-slate-900 border border-slate-600 px-4 py-3 outline-none focus:border-blue-500"
-            />
-          </div>
+          <input
+            type="text"
+            value={license}
+            onChange={(e) => setLicense(e.target.value)}
+            placeholder="رمز الترخيص"
+            className="w-full rounded-lg bg-slate-900 border border-slate-600 px-4 py-3 outline-none focus:border-blue-500"
+          />
 
           {error && (
             <p className="rounded-lg bg-red-900/50 border border-red-600 p-3 text-sm">
@@ -82,10 +73,6 @@ export default function Home() {
             تسجيل الدخول
           </button>
         </div>
-
-        <p className="mt-6 text-center text-xs text-slate-500">
-          الدخول مقيّد. يمنع الاستخدام بدون تصريح.
-        </p>
       </div>
     </main>
   );
