@@ -16,10 +16,10 @@ export default function LoginPage() {
     setError('');
     setLoading(true);
 
-    // التحقق الآمن من البيانات (Username: admin, Password: CCU2026, License Key: JUH-001)
     if (username === 'admin' && password === 'CCU2026' && licenseKey === 'JUH-001') {
-      document.cookie = "icu_auth=true; path=/; max-age=86400"; // صالحة لمدة 24 ساعة
-      router.push('/medications');
+      document.cookie = "icu_auth=true; path=/; max-age=86400"; // 24 ساعة
+      // التوجيه إلى الصفحة الرئيسية الجديدة (Dashboard)
+      router.push('/dashboard');
     } else {
       setError('خطأ في اسم المستخدم، كلمة المرور أو رمز الترخيص! يرجى التواصل مع المطور لأخذ الإذن.');
       setLoading(false);
@@ -29,7 +29,7 @@ export default function LoginPage() {
   return (
     <div 
       style={{
-        backgroundColor: '#020617', // الخلفية السوداء الداكنة والمريحة جداً للعين
+        backgroundColor: '#020617',
         minHeight: '100vh',
         display: 'flex',
         flexDirection: 'column',
@@ -44,7 +44,7 @@ export default function LoginPage() {
     >
       <div 
         style={{
-          backgroundColor: '#0f172a', // بطاقة تسجيل الدخول الرمادية الداكنة المتناسقة
+          backgroundColor: '#0f172a',
           padding: '32px',
           borderRadius: '16px',
           boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.5)',
@@ -64,7 +64,7 @@ export default function LoginPage() {
               marginBottom: '12px',
               borderRadius: '50%',
               overflow: 'hidden',
-              border: '4px solid #2563eb', // الفريم الأزرق الأنيق حول الصورة
+              border: '4px solid #2563eb',
               boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.3)',
               backgroundColor: '#1e293b',
               display: 'flex',
@@ -73,7 +73,7 @@ export default function LoginPage() {
             }}
           >
             <img 
-              src="https://i.ibb.co/N2N98vh2/Man-wear-light-blue-scrub-202606151052.jpg" // رابط صورتك المباشر المستضاف أونلاين حتماً
+              src="https://i.ibb.co/N2N98vh2/Man-wear-light-blue-scrub-202606151052.jpg"
               alt="Suliman Bilal Awad, R.N"
               style={{ width: '100%', height: '100%', objectFit: 'cover' }}
             />
@@ -94,14 +94,12 @@ export default function LoginPage() {
           نظام حاسبة أدوية العناية الحثيثة للبالغين - نظام محمي وخاص
         </p>
 
-        {/* تنبيه الأخطاء */}
         {error && (
           <div style={{ backgroundColor: 'rgba(127, 29, 29, 0.4)', borderRight: '4px solid #ef4444', color: '#fca5a5', padding: '12px', borderRadius: '8px', marginBottom: '16px', fontSize: '0.875rem', textAlign: 'right' }}>
             {error}
           </div>
         )}
 
-        {/* نموذج تسجيل الدخول */}
         <form onSubmit={handleLogin} style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
           <div>
             <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: 'bold', color: '#cbd5e1', marginBottom: '4px', textAlign: 'right' }}>اسم المستخدم (Username)</label>
