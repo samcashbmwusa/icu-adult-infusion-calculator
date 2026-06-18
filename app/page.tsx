@@ -72,22 +72,17 @@ export default function LoginPage() {
             }}
           >
             <img 
-              src="/suliman.jpg" 
+              src="/profile.jpg" // تم التحديث إلى الاسم الجديد الصريح
               alt="Suliman Bilal Awad, R.N"
               style={{ width: '100%', height: '100%', objectFit: 'cover' }}
               onError={(e) => {
-                // حلقة ذكية للتنقل بين الصيغ والاحتمالات في حال وجود خطأ في التسمية على السيرفر
                 const img = e.target as HTMLImageElement;
-                if (img.src.includes('/suliman.jpg')) {
-                  img.src = '/suliman.png';
-                } else if (img.src.includes('/suliman.png')) {
-                  img.src = '/suliman.PNG';
-                } else if (img.src.includes('/suliman.PNG')) {
-                  img.src = '/suliman.JPG';
-                } else if (img.src.includes('/suliman.JPG')) {
-                  img.src = '/suliman.jpeg';
-                } else if (img.src.includes('/suliman.jpeg')) {
-                  img.src = '/suliman.JPEG';
+                if (img.src.includes('/profile.jpg')) {
+                  img.src = '/profile.png';
+                } else if (img.src.includes('/profile.png')) {
+                  img.src = '/profile.PNG';
+                } else if (img.src.includes('/profile.PNG')) {
+                  img.src = '/profile.JPG';
                 }
               }}
             />
