@@ -16,12 +16,8 @@ export default function LoginPage() {
     setError('');
     setLoading(true);
 
-    // التحقق من البيانات (Username: admin, Password: CCU2026, License Key: JUH-001)
     if (username === 'admin' && password === 'CCU2026' && licenseKey === 'JUH-001') {
-      // حفظ حالة الدخول في الـ Cookies ليراها نظام الحماية middleware.ts
-      document.cookie = "icu_auth=true; path=/; max-age=86400"; // صالح لمدة 24 ساعة
-      
-      // الانتقال إلى صفحة حاسبة الأدوية مباشرة
+      document.cookie = "icu_auth=true; path=/; max-age=86400";
       router.push('/medications');
     } else {
       setError('خطأ في اسم المستخدم، كلمة المرور أو رمز الترخيص! يرجى التواصل مع المطور لأخذ الإذن.');
@@ -32,7 +28,7 @@ export default function LoginPage() {
   return (
     <div 
       style={{
-        backgroundColor: '#020617', // لون أسود ملكي داكن ومريح للعين أثناء النوبات الليلية
+        backgroundColor: '#020617',
         minHeight: '100vh',
         display: 'flex',
         flexDirection: 'column',
@@ -47,7 +43,7 @@ export default function LoginPage() {
     >
       <div 
         style={{
-          backgroundColor: '#0f172a', // لون رمادي داكن للبطاقة المحيطة بالنموذج متناسق مع الخلفية
+          backgroundColor: '#0f172a',
           padding: '32px',
           borderRadius: '16px',
           boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.5)',
@@ -80,14 +76,18 @@ export default function LoginPage() {
               alt="Suliman Bilal Awad, R.N"
               style={{ width: '100%', height: '100%', objectFit: 'cover' }}
               onError={(e) => {
-                // محاولة احتياطية ذكية في حال اختلاف امتداد الصورة على جهازك بين كابيتال وسمول
+                // حلقة ذكية للتنقل بين الصيغ والاحتمالات في حال وجود خطأ في التسمية على السيرفر
                 const img = e.target as HTMLImageElement;
-                if (img.src.includes('suliman.jpg')) {
+                if (img.src.includes('/suliman.jpg')) {
                   img.src = '/suliman.png';
-                } else if (img.src.includes('suliman.png')) {
+                } else if (img.src.includes('/suliman.png')) {
                   img.src = '/suliman.PNG';
-                } else if (img.src.includes('suliman.PNG')) {
+                } else if (img.src.includes('/suliman.PNG')) {
                   img.src = '/suliman.JPG';
+                } else if (img.src.includes('/suliman.JPG')) {
+                  img.src = '/suliman.jpeg';
+                } else if (img.src.includes('/suliman.jpeg')) {
+                  img.src = '/suliman.JPEG';
                 }
               }}
             />
@@ -108,14 +108,12 @@ export default function LoginPage() {
           نظام حاسبة أدوية العناية الحثيثة للبالغين - نظام محمي وخاص
         </p>
 
-        {/* رسالة الخطأ */}
         {error && (
           <div style={{ backgroundColor: 'rgba(127, 29, 29, 0.4)', borderRight: '4px solid #ef4444', color: '#fca5a5', padding: '12px', borderRadius: '8px', marginBottom: '16px', fontSize: '0.875rem', textAlign: 'right' }}>
             {error}
           </div>
         )}
 
-        {/* نموذج تسجيل الدخول */}
         <form onSubmit={handleLogin} style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
           <div>
             <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: 'bold', color: '#cbd5e1', marginBottom: '4px', textAlign: 'right' }}>اسم المستخدم (Username)</label>
