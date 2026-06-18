@@ -1,4 +1,4 @@
-'use strict';
+'use client';
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
@@ -17,13 +17,8 @@ export default function LoginPage() {
     setError('');
     setLoading(true);
 
-    // التحقق من البيانات البرمجية (كلمة المرور الجديدة CCU2026)
     if (username === 'admin' && password === 'CCU2026' && licenseKey === 'JUH-001') {
-      
-      // هنا قمنا بتعديل اسم الـ Cookie إلى icu_auth ليطابق الـ middleware تماماً
-      document.cookie = "icu_auth=true; path=/; max-age=86400"; // صالح لمدة 24 ساعة
-      
-      // الانتقال إلى صفحة حاسبة الأدوية مباشرة
+      document.cookie = "icu_auth=true; path=/; max-age=86400";
       router.push('/medications');
     } else {
       setError('خطأ في اسم المستخدم، كلمة المرور أو رمز الترخيص! يرجى التواصل مع المطور لأخذ الإذن.');
@@ -32,25 +27,25 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-slate-50 p-4 font-sans" dir="rtl">
-      <div className="bg-white p-8 rounded-2xl shadow-2xl max-w-md w-full border border-slate-100 transition-all duration-300 hover:shadow-blue-100/50">
+    <div className="min-h-screen flex flex-col items-center justify-center bg-slate-50 p-4" dir="rtl">
+      <div className="bg-white p-8 rounded-2xl shadow-2xl max-w-md w-full border border-slate-100">
         
-        {/* شاشة عرض المطور والصورة الشخصية */}
         <div className="flex flex-col items-center mb-6" dir="ltr">
           <div className="relative w-28 h-28 mb-3 rounded-full overflow-hidden border-4 border-blue-600 shadow-xl bg-slate-100">
             <Image 
-              src="/suliman.jpg" // تأكد من وجود صورتك بهذا الاسم والامتداد في مجلد public
+              src="/suliman.jpg"
               alt="Suliman Bilal Awad, R.N"
-              fill
-              className="object-cover"
+              width={112}
+              height={112}
+              className="object-cover w-full h-full"
               priority
             />
           </div>
-          <h2 className="text-xl font-bold text-slate-800 tracking-wide text-center">Suliman Bilal Awad, R.N</h2>
-          <p className="text-xs text-blue-600 font-semibold uppercase tracking-wider mt-1 text-center">
+          <h2 className="text-xl font-bold text-slate-800 text-center">Suliman Bilal Awad, R.N</h2>
+          <p className="text-xs text-blue-600 font-semibold uppercase mt-1 text-center">
             Jordan University Hospital
           </p>
-          <div className="w-16 h-1 bg-blue-600 rounded mt-3"></div>
+          <div className="w-16 h-1 bg-blue-600 rounded mt-3 mx-auto"></div>
         </div>
 
         <h1 className="text-xl font-black text-slate-700 text-center mb-2">
@@ -60,14 +55,12 @@ export default function LoginPage() {
           نظام حاسبة أدوية العناية الحثيثة للبالغين - نظام محمي وخاص
         </p>
 
-        {/* رسالة الخطأ في حال إدخال بيانات خاطئة */}
         {error && (
           <div className="bg-red-50 border-r-4 border-red-500 text-red-700 p-3 rounded-lg mb-4 text-sm text-right">
             {error}
           </div>
         )}
 
-        {/* نموذج تسجيل الدخول */}
         <form onSubmit={handleLogin} className="space-y-4">
           <div>
             <label className="block text-sm font-bold text-slate-600 mb-1 text-right">اسم المستخدم (Username)</label>
@@ -111,7 +104,7 @@ export default function LoginPage() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-xl transition duration-200 shadow-lg shadow-blue-600/20 disabled:bg-blue-400 mt-2"
+            className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-xl transition duration-200 shadow-lg disabled:bg-blue-400 mt-2"
           >
             {loading ? 'جاري التحقق والدخول...' : 'تسجيل الدخول'}
           </button>
