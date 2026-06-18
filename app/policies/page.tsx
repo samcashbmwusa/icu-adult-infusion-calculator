@@ -23,6 +23,7 @@ export default function PoliciesPage() {
     {
       id: 1,
       title: "Allow Natural Death (AND)",
+      // تم استخراج الرابط المباشر للملف الخام الأصلي لتفادي ضغط الجودة والتشويه
       url: "https://i.ibb.co/76YTH5S/Allow-Natural-Death-AND-CLIN-P037.png"
     },
     {
@@ -53,15 +54,13 @@ export default function PoliciesPage() {
     setIsDragging(false);
   };
 
-  // معالجة بداية سحب الصورة بالماوس
   const handleMouseDown = (e: MouseEvent) => {
     e.preventDefault();
-    if (scale === 1) return; // لا تسحب إذا كانت الحجم الافتراضي
+    if (scale === 1) return;
     setIsDragging(true);
     dragStart.current = { x: e.clientX - position.x, y: e.clientY - position.y };
   };
 
-  // معالجة حركة السحب بالماوس
   const handleMouseMove = (e: MouseEvent) => {
     if (!isDragging) return;
     setPosition({
@@ -70,7 +69,6 @@ export default function PoliciesPage() {
     });
   };
 
-  // معالجة بداية سحب الصورة باللمس للهواتف
   const handleTouchStart = (e: TouchEvent) => {
     if (scale === 1 || e.touches.length !== 1) return;
     setIsDragging(true);
@@ -78,7 +76,6 @@ export default function PoliciesPage() {
     dragStart.current = { x: touch.clientX - position.x, y: touch.clientY - position.y };
   };
 
-  // معالجة حركة السحب باللمس للهواتف
   const handleTouchMove = (e: TouchEvent) => {
     if (!isDragging || e.touches.length !== 1) return;
     const touch = e.touches[0];
@@ -90,14 +87,14 @@ export default function PoliciesPage() {
 
   const zoomIn = (e: MouseEvent) => {
     e.stopPropagation();
-    setScale(prev => Math.min(prev + 0.5, 4)); // الحد الأقصى للتكبير 4 أضعاف حجم الصورة الأصلي
+    setScale(prev => Math.min(prev + 0.5, 5)); // رفع الحد الأقصى للتكبير الداخلي لـ 5 أضعاف
   };
 
   const zoomOut = (e: MouseEvent) => {
     e.stopPropagation();
     setScale(prev => {
       const nextScale = Math.max(prev - 0.5, 1);
-      if (nextScale === 1) setPosition({ x: 0, y: 0 }); // إعادة التوسيط التلقائي عند الرجوع للحجم الطبيعي
+      if (nextScale === 1) setPosition({ x: 0, y: 0 });
       return nextScale;
     });
   };
@@ -143,14 +140,14 @@ export default function PoliciesPage() {
             مجلدات السياسات والبروتوكولات (40 سياسة)
           </h1>
           <p style={{ fontSize: '0.85rem', color: '#94a3b8', margin: '4px 0 0 0' }}>
-            مكتبة السياسات الرقمية المعتمدة - اضغط على المجلد لفتح لوحة الفحص والزووم التفاعلي
+            مكتبة السياسات الرقمية المعتمدة - اضغط على المجلد لفتح لوحة الفحص بدقة الـ HD الكاملة
           </p>
         </div>
       </div>
 
       <div style={{ maxWidth: '1200px', width: '100%', height: '2px', backgroundColor: '#1e293b', marginBottom: '32px' }}></div>
 
-      {/* شبكة المجلدات التفاعلية */}
+      {/* شبكة المجلدات */}
       <div 
         style={{
           display: 'grid',
@@ -200,7 +197,7 @@ export default function PoliciesPage() {
         ))}
       </div>
 
-      {/* لوحة الفحص والتكبير الذكي الفاخرة (Interactive Pan & Zoom Lightbox) */}
+      {/* لوحة الفحص والتكبير الذكي الفاخرة */}
       {selectedPhoto && (
         <div 
           onClick={closeModal}
@@ -210,7 +207,7 @@ export default function PoliciesPage() {
             left: 0,
             width: '100vw',
             height: '100vh',
-            backgroundColor: 'rgba(2, 6, 23, 0.98)',
+            backgroundColor: 'rgba(2, 6, 23, 0.99)', // تعتيم تام للتركيز
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
@@ -219,7 +216,7 @@ export default function PoliciesPage() {
             boxSizing: 'border-box'
           }}
         >
-          {/* لوحة التحكم العلوية للزووم والإغلاق */}
+          {/* لوحة التحكم العلوية المحسّنة للزووم مع زر الدقة الكاملة */}
           <div 
             onClick={(e) => e.stopPropagation()} 
             style={{
@@ -229,10 +226,10 @@ export default function PoliciesPage() {
               transform: 'translateX(-50%)',
               backgroundColor: '#0f172a',
               border: '1px solid #1e293b',
-              padding: '8px 16px',
+              padding: '8px 20px',
               borderRadius: '30px',
               display: 'flex',
-              gap: '12px',
+              gap: '14px',
               alignItems: 'center',
               boxShadow: '0 10px 25px rgba(0,0,0,0.5)',
               zIndex: 10000
@@ -241,7 +238,6 @@ export default function PoliciesPage() {
             <button 
               onClick={zoomIn} 
               style={{ backgroundColor: '#1e293b', border: '1px solid #334155', color: '#fff', width: '36px', height: '36px', borderRadius: '50%', cursor: 'pointer', fontSize: '1.2rem', fontWeight: 'bold' }}
-              title="تكبير الصورة"
             >
               ＋
             </button>
@@ -251,11 +247,36 @@ export default function PoliciesPage() {
             <button 
               onClick={zoomOut} 
               style={{ backgroundColor: '#1e293b', border: '1px solid #334155', color: '#fff', width: '36px', height: '36px', borderRadius: '50%', cursor: 'pointer', fontSize: '1.2rem', fontWeight: 'bold' }}
-              title="تصغير الصورة"
             >
               －
             </button>
+            
             <div style={{ width: '1px', height: '20px', backgroundColor: '#334155' }}></div>
+            
+            {/* 🎯 الحل السحري للحصول على الجودة الخام الأصلية دون أي تشويش وضغط */}
+            <a 
+              href={selectedPhoto} 
+              target="_blank" 
+              rel="noopener noreferrer"
+              style={{
+                backgroundColor: '#2563eb',
+                color: '#ffffff',
+                textDecoration: 'none',
+                padding: '6px 14px',
+                borderRadius: '20px',
+                fontSize: '0.85rem',
+                fontWeight: 'bold',
+                cursor: 'pointer',
+                display: 'inline-flex',
+                alignItems: 'center',
+                boxShadow: '0 4px 6px rgba(0,0,0,0.1)'
+              }}
+            >
+              🔎 فتح بالدقة الكاملة الخام
+            </a>
+
+            <div style={{ width: '1px', height: '20px', backgroundColor: '#334155' }}></div>
+            
             <button 
               onClick={closeModal} 
               style={{ backgroundColor: '#ef4444', border: 'none', color: '#fff', padding: '6px 16px', borderRadius: '20px', cursor: 'pointer', fontSize: '0.85rem', fontWeight: 'bold' }}
@@ -287,10 +308,10 @@ export default function PoliciesPage() {
               alt="Policy Grid Inspect" 
               style={{
                 maxWidth: '90%',
-                maxHeight: '85vh',
+                maxHeight: '80vh',
                 borderRadius: '8px',
                 boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.8)',
-                pointerEvents: 'none', // تعطيل الحدث الافتراضي للمتصفح للسماح بالسحب المخصص
+                pointerEvents: 'none',
                 transform: `translate(${position.x}px, ${position.y}px) scale(${scale})`,
                 transition: isDragging ? 'none' : 'transform 0.15s ease-out'
               }}
