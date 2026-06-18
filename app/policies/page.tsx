@@ -1,108 +1,46 @@
 'use client';
 
-import { useState, useRef, MouseEvent, TouchEvent } from 'react';
+import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 
 interface Policy {
   id: number;
   title: string;
-  url: string;
+  pdfUrl: string; // رابط الـ PDF الرسمي المتصل بسحاب جوجل
 }
 
 export default function PoliciesPage() {
   const router = useRouter();
-  const [selectedPhoto, setSelectedPhoto] = useState<string | null>(null);
-  
-  // حالات التحكم بالزووم والسحب الذكي للصورة المكبّرة
-  const [scale, setScale] = useState(1);
-  const [position, setPosition] = useState({ x: 0, y: 0 });
-  const [isDragging, setIsDragging] = useState(false);
-  const dragStart = useRef({ x: 0, y: 0 });
+  const [selectedPdf, setSelectedPdf] = useState<string | null>(null);
 
+  // مصفوفة الـ 40 سياسة - تم ربط السياسة الأولى برابط الـ PDF الأصلي الخاص بك بنجاح
   const policies: Policy[] = [
     {
       id: 1,
       title: "Allow Natural Death (AND)",
-      // تم استخراج الرابط المباشر للملف الخام الأصلي لتفادي ضغط الجودة والتشويه
-      url: "https://i.ibb.co/76YTH5S/Allow-Natural-Death-AND-CLIN-P037.png"
+      pdfUrl: "https://drive.google.com/file/d/1FH_c3jgFS8dvuMyiGaFo88-1KVUhPJd-/preview" // رابط ملفك الأصلي الصافي
     },
     {
       id: 2,
       title: "إدارة الأدوية الخطرة (High-Alert Medications)",
-      url: "https://i.ibb.co/N2N98vh2/Man-wear-light-blue-scrub-202606151052.jpg"
+      pdfUrl: "" // أضف رابط الـ preview الخاص بها لاحقاً بنفس الطريقة
     },
     {
       id: 3,
       title: "سياسة مكافحة العدوى والتعقيم (Infection Control)",
-      url: "https://i.ibb.co/N2N98vh2/Man-wear-light-blue-scrub-202606151052.jpg"
+      pdfUrl: ""
     },
     ...Array.from({ length: 37 }, (_, i) => ({
       id: i + 4,
       title: `سياسة بروتوكول العناية الحثيثة رقم ${i + 4}`,
-      url: "https://i.ibb.co/N2N98vh2/Man-wear-light-blue-scrub-202606151052.jpg"
+      pdfUrl: ""
     }))
   ];
-
-  const openModal = (url: string) => {
-    setSelectedPhoto(url);
-    setScale(1);
-    setPosition({ x: 0, y: 0 });
-  };
-
-  const closeModal = () => {
-    setSelectedPhoto(null);
-    setIsDragging(false);
-  };
-
-  const handleMouseDown = (e: MouseEvent) => {
-    e.preventDefault();
-    if (scale === 1) return;
-    setIsDragging(true);
-    dragStart.current = { x: e.clientX - position.x, y: e.clientY - position.y };
-  };
-
-  const handleMouseMove = (e: MouseEvent) => {
-    if (!isDragging) return;
-    setPosition({
-      x: e.clientX - dragStart.current.x,
-      y: e.clientY - dragStart.current.y
-    });
-  };
-
-  const handleTouchStart = (e: TouchEvent) => {
-    if (scale === 1 || e.touches.length !== 1) return;
-    setIsDragging(true);
-    const touch = e.touches[0];
-    dragStart.current = { x: touch.clientX - position.x, y: touch.clientY - position.y };
-  };
-
-  const handleTouchMove = (e: TouchEvent) => {
-    if (!isDragging || e.touches.length !== 1) return;
-    const touch = e.touches[0];
-    setPosition({
-      x: touch.clientX - dragStart.current.x,
-      y: touch.clientY - dragStart.current.y
-    });
-  };
-
-  const zoomIn = (e: MouseEvent) => {
-    e.stopPropagation();
-    setScale(prev => Math.min(prev + 0.5, 5)); // رفع الحد الأقصى للتكبير الداخلي لـ 5 أضعاف
-  };
-
-  const zoomOut = (e: MouseEvent) => {
-    e.stopPropagation();
-    setScale(prev => {
-      const nextScale = Math.max(prev - 0.5, 1);
-      if (nextScale === 1) setPosition({ x: 0, y: 0 });
-      return nextScale;
-    });
-  };
 
   return (
     <div 
       style={{
-        backgroundColor: '#020617',
+        backgroundColor: '#020617', // الخلفية السوداء المريحة جداً للعين
         minHeight: '100vh',
         display: 'flex',
         flexDirection: 'column',
@@ -114,7 +52,7 @@ export default function PoliciesPage() {
       }} 
       dir="rtl"
     >
-      {/* الهيدر العلوي */}
+      {/* الهيدر العلوي وزر العودة */}
       <div style={{ maxWidth: '1200px', width: '100%', marginBottom: '40px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <button 
           onClick={() => router.push('/dashboard')}
@@ -140,14 +78,14 @@ export default function PoliciesPage() {
             مجلدات السياسات والبروتوكولات (40 سياسة)
           </h1>
           <p style={{ fontSize: '0.85rem', color: '#94a3b8', margin: '4px 0 0 0' }}>
-            مكتبة السياسات الرقمية المعتمدة - اضغط على المجلد لفتح لوحة الفحص بدقة الـ HD الكاملة
+            مكتبة المستندات الرقمية المعتمدة - اضغط لعرض ملف الـ PDF الأصلي بدقة خارقة حادة
           </p>
         </div>
       </div>
 
       <div style={{ maxWidth: '1200px', width: '100%', height: '2px', backgroundColor: '#1e293b', marginBottom: '32px' }}></div>
 
-      {/* شبكة المجلدات */}
+      {/* شبكة المجلدات التفاعلية الـ 40 */}
       <div 
         style={{
           display: 'grid',
@@ -161,7 +99,13 @@ export default function PoliciesPage() {
         {policies.map((policy) => (
           <div 
             key={policy.id}
-            onClick={() => openModal(policy.url)}
+            onClick={() => {
+              if (policy.pdfUrl) {
+                setSelectedPdf(policy.pdfUrl);
+              } else {
+                alert("لم يتم رفع ملف الـ PDF الخاص بهذه السياسة بعد.");
+              }
+            }}
             style={{
               backgroundColor: '#0f172a',
               border: '1px solid #1e293b',
@@ -197,126 +141,59 @@ export default function PoliciesPage() {
         ))}
       </div>
 
-      {/* لوحة الفحص والتكبير الذكي الفاخرة */}
-      {selectedPhoto && (
+      {/* شاشة العرض المدمجة لملف الـ PDF الأصلي بملء الشاشة الذكي */}
+      {selectedPdf && (
         <div 
-          onClick={closeModal}
           style={{
             position: 'fixed',
             top: 0,
             left: 0,
             width: '100vw',
             height: '100vh',
-            backgroundColor: 'rgba(2, 6, 23, 0.99)', // تعتيم تام للتركيز
+            backgroundColor: 'rgba(2, 6, 23, 0.98)',
             display: 'flex',
+            flexDirection: 'column',
             alignItems: 'center',
             justifyContent: 'center',
             zIndex: 9999,
-            overflow: 'hidden',
+            padding: '24px',
             boxSizing: 'border-box'
           }}
         >
-          {/* لوحة التحكم العلوية المحسّنة للزووم مع زر الدقة الكاملة */}
+          {/* بار التحكم العلوي وسياق الوثيقة */}
           <div 
-            onClick={(e) => e.stopPropagation()} 
             style={{
-              position: 'absolute',
-              top: '20px',
-              left: '50%',
-              transform: 'translateX(-50%)',
-              backgroundColor: '#0f172a',
-              border: '1px solid #1e293b',
-              padding: '8px 20px',
-              borderRadius: '30px',
+              maxWidth: '1200px',
+              width: '100%',
               display: 'flex',
-              gap: '14px',
+              justifyContent: 'space-between',
               alignItems: 'center',
-              boxShadow: '0 10px 25px rgba(0,0,0,0.5)',
-              zIndex: 10000
+              marginBottom: '16px',
+              backgroundColor: '#0f172a',
+              padding: '12px 24px',
+              borderRadius: '16px',
+              border: '1px solid #1e293b',
+              boxSizing: 'border-box'
             }}
           >
+            <span style={{ fontSize: '1rem', fontWeight: 'bold', color: '#ffffff' }}>📄 استعراض وثيقة السياسة الرسمية بالدقة الكاملة (Vector PDF)</span>
             <button 
-              onClick={zoomIn} 
-              style={{ backgroundColor: '#1e293b', border: '1px solid #334155', color: '#fff', width: '36px', height: '36px', borderRadius: '50%', cursor: 'pointer', fontSize: '1.2rem', fontWeight: 'bold' }}
+              onClick={() => setSelectedPdf(null)} 
+              style={{ backgroundColor: '#ef4444', border: 'none', color: '#fff', padding: '8px 20px', borderRadius: '12px', cursor: 'pointer', fontSize: '0.9rem', fontWeight: 'bold' }}
             >
-              ＋
-            </button>
-            <span style={{ fontSize: '0.85rem', color: '#94a3b8', minWidth: '45px', textAlign: 'center', fontWeight: 'bold' }}>
-              {Math.round(scale * 100)}%
-            </span>
-            <button 
-              onClick={zoomOut} 
-              style={{ backgroundColor: '#1e293b', border: '1px solid #334155', color: '#fff', width: '36px', height: '36px', borderRadius: '50%', cursor: 'pointer', fontSize: '1.2rem', fontWeight: 'bold' }}
-            >
-              －
-            </button>
-            
-            <div style={{ width: '1px', height: '20px', backgroundColor: '#334155' }}></div>
-            
-            {/* 🎯 الحل السحري للحصول على الجودة الخام الأصلية دون أي تشويش وضغط */}
-            <a 
-              href={selectedPhoto} 
-              target="_blank" 
-              rel="noopener noreferrer"
-              style={{
-                backgroundColor: '#2563eb',
-                color: '#ffffff',
-                textDecoration: 'none',
-                padding: '6px 14px',
-                borderRadius: '20px',
-                fontSize: '0.85rem',
-                fontWeight: 'bold',
-                cursor: 'pointer',
-                display: 'inline-flex',
-                alignItems: 'center',
-                boxShadow: '0 4px 6px rgba(0,0,0,0.1)'
-              }}
-            >
-              🔎 فتح بالدقة الكاملة الخام
-            </a>
-
-            <div style={{ width: '1px', height: '20px', backgroundColor: '#334155' }}></div>
-            
-            <button 
-              onClick={closeModal} 
-              style={{ backgroundColor: '#ef4444', border: 'none', color: '#fff', padding: '6px 16px', borderRadius: '20px', cursor: 'pointer', fontSize: '0.85rem', fontWeight: 'bold' }}
-            >
-              إغلاق ✕
+              إغلاق العرض ✕
             </button>
           </div>
 
-          {/* حاوية سحب وتحريك الصورة الحر */}
-          <div
-            style={{
-              width: '100%',
-              height: '100%',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              cursor: scale > 1 ? (isDragging ? 'grabbing' : 'grab') : 'default'
-            }}
-            onMouseDown={handleMouseDown}
-            onMouseMove={handleMouseMove}
-            onMouseUp={() => setIsDragging(false)}
-            onMouseLeave={() => setIsDragging(false)}
-            onTouchStart={handleTouchStart}
-            onTouchMove={handleTouchMove}
-            onTouchEnd={() => setIsDragging(false)}
-          >
-            <img 
-              src={selectedPhoto} 
-              alt="Policy Grid Inspect" 
-              style={{
-                maxWidth: '90%',
-                maxHeight: '80vh',
-                borderRadius: '8px',
-                boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.8)',
-                pointerEvents: 'none',
-                transform: `translate(${position.x}px, ${position.y}px) scale(${scale})`,
-                transition: isDragging ? 'none' : 'transform 0.15s ease-out'
-              }}
-              onClick={(e) => e.stopPropagation()}
-            />
+          {/* نافذة التضمين لملف الـ PDF الأصلي بدون أي ضغط جودة */}
+          <div style={{ maxWidth: '1200px', width: '100%', height: '80vh', backgroundColor: '#1e293b', borderRadius: '16px', overflow: 'hidden', border: '1px solid #334155' }}>
+            <iframe 
+              src={selectedPdf} 
+              width="100%" 
+              height="100%" 
+              allow="autoplay"
+              style={{ border: 'none' }}
+            ></iframe>
           </div>
         </div>
       )}
