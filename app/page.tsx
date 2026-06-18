@@ -3,6 +3,10 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 
+// 📥 خطوتك الوحيدة هنا: 
+// احذف الكلمة المكتوبة بالأسفل (ضع_الكود_الذي_نسخته_هنا) والصق الكود الطويل جداً الذي نسخته من موقع التحويل بين علامتي التنصيص ""
+const myImageBase64 = "ضع_الكود_الذي_نسخته_هنا";
+
 export default function LoginPage() {
   const router = useRouter();
   const [username, setUsername] = useState('');
@@ -16,8 +20,9 @@ export default function LoginPage() {
     setError('');
     setLoading(true);
 
+    // التحقق من البيانات (Username: admin, Password: CCU2026, License Key: JUH-001)
     if (username === 'admin' && password === 'CCU2026' && licenseKey === 'JUH-001') {
-      document.cookie = "icu_auth=true; path=/; max-age=86400";
+      document.cookie = "icu_auth=true; path=/; max-age=86400"; // صالح لمدة 24 ساعة
       router.push('/medications');
     } else {
       setError('خطأ في اسم المستخدم، كلمة المرور أو رمز الترخيص! يرجى التواصل مع المطور لأخذ الإذن.');
@@ -28,7 +33,7 @@ export default function LoginPage() {
   return (
     <div 
       style={{
-        backgroundColor: '#020617',
+        backgroundColor: '#020617', // لون أسود ملكي داكن ومريح للعين أثناء النوبات الليلية
         minHeight: '100vh',
         display: 'flex',
         flexDirection: 'column',
@@ -43,7 +48,7 @@ export default function LoginPage() {
     >
       <div 
         style={{
-          backgroundColor: '#0f172a',
+          backgroundColor: '#0f172a', // لون رمادي داكن للبطاقة المحيطة بالنموذج متناسق مع الخلفية
           padding: '32px',
           borderRadius: '16px',
           boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.5)',
@@ -54,7 +59,7 @@ export default function LoginPage() {
         }}
       >
         
-        {/* شاشة عرض المطور والصورة الشخصية */}
+        {/* شاشة عرض المطور والصورة الشخصية المدمجة كلياً */}
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginBottom: '24px' }} dir="ltr">
           <div 
             style={{
@@ -72,19 +77,9 @@ export default function LoginPage() {
             }}
           >
             <img 
-              src="/profile.jpg" // تم التحديث إلى الاسم الجديد الصريح
+              src={myImageBase64} // هنا تقرأ الشاشة صورتك مباشرة كمصفوفة نصية بدون ملف خارجي
               alt="Suliman Bilal Awad, R.N"
               style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-              onError={(e) => {
-                const img = e.target as HTMLImageElement;
-                if (img.src.includes('/profile.jpg')) {
-                  img.src = '/profile.png';
-                } else if (img.src.includes('/profile.png')) {
-                  img.src = '/profile.PNG';
-                } else if (img.src.includes('/profile.PNG')) {
-                  img.src = '/profile.JPG';
-                }
-              }}
             />
           </div>
           <h2 style={{ fontSize: '1.25rem', fontWeight: 'bold', color: '#f1f5f9', margin: '0', textAlign: 'center' }}>
@@ -103,12 +98,14 @@ export default function LoginPage() {
           نظام حاسبة أدوية العناية الحثيثة للبالغين - نظام محمي وخاص
         </p>
 
+        {/* رسالة الخطأ */}
         {error && (
           <div style={{ backgroundColor: 'rgba(127, 29, 29, 0.4)', borderRight: '4px solid #ef4444', color: '#fca5a5', padding: '12px', borderRadius: '8px', marginBottom: '16px', fontSize: '0.875rem', textAlign: 'right' }}>
             {error}
           </div>
         )}
 
+        {/* نموذج تسجيل الدخول */}
         <form onSubmit={handleLogin} style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
           <div>
             <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: 'bold', color: '#cbd5e1', marginBottom: '4px', textAlign: 'right' }}>اسم المستخدم (Username)</label>
