@@ -16,8 +16,12 @@ export default function LoginPage() {
     setError('');
     setLoading(true);
 
+    // التحقق من البيانات (Username: admin, Password: CCU2026, License Key: JUH-001)
     if (username === 'admin' && password === 'CCU2026' && licenseKey === 'JUH-001') {
-      document.cookie = "icu_auth=true; path=/; max-age=86400";
+      // حفظ حالة الدخول في الـ Cookies ليراها نظام الحماية middleware.ts
+      document.cookie = "icu_auth=true; path=/; max-age=86400"; // صالح لمدة 24 ساعة
+      
+      // الانتقال إلى صفحة حاسبة الأدوية مباشرة
       router.push('/medications');
     } else {
       setError('خطأ في اسم المستخدم، كلمة المرور أو رمز الترخيص! يرجى التواصل مع المطور لأخذ الإذن.');
@@ -26,95 +30,139 @@ export default function LoginPage() {
   };
 
   return (
-    // الخلفية هنا باللون الأسود الداكن المريح جداً للعين في النوبات الليلية (bg-slate-950)
-    <div className="min-h-screen flex flex-col items-center justify-center bg-slate-950 p-4 font-sans" dir="rtl">
-      {/* البطاقة بلون رمادي داكن متناسق مع الخلفية السوداء (bg-slate-900) */}
-      <div className="bg-slate-900 p-8 rounded-2xl shadow-2xl max-w-md w-full border border-slate-800">
+    <div 
+      style={{
+        backgroundColor: '#020617', // لون أسود ملكي داكن ومريح للعين أثناء النوبات الليلية
+        minHeight: '100vh',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: '16px',
+        fontFamily: 'sans-serif',
+        color: '#f8fafc',
+        boxSizing: 'border-box'
+      }} 
+      dir="rtl"
+    >
+      <div 
+        style={{
+          backgroundColor: '#0f172a', // لون رمادي داكن للبطاقة المحيطة بالنموذج متناسق مع الخلفية
+          padding: '32px',
+          borderRadius: '16px',
+          boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.5)',
+          maxWidth: '448px',
+          width: '100%',
+          border: '1px solid #1e293b',
+          boxSizing: 'border-box'
+        }}
+      >
         
         {/* شاشة عرض المطور والصورة الشخصية */}
-        <div className="flex flex-col items-center mb-6" dir="ltr">
-          {/* تم تعديل طريقة عرض الصورة باستخدام وسم HTML عادي لضمان ظهورها فوراً بدون تعقيدات Vercel */}
-          <div className="w-28 h-28 mb-3 rounded-full overflow-hidden border-4 border-blue-600 shadow-xl bg-slate-800 flex items-center justify-center">
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginBottom: '24px' }} dir="ltr">
+          <div 
+            style={{
+              width: '112px',
+              height: '112px',
+              marginBottom: '12px',
+              borderRadius: '50%',
+              overflow: 'hidden',
+              border: '4px solid #2563eb',
+              boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.3)',
+              backgroundColor: '#1e293b',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center'
+            }}
+          >
             <img 
-              src="/suliman.jpg" // تأكد أن الصورة في مجلد public وباسم suliman.jpg تماماً
+              src="/suliman.jpg" 
               alt="Suliman Bilal Awad, R.N"
-              className="object-cover w-full h-full"
+              style={{ width: '100%', height: '100%', objectFit: 'cover' }}
               onError={(e) => {
-                // حل احتياطي في حال كان هناك مشكلة بالامتداد (مثل JPG كابيتال)
-                (e.target as HTMLImageElement).src = '/suliman.PNG';
+                // محاولة احتياطية ذكية في حال اختلاف امتداد الصورة على جهازك بين كابيتال وسمول
+                const img = e.target as HTMLImageElement;
+                if (img.src.includes('suliman.jpg')) {
+                  img.src = '/suliman.png';
+                } else if (img.src.includes('suliman.png')) {
+                  img.src = '/suliman.PNG';
+                } else if (img.src.includes('suliman.PNG')) {
+                  img.src = '/suliman.JPG';
+                }
               }}
             />
           </div>
-          <h2 className="text-xl font-bold text-slate-100 text-center">Suliman Bilal Awad, R.N</h2>
-          <p className="text-xs text-blue-400 font-semibold uppercase mt-1 text-center">
+          <h2 style={{ fontSize: '1.25rem', fontWeight: 'bold', color: '#f1f5f9', margin: '0', textAlign: 'center' }}>
+            Suliman Bilal Awad, R.N
+          </h2>
+          <p style={{ fontSize: '0.75rem', color: '#60a5fa', fontWeight: '600', textTransform: 'uppercase', marginTop: '4px', textAlign: 'center' }}>
             Jordan University Hospital
           </p>
-          <div className="w-16 h-1 bg-blue-600 rounded mt-3 mx-auto"></div>
+          <div style={{ width: '64px', height: '4px', backgroundColor: '#2563eb', borderRadius: '4px', marginTop: '12px' }}></div>
         </div>
 
-        <h1 className="text-xl font-black text-slate-200 text-center mb-2">
+        <h1 style={{ fontSize: '1.25rem', fontWeight: '900', color: '#e2e8f0', textAlign: 'center', marginBottom: '8px' }}>
           ICU Adult Infusion Calculator
         </h1>
-        <p className="text-xs text-slate-400 text-center mb-6">
+        <p style={{ fontSize: '0.75rem', color: '#94a3b8', textAlign: 'center', marginBottom: '24px', margin: '0' }}>
           نظام حاسبة أدوية العناية الحثيثة للبالغين - نظام محمي وخاص
         </p>
 
+        {/* رسالة الخطأ */}
         {error && (
-          <div className="bg-red-950/50 border-r-4 border-red-500 text-red-200 p-3 rounded-lg mb-4 text-sm text-right">
+          <div style={{ backgroundColor: 'rgba(127, 29, 29, 0.4)', borderRight: '4px solid #ef4444', color: '#fca5a5', padding: '12px', borderRadius: '8px', marginBottom: '16px', fontSize: '0.875rem', textAlign: 'right' }}>
             {error}
           </div>
         )}
 
-        <form onSubmit={handleLogin} className="space-y-4">
+        {/* نموذج تسجيل الدخول */}
+        <form onSubmit={handleLogin} style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
           <div>
-            <label className="block text-sm font-bold text-slate-300 mb-1 text-right">اسم المستخدم (Username)</label>
+            <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: 'bold', color: '#cbd5e1', marginBottom: '4px', textAlign: 'right' }}>اسم المستخدم (Username)</label>
             <input
               type="text"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
-              className="w-full px-4 py-2.5 bg-slate-800 border border-slate-700 text-slate-100 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 text-left"
+              style={{ width: '100%', padding: '10px 16px', backgroundColor: '#1e293b', border: '1px solid #334155', color: '#ffffff', borderRadius: '12px', outline: 'none', direction: 'ltr', boxSizing: 'border-box' }}
               placeholder="Enter username"
               required
-              style={{ direction: 'ltr' }}
             />
           </div>
 
           <div>
-            <label className="block text-sm font-bold text-slate-300 mb-1 text-right">كلمة المرور (Password)</label>
+            <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: 'bold', color: '#cbd5e1', marginBottom: '4px', textAlign: 'right' }}>كلمة المرور (Password)</label>
             <input
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full px-4 py-2.5 bg-slate-800 border border-slate-700 text-slate-100 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 text-left"
+              style={{ width: '100%', padding: '10px 16px', backgroundColor: '#1e293b', border: '1px solid #334155', color: '#ffffff', borderRadius: '12px', outline: 'none', direction: 'ltr', boxSizing: 'border-box' }}
               placeholder="Enter password"
               required
-              style={{ direction: 'ltr' }}
             />
           </div>
 
           <div>
-            <label className="block text-sm font-bold text-slate-300 mb-1 text-right">رمز الترخيص الإذن (License Key)</label>
+            <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: 'bold', color: '#cbd5e1', marginBottom: '4px', textAlign: 'right' }}>رمز الترخيص الإذن (License Key)</label>
             <input
               type="text"
               value={licenseKey}
               onChange={(e) => setLicenseKey(e.target.value)}
-              className="w-full px-4 py-2.5 bg-slate-800 border border-slate-700 text-slate-100 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 text-left"
+              style={{ width: '100%', padding: '10px 16px', backgroundColor: '#1e293b', border: '1px solid #334155', color: '#ffffff', borderRadius: '12px', outline: 'none', direction: 'ltr', boxSizing: 'border-box' }}
               placeholder="JUH-XXX"
               required
-              style={{ direction: 'ltr' }}
             />
           </div>
 
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-xl transition duration-200 shadow-lg disabled:bg-blue-800 mt-2"
+            style={{ width: '100%', backgroundColor: '#2563eb', color: '#ffffff', fontWeight: 'bold', padding: '12px', borderRadius: '12px', border: 'none', cursor: 'pointer', fontSize: '1rem', marginTop: '8px' }}
           >
             {loading ? 'جاري التحقق والدخول...' : 'تسجيل الدخول'}
           </button>
         </form>
 
-        <p className="text-[10px] text-slate-500 text-center mt-6 uppercase tracking-wider">
+        <p style={{ fontSize: '10px', color: '#64748b', textAlign: 'center', marginTop: '24px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
           © All Rights Reserved. Designed & Developed by Suliman Bilal Awad
         </p>
 
