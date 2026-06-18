@@ -17,16 +17,17 @@ export default function LoginPage() {
     setError('');
     setLoading(true);
 
-    // التحقق من البيانات البرمجية ومطابقتها (تم تعديل الباسوورد إلى CCU2026)
+    // التحقق من البيانات البرمجية (كلمة المرور الجديدة CCU2026)
     if (username === 'admin' && password === 'CCU2026' && licenseKey === 'JUH-001') {
-      // حفظ حالة الدخول في الـ Cookies ليراها نظام الحماية middleware.ts
-      document.cookie = "isLoggedIn=true; path=/; max-age=86400"; // صالح لمدة 24 ساعة
+      
+      // هنا قمنا بتعديل اسم الـ Cookie إلى icu_auth ليطابق الـ middleware تماماً
+      document.cookie = "icu_auth=true; path=/; max-age=86400"; // صالح لمدة 24 ساعة
       
       // الانتقال إلى صفحة حاسبة الأدوية مباشرة
       router.push('/medications');
     } else {
       setError('خطأ في اسم المستخدم، كلمة المرور أو رمز الترخيص! يرجى التواصل مع المطور لأخذ الإذن.');
-      loading && setLoading(false);
+      setLoading(false);
     }
   };
 
