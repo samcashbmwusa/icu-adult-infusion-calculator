@@ -17,8 +17,7 @@ export default function LoginPage() {
     setLoading(true);
 
     if (username === 'admin' && password === 'CCU2026' && licenseKey === 'JUH-001') {
-      document.cookie = "icu_auth=true; path=/; max-age=86400"; // 24 ساعة
-      // التوجيه إلى الصفحة الرئيسية الجديدة (Dashboard)
+      document.cookie = "icu_auth=true; path=/; max-age=86400"; // صالح لمدة 24 ساعة
       router.push('/dashboard');
     } else {
       setError('خطأ في اسم المستخدم، كلمة المرور أو رمز الترخيص! يرجى التواصل مع المطور لأخذ الإذن.');
@@ -54,8 +53,6 @@ export default function LoginPage() {
           boxSizing: 'border-box'
         }}
       >
-        
-        {/* شاشة عرض المطور والصورة الشخصية عبر الرابط السحابي المباشر */}
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginBottom: '24px' }} dir="ltr">
           <div 
             style={{
@@ -149,7 +146,6 @@ export default function LoginPage() {
         <p style={{ fontSize: '10px', color: '#64748b', textAlign: 'center', marginTop: '24px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
           © All Rights Reserved. Designed & Developed by Suliman Bilal Awad
         </p>
-
       </div>
     </div>
   );

@@ -1,29 +1,132 @@
-import Link from "next/link";
+'use client';
+
+import { useRouter } from 'next/navigation';
 
 export default function DashboardPage() {
+  const router = useRouter();
+
   return (
-    <main dir="rtl" className="min-h-screen bg-slate-900 text-white p-6">
-      <div className="max-w-5xl mx-auto">
-        <h1 className="text-3xl font-bold mb-2">نظام حساب الجرعات الوريدية</h1>
-        <p className="text-slate-400 mb-8">اختر القسم المطلوب</p>
+    <div 
+      style={{
+        backgroundColor: '#020617',
+        minHeight: '100vh',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        padding: '40px 16px',
+        fontFamily: 'sans-serif',
+        color: '#f8fafc',
+        boxSizing: 'border-box'
+      }} 
+      dir="rtl"
+    >
+      {/* العنوان العلوي والترويسة */}
+      <div style={{ maxWidth: '800px', width: '100%', marginBottom: '40px', textAlign: 'center' }}>
+        <h1 style={{ fontSize: '2rem', fontWeight: '900', color: '#ffffff', marginBottom: '8px' }}>
+          لوحة التحكم الرئيسية
+        </h1>
+        <p style={{ fontSize: '0.875rem', color: '#94a3b8', margin: '0' }}>
+          نظام حاسبة أدوية العناية الحثيثة للبالغين - مستشفى الجامعة الأردنية
+        </p>
+        <div style={{ width: '100px', height: '4px', backgroundColor: '#2563eb', borderRadius: '4px', marginTop: '16px', marginLeft: 'auto', marginRight: 'auto' }}></div>
+      </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-          <Link href="/medications" className="rounded-2xl bg-slate-800 p-6 border border-slate-700 hover:bg-slate-700 transition">
-            <h2 className="text-2xl font-bold mb-3">💊 الأدوية</h2>
-            <p className="text-slate-300">تحضير وتخفيف أدوية العناية الحثيثة</p>
-          </Link>
+      {/* شبكة الخيارات التفاعلية الثلاثة */}
+      <div 
+        style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
+          gap: '24px',
+          maxWidth: '800px',
+          width: '100%',
+          boxSizing: 'border-box'
+        }}
+      >
+        {/* الكرت الأول: الأدوية */}
+        <div 
+          onClick={() => router.push('/medications')}
+          style={{
+            backgroundColor: '#0f172a',
+            border: '1px solid #1e293b',
+            borderRadius: '16px',
+            padding: '32px 24px',
+            textAlign: 'center',
+            cursor: 'pointer',
+            transition: 'all 0.2s ease',
+            boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.3)'
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.borderColor = '#2563eb';
+            e.currentTarget.style.transform = 'translateY(-4px)';
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.borderColor = '#1e293b';
+            e.currentTarget.style.transform = 'translateY(0)';
+          }}
+        >
+          <div style={{ fontSize: '2.5rem', marginBottom: '16px' }}>💊</div>
+          <h2 style={{ fontSize: '1.25rem', fontWeight: 'bold', color: '#ffffff', margin: '0' }}>الأدوية</h2>
+          <p style={{ fontSize: '0.85rem', color: '#94a3b8', marginTop: '8px', margin: '0' }}>حاسبة نسب التدفق والجرعات الدقيقة لأدوية العناية الحثيثة.</p>
+        </div>
 
-          <Link href="/policies" className="rounded-2xl bg-slate-800 p-6 border border-slate-700 hover:bg-slate-700 transition">
-            <h2 className="text-2xl font-bold mb-3">📘 سياسات مستشفى الجامعة</h2>
-            <p className="text-slate-300">سياسات وتعليمات مستشفى الجامعة الأردنية</p>
-          </Link>
+        {/* الكرت الثاني: السياسات */}
+        <div 
+          onClick={() => router.push('/policies')}
+          style={{
+            backgroundColor: '#0f172a',
+            border: '1px solid #1e293b',
+            borderRadius: '16px',
+            padding: '32px 24px',
+            textAlign: 'center',
+            cursor: 'pointer',
+            transition: 'all 0.2s ease',
+            boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.3)'
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.borderColor = '#10b981';
+            e.currentTarget.style.transform = 'translateY(-4px)';
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.borderColor = '#1e293b';
+            e.currentTarget.style.transform = 'translateY(0)';
+          }}
+        >
+          <div style={{ fontSize: '2.5rem', marginBottom: '16px' }}>📜</div>
+          <h2 style={{ fontSize: '1.25rem', fontWeight: 'bold', color: '#ffffff', margin: '0' }}>السياسات</h2>
+          <p style={{ fontSize: '0.85rem', color: '#94a3b8', marginTop: '8px', margin: '0' }}>السياسات الطبية والتمريضية المعتمدة في قسم الـ ICU.</p>
+        </div>
 
-          <Link href="/procedures" className="rounded-2xl bg-slate-800 p-6 border border-slate-700 hover:bg-slate-700 transition">
-            <h2 className="text-2xl font-bold mb-3">🩺 الإجراءات الطبية</h2>
-            <p className="text-slate-300">إجراءات تمريضية وطبية للعناية الحثيثة</p>
-          </Link>
+        {/* الكرت الثالث: الإجراءات */}
+        <div 
+          onClick={() => router.push('/procedures')}
+          style={{
+            backgroundColor: '#0f172a',
+            border: '1px solid #1e293b',
+            borderRadius: '16px',
+            padding: '32px 24px',
+            textAlign: 'center',
+            cursor: 'pointer',
+            transition: 'all 0.2s ease',
+            boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.3)'
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.borderColor = '#eab308';
+            e.currentTarget.style.transform = 'translateY(-4px)';
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.borderColor = '#1e293b';
+            e.currentTarget.style.transform = 'translateY(0)';
+          }}
+        >
+          <div style={{ fontSize: '2.5rem', marginBottom: '16px' }}>🛠️</div>
+          <h2 style={{ fontSize: '1.25rem', fontWeight: 'bold', color: '#ffffff', margin: '0' }}>الإجراءات</h2>
+          <p style={{ fontSize: '0.85rem', color: '#94a3b8', marginTop: '8px', margin: '0' }}>بروتوكولات وخطوات العمل التمريضية للمرضى الداخليين.</p>
         </div>
       </div>
-    </main>
+
+      <p style={{ fontSize: '11px', color: '#64748b', marginTop: '60px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+        © All Rights Reserved. Designed & Developed by Suliman Bilal Awad
+      </p>
+    </div>
   );
 }
