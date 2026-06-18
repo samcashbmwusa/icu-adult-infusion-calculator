@@ -3,10 +3,6 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 
-// 📥 خطوتك الوحيدة هنا: 
-// احذف الكلمة المكتوبة بالأسفل (ضع_الكود_الذي_نسخته_هنا) والصق الكود الطويل جداً الذي نسخته من موقع التحويل بين علامتي التنصيص ""
-const myImageBase64 = "ضع_الكود_الذي_نسخته_هنا";
-
 export default function LoginPage() {
   const router = useRouter();
   const [username, setUsername] = useState('');
@@ -20,9 +16,9 @@ export default function LoginPage() {
     setError('');
     setLoading(true);
 
-    // التحقق من البيانات (Username: admin, Password: CCU2026, License Key: JUH-001)
+    // التحقق الآمن من البيانات (Username: admin, Password: CCU2026, License Key: JUH-001)
     if (username === 'admin' && password === 'CCU2026' && licenseKey === 'JUH-001') {
-      document.cookie = "icu_auth=true; path=/; max-age=86400"; // صالح لمدة 24 ساعة
+      document.cookie = "icu_auth=true; path=/; max-age=86400"; // صالحة لمدة 24 ساعة
       router.push('/medications');
     } else {
       setError('خطأ في اسم المستخدم، كلمة المرور أو رمز الترخيص! يرجى التواصل مع المطور لأخذ الإذن.');
@@ -33,7 +29,7 @@ export default function LoginPage() {
   return (
     <div 
       style={{
-        backgroundColor: '#020617', // لون أسود ملكي داكن ومريح للعين أثناء النوبات الليلية
+        backgroundColor: '#020617', // الخلفية السوداء الداكنة والمريحة جداً للعين
         minHeight: '100vh',
         display: 'flex',
         flexDirection: 'column',
@@ -48,7 +44,7 @@ export default function LoginPage() {
     >
       <div 
         style={{
-          backgroundColor: '#0f172a', // لون رمادي داكن للبطاقة المحيطة بالنموذج متناسق مع الخلفية
+          backgroundColor: '#0f172a', // بطاقة تسجيل الدخول الرمادية الداكنة المتناسقة
           padding: '32px',
           borderRadius: '16px',
           boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.5)',
@@ -59,7 +55,7 @@ export default function LoginPage() {
         }}
       >
         
-        {/* شاشة عرض المطور والصورة الشخصية المدمجة كلياً */}
+        {/* شاشة عرض المطور والصورة الشخصية عبر الرابط السحابي المباشر */}
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginBottom: '24px' }} dir="ltr">
           <div 
             style={{
@@ -68,7 +64,7 @@ export default function LoginPage() {
               marginBottom: '12px',
               borderRadius: '50%',
               overflow: 'hidden',
-              border: '4px solid #2563eb',
+              border: '4px solid #2563eb', // الفريم الأزرق الأنيق حول الصورة
               boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.3)',
               backgroundColor: '#1e293b',
               display: 'flex',
@@ -77,7 +73,7 @@ export default function LoginPage() {
             }}
           >
             <img 
-              src={myImageBase64} // هنا تقرأ الشاشة صورتك مباشرة كمصفوفة نصية بدون ملف خارجي
+              src="https://i.ibb.co/N2N98vh2/Man-wear-light-blue-scrub-202606151052.jpg" // رابط صورتك المباشر المستضاف أونلاين حتماً
               alt="Suliman Bilal Awad, R.N"
               style={{ width: '100%', height: '100%', objectFit: 'cover' }}
             />
@@ -98,7 +94,7 @@ export default function LoginPage() {
           نظام حاسبة أدوية العناية الحثيثة للبالغين - نظام محمي وخاص
         </p>
 
-        {/* رسالة الخطأ */}
+        {/* تنبيه الأخطاء */}
         {error && (
           <div style={{ backgroundColor: 'rgba(127, 29, 29, 0.4)', borderRight: '4px solid #ef4444', color: '#fca5a5', padding: '12px', borderRadius: '8px', marginBottom: '16px', fontSize: '0.875rem', textAlign: 'right' }}>
             {error}
