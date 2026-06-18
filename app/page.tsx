@@ -2,7 +2,6 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import Image from 'next/image';
 
 export default function LoginPage() {
   const router = useRouter();
@@ -27,28 +26,33 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-slate-50 p-4" dir="rtl">
-      <div className="bg-white p-8 rounded-2xl shadow-2xl max-w-md w-full border border-slate-100">
+    // الخلفية هنا باللون الأسود الداكن المريح جداً للعين في النوبات الليلية (bg-slate-950)
+    <div className="min-h-screen flex flex-col items-center justify-center bg-slate-950 p-4 font-sans" dir="rtl">
+      {/* البطاقة بلون رمادي داكن متناسق مع الخلفية السوداء (bg-slate-900) */}
+      <div className="bg-slate-900 p-8 rounded-2xl shadow-2xl max-w-md w-full border border-slate-800">
         
+        {/* شاشة عرض المطور والصورة الشخصية */}
         <div className="flex flex-col items-center mb-6" dir="ltr">
-          <div className="relative w-28 h-28 mb-3 rounded-full overflow-hidden border-4 border-blue-600 shadow-xl bg-slate-100">
-            <Image 
-              src="/suliman.jpg"
+          {/* تم تعديل طريقة عرض الصورة باستخدام وسم HTML عادي لضمان ظهورها فوراً بدون تعقيدات Vercel */}
+          <div className="w-28 h-28 mb-3 rounded-full overflow-hidden border-4 border-blue-600 shadow-xl bg-slate-800 flex items-center justify-center">
+            <img 
+              src="/suliman.jpg" // تأكد أن الصورة في مجلد public وباسم suliman.jpg تماماً
               alt="Suliman Bilal Awad, R.N"
-              width={112}
-              height={112}
               className="object-cover w-full h-full"
-              priority
+              onError={(e) => {
+                // حل احتياطي في حال كان هناك مشكلة بالامتداد (مثل JPG كابيتال)
+                (e.target as HTMLImageElement).src = '/suliman.PNG';
+              }}
             />
           </div>
-          <h2 className="text-xl font-bold text-slate-800 text-center">Suliman Bilal Awad, R.N</h2>
-          <p className="text-xs text-blue-600 font-semibold uppercase mt-1 text-center">
+          <h2 className="text-xl font-bold text-slate-100 text-center">Suliman Bilal Awad, R.N</h2>
+          <p className="text-xs text-blue-400 font-semibold uppercase mt-1 text-center">
             Jordan University Hospital
           </p>
           <div className="w-16 h-1 bg-blue-600 rounded mt-3 mx-auto"></div>
         </div>
 
-        <h1 className="text-xl font-black text-slate-700 text-center mb-2">
+        <h1 className="text-xl font-black text-slate-200 text-center mb-2">
           ICU Adult Infusion Calculator
         </h1>
         <p className="text-xs text-slate-400 text-center mb-6">
@@ -56,19 +60,19 @@ export default function LoginPage() {
         </p>
 
         {error && (
-          <div className="bg-red-50 border-r-4 border-red-500 text-red-700 p-3 rounded-lg mb-4 text-sm text-right">
+          <div className="bg-red-950/50 border-r-4 border-red-500 text-red-200 p-3 rounded-lg mb-4 text-sm text-right">
             {error}
           </div>
         )}
 
         <form onSubmit={handleLogin} className="space-y-4">
           <div>
-            <label className="block text-sm font-bold text-slate-600 mb-1 text-right">اسم المستخدم (Username)</label>
+            <label className="block text-sm font-bold text-slate-300 mb-1 text-right">اسم المستخدم (Username)</label>
             <input
               type="text"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
-              className="w-full px-4 py-2.5 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 text-left"
+              className="w-full px-4 py-2.5 bg-slate-800 border border-slate-700 text-slate-100 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 text-left"
               placeholder="Enter username"
               required
               style={{ direction: 'ltr' }}
@@ -76,12 +80,12 @@ export default function LoginPage() {
           </div>
 
           <div>
-            <label className="block text-sm font-bold text-slate-600 mb-1 text-right">كلمة المرور (Password)</label>
+            <label className="block text-sm font-bold text-slate-300 mb-1 text-right">كلمة المرور (Password)</label>
             <input
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full px-4 py-2.5 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 text-left"
+              className="w-full px-4 py-2.5 bg-slate-800 border border-slate-700 text-slate-100 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 text-left"
               placeholder="Enter password"
               required
               style={{ direction: 'ltr' }}
@@ -89,12 +93,12 @@ export default function LoginPage() {
           </div>
 
           <div>
-            <label className="block text-sm font-bold text-slate-600 mb-1 text-right">رمز الترخيص الإذن (License Key)</label>
+            <label className="block text-sm font-bold text-slate-300 mb-1 text-right">رمز الترخيص الإذن (License Key)</label>
             <input
               type="text"
               value={licenseKey}
               onChange={(e) => setLicenseKey(e.target.value)}
-              className="w-full px-4 py-2.5 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 text-left"
+              className="w-full px-4 py-2.5 bg-slate-800 border border-slate-700 text-slate-100 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 text-left"
               placeholder="JUH-XXX"
               required
               style={{ direction: 'ltr' }}
@@ -104,13 +108,13 @@ export default function LoginPage() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-xl transition duration-200 shadow-lg disabled:bg-blue-400 mt-2"
+            className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-xl transition duration-200 shadow-lg disabled:bg-blue-800 mt-2"
           >
             {loading ? 'جاري التحقق والدخول...' : 'تسجيل الدخول'}
           </button>
         </form>
 
-        <p className="text-[10px] text-slate-400 text-center mt-6 uppercase tracking-wider">
+        <p className="text-[10px] text-slate-500 text-center mt-6 uppercase tracking-wider">
           © All Rights Reserved. Designed & Developed by Suliman Bilal Awad
         </p>
 
