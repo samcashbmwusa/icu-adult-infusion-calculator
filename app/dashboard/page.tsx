@@ -26,7 +26,7 @@ export default function DashboardPage() {
           لوحة التحكم الرئيسية
         </h1>
         <p style={{ fontSize: '0.875rem', color: '#94a3b8', margin: '0' }}>
-          نظام حاسبة أدوية العناية الحثيثة للبالغين - مستشفى الجامعة الأردنية
+         أهلا و سهلا بكم - مستشفى الجامعة الأردنية
         </p>
         <div style={{ width: '100px', height: '4px', backgroundColor: '#2563eb', borderRadius: '4px', marginTop: '16px', marginLeft: 'auto', marginRight: 'auto' }}></div>
       </div>
