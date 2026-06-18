@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useRef, MouseEvent, TouchEvent } from 'react';
 import { useRouter } from 'next/navigation';
 
 interface Policy {
@@ -12,36 +12,100 @@ interface Policy {
 export default function PoliciesPage() {
   const router = useRouter();
   const [selectedPhoto, setSelectedPhoto] = useState<string | null>(null);
+  
+  // حالات التحكم بالزووم والسحب الذكي للصورة المكبّرة
+  const [scale, setScale] = useState(1);
+  const [position, setPosition] = useState({ x: 0, y: 0 });
+  const [isDragging, setIsDragging] = useState(false);
+  const dragStart = useRef({ x: 0, y: 0 });
 
-  // مصفوفة الـ 40 سياسة - يمكنك تعديل العناوين والروابط من هنا مباشرة بكل سهولة
   const policies: Policy[] = [
     {
       id: 1,
       title: "Allow Natural Death (AND)",
-      url: "https://i.ibb.co/76YTH5S/Allow-Natural-Death-AND-CLIN-P037.png" // صورتك الأولى الجاهزة
+      url: "https://i.ibb.co/76YTH5S/Allow-Natural-Death-AND-CLIN-P037.png"
     },
     {
       id: 2,
       title: "إدارة الأدوية الخطرة (High-Alert Medications)",
-      url: "https://i.ibb.co/N2N98vh2/Man-wear-light-blue-scrub-202606151052.jpg" // رابط تجريبي
+      url: "https://i.ibb.co/N2N98vh2/Man-wear-light-blue-scrub-202606151052.jpg"
     },
     {
       id: 3,
       title: "سياسة مكافحة العدوى والتعقيم (Infection Control)",
       url: "https://i.ibb.co/N2N98vh2/Man-wear-light-blue-scrub-202606151052.jpg"
     },
-    // إنشاء بقية المجلدات الـ 40 تلقائياً لتسهيل الكود وتوفير المساحة
     ...Array.from({ length: 37 }, (_, i) => ({
       id: i + 4,
       title: `سياسة بروتوكول العناية الحثيثة رقم ${i + 4}`,
-      url: "https://i.ibb.co/N2N98vh2/Man-wear-light-blue-scrub-202606151052.jpg" // رابط تجريبي حتى ترفع صورها
+      url: "https://i.ibb.co/N2N98vh2/Man-wear-light-blue-scrub-202606151052.jpg"
     }))
   ];
+
+  const openModal = (url: string) => {
+    setSelectedPhoto(url);
+    setScale(1);
+    setPosition({ x: 0, y: 0 });
+  };
+
+  const closeModal = () => {
+    setSelectedPhoto(null);
+    setIsDragging(false);
+  };
+
+  // معالجة بداية سحب الصورة بالماوس
+  const handleMouseDown = (e: MouseEvent) => {
+    e.preventDefault();
+    if (scale === 1) return; // لا تسحب إذا كانت الحجم الافتراضي
+    setIsDragging(true);
+    dragStart.current = { x: e.clientX - position.x, y: e.clientY - position.y };
+  };
+
+  // معالجة حركة السحب بالماوس
+  const handleMouseMove = (e: MouseEvent) => {
+    if (!isDragging) return;
+    setPosition({
+      x: e.clientX - dragStart.current.x,
+      y: e.clientY - dragStart.current.y
+    });
+  };
+
+  // معالجة بداية سحب الصورة باللمس للهواتف
+  const handleTouchStart = (e: TouchEvent) => {
+    if (scale === 1 || e.touches.length !== 1) return;
+    setIsDragging(true);
+    const touch = e.touches[0];
+    dragStart.current = { x: touch.clientX - position.x, y: touch.clientY - position.y };
+  };
+
+  // معالجة حركة السحب باللمس للهواتف
+  const handleTouchMove = (e: TouchEvent) => {
+    if (!isDragging || e.touches.length !== 1) return;
+    const touch = e.touches[0];
+    setPosition({
+      x: touch.clientX - dragStart.current.x,
+      y: touch.clientY - dragStart.current.y
+    });
+  };
+
+  const zoomIn = (e: MouseEvent) => {
+    e.stopPropagation();
+    setScale(prev => Math.min(prev + 0.5, 4)); // الحد الأقصى للتكبير 4 أضعاف حجم الصورة الأصلي
+  };
+
+  const zoomOut = (e: MouseEvent) => {
+    e.stopPropagation();
+    setScale(prev => {
+      const nextScale = Math.max(prev - 0.5, 1);
+      if (nextScale === 1) setPosition({ x: 0, y: 0 }); // إعادة التوسيط التلقائي عند الرجوع للحجم الطبيعي
+      return nextScale;
+    });
+  };
 
   return (
     <div 
       style={{
-        backgroundColor: '#020617', // الخلفية السوداء المريحة جداً للعين
+        backgroundColor: '#020617',
         minHeight: '100vh',
         display: 'flex',
         flexDirection: 'column',
@@ -53,7 +117,7 @@ export default function PoliciesPage() {
       }} 
       dir="rtl"
     >
-      {/* الهيدر العلوي وزر العودة */}
+      {/* الهيدر العلوي */}
       <div style={{ maxWidth: '1200px', width: '100%', marginBottom: '40px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <button 
           onClick={() => router.push('/dashboard')}
@@ -79,14 +143,14 @@ export default function PoliciesPage() {
             مجلدات السياسات والبروتوكولات (40 سياسة)
           </h1>
           <p style={{ fontSize: '0.85rem', color: '#94a3b8', margin: '4px 0 0 0' }}>
-            مكتبة السياسات الرقمية المعتمدة - اضغط على المجلد لعرض الإنفوجرافيك
+            مكتبة السياسات الرقمية المعتمدة - اضغط على المجلد لفتح لوحة الفحص والزووم التفاعلي
           </p>
         </div>
       </div>
 
       <div style={{ maxWidth: '1200px', width: '100%', height: '2px', backgroundColor: '#1e293b', marginBottom: '32px' }}></div>
 
-      {/* شبكة المجلدات التفاعلية (Folders Grid) */}
+      {/* شبكة المجلدات التفاعلية */}
       <div 
         style={{
           display: 'grid',
@@ -100,7 +164,7 @@ export default function PoliciesPage() {
         {policies.map((policy) => (
           <div 
             key={policy.id}
-            onClick={() => setSelectedPhoto(policy.url)} // فتح الصورة المكبّرة عند الضغط
+            onClick={() => openModal(policy.url)}
             style={{
               backgroundColor: '#0f172a',
               border: '1px solid #1e293b',
@@ -125,7 +189,6 @@ export default function PoliciesPage() {
               e.currentTarget.style.transform = 'translateY(0)';
             }}
           >
-            {/* أيقونة مجلد تفاعلية بلون أصفر فخم للمجلدات الطبية */}
             <div style={{ fontSize: '2.8rem', marginBottom: '10px', color: '#eab308' }}>📁</div>
             <span style={{ fontSize: '0.75rem', color: '#64748b', fontWeight: 'bold', display: 'block', marginBottom: '4px' }}>
               سياسة #{policy.id}
@@ -137,62 +200,103 @@ export default function PoliciesPage() {
         ))}
       </div>
 
-      {/* شاشة العرض المكبّرة التلقائية (Lightbox Modal) */}
+      {/* لوحة الفحص والتكبير الذكي الفاخرة (Interactive Pan & Zoom Lightbox) */}
       {selectedPhoto && (
         <div 
-          onClick={() => setSelectedPhoto(null)} // إغلاق شاشة التكبير عند الضغط في أي مكان فارغ بالخلفية
+          onClick={closeModal}
           style={{
             position: 'fixed',
             top: 0,
             left: 0,
             width: '100vw',
             height: '100vh',
-            backgroundColor: 'rgba(2, 6, 23, 0.95)', // خلفية معتمة جداً للتركيز على الصورة
+            backgroundColor: 'rgba(2, 6, 23, 0.98)',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
             zIndex: 9999,
-            padding: '20px',
-            boxSizing: 'border-box',
-            cursor: 'zoom-out'
+            overflow: 'hidden',
+            boxSizing: 'border-box'
           }}
         >
-          {/* زر الإغلاق العلوي */}
-          <button 
-            onClick={() => setSelectedPhoto(null)}
+          {/* لوحة التحكم العلوية للزووم والإغلاق */}
+          <div 
+            onClick={(e) => e.stopPropagation()} 
             style={{
               position: 'absolute',
               top: '20px',
-              right: '20px',
-              backgroundColor: '#ef4444',
-              color: '#ffffff',
-              border: 'none',
-              borderRadius: '50%',
-              width: '40px',
-              height: '40px',
-              fontSize: '1.2rem',
-              fontWeight: 'bold',
-              cursor: 'pointer',
-              boxShadow: '0 4px 10px rgba(0,0,0,0.3)'
+              left: '50%',
+              transform: 'translateX(-50%)',
+              backgroundColor: '#0f172a',
+              border: '1px solid #1e293b',
+              padding: '8px 16px',
+              borderRadius: '30px',
+              display: 'flex',
+              gap: '12px',
+              alignItems: 'center',
+              boxShadow: '0 10px 25px rgba(0,0,0,0.5)',
+              zIndex: 10000
             }}
           >
-            ✕
-          </button>
+            <button 
+              onClick={zoomIn} 
+              style={{ backgroundColor: '#1e293b', border: '1px solid #334155', color: '#fff', width: '36px', height: '36px', borderRadius: '50%', cursor: 'pointer', fontSize: '1.2rem', fontWeight: 'bold' }}
+              title="تكبير الصورة"
+            >
+              ＋
+            </button>
+            <span style={{ fontSize: '0.85rem', color: '#94a3b8', minWidth: '45px', textAlign: 'center', fontWeight: 'bold' }}>
+              {Math.round(scale * 100)}%
+            </span>
+            <button 
+              onClick={zoomOut} 
+              style={{ backgroundColor: '#1e293b', border: '1px solid #334155', color: '#fff', width: '36px', height: '36px', borderRadius: '50%', cursor: 'pointer', fontSize: '1.2rem', fontWeight: 'bold' }}
+              title="تصغير الصورة"
+            >
+              －
+            </button>
+            <div style={{ width: '1px', height: '20px', backgroundColor: '#334155' }}></div>
+            <button 
+              onClick={closeModal} 
+              style={{ backgroundColor: '#ef4444', border: 'none', color: '#fff', padding: '6px 16px', borderRadius: '20px', cursor: 'pointer', fontSize: '0.85rem', fontWeight: 'bold' }}
+            >
+              إغلاق ✕
+            </button>
+          </div>
 
-          {/* الإنفوجرافيك المكبّر بحجم الشاشة الذكي */}
-          <img 
-            src={selectedPhoto} 
-            alt="Expanded Infographic" 
+          {/* حاوية سحب وتحريك الصورة الحر */}
+          <div
             style={{
-              maxWidth: '95%',
-              maxHeight: '90vh',
-              borderRadius: '12px',
-              boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.7)',
-              border: '2px solid #334155',
-              cursor: 'default'
+              width: '100%',
+              height: '100%',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              cursor: scale > 1 ? (isDragging ? 'grabbing' : 'grab') : 'default'
             }}
-            onClick={(e) => e.stopPropagation()} // منع الإغلاق عند الضغط على الصورة نفسها
-          />
+            onMouseDown={handleMouseDown}
+            onMouseMove={handleMouseMove}
+            onMouseUp={() => setIsDragging(false)}
+            onMouseLeave={() => setIsDragging(false)}
+            onTouchStart={handleTouchStart}
+            onTouchMove={handleTouchMove}
+            onTouchEnd={() => setIsDragging(false)}
+          >
+            <img 
+              src={selectedPhoto} 
+              alt="Policy Grid Inspect" 
+              style={{
+                maxWidth: '90%',
+                maxHeight: '85vh',
+                borderRadius: '8px',
+                boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.8)',
+                pointerEvents: 'none', // تعطيل الحدث الافتراضي للمتصفح للسماح بالسحب المخصص
+                transform: `translate(${position.x}px, ${position.y}px) scale(${scale})`,
+                transition: isDragging ? 'none' : 'transform 0.15s ease-out'
+              }}
+              onClick={(e) => e.stopPropagation()}
+            />
+          </div>
         </div>
       )}
 
