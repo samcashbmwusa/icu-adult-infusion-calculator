@@ -89,11 +89,41 @@ export default function DashboardPage() {
     },
   ];
 
-  // تصفية النتائج الذكية بفضل الـ keywords
-  const filteredResults = searchTerm.trim() === '' ? [] : allItems.filter(item =>
-    item.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    item.keywords.some(keyword => keyword.toLowerCase().includes(searchTerm.toLowerCase()))
-  );
+  // دالة متقدمة لتنظيف النصوص وتوحيد الأحرف (تسهيل مطابقة العربي والإنجليزي)
+  const normalizeText = (text: string): string => {
+    return text
+      .toLowerCase()
+      .replace(/[أإآا]/g, 'ا') // تحويل كل أشكال الألف إلى ألف عادية
+      .replace(/[ةه]/g, 'ه')   // توحيد التاء المربوطة والهاء
+      .trim();
+  };
+
+  // 🛠️ خوارزمية الفلترة والبحث المتقدم الذكي
+  const getFilteredResults = () => {
+    const query = normalizeText(searchTerm);
+    if (!query) return [];
+
+    // تقسيم جملة البحث إلى كلمات منفصلة لدعم البحث العشوائي المتعدد
+    const searchWords = query.split(/\s+/);
+
+    return allItems.filter(item => {
+      // توحيد نصوص عناصر المحتوى الأساسية والمفاتيح
+      const normalizedTitle = normalizeText(item.title);
+      const normalizedKeywords = item.keywords.map(kw => normalizeText(kw));
+      const normalizedType = normalizeText(item.type);
+
+      // يجب أن تطابق كل كلمة من كلمات البحث جزءاً من العنوان أو الكلمات المفتاحية
+      return searchWords.every(word => {
+        return (
+          normalizedTitle.includes(word) ||
+          normalizedType.includes(word) ||
+          normalizedKeywords.some(keyword => keyword.includes(word))
+        );
+      });
+    });
+  };
+
+  const filteredResults = getFilteredResults();
 
   return (
     <div style={{ backgroundColor: '#020617', minHeight: '100vh', padding: '40px 16px', fontFamily: 'sans-serif', color: '#f8fafc' }} dir="rtl">
@@ -108,13 +138,13 @@ export default function DashboardPage() {
         </p>
       </div>
 
-      {/* 🔍 شريط البحث الذكي */}
+      {/* 🔍 شريط البحث الذكي المتقدم المحسّن */}
       <div style={{ maxWidth: '650px', margin: '0 auto 48px auto', position: 'relative' }}>
         <div style={{ display: 'flex', alignItems: 'center', backgroundColor: '#0f172a', border: '2px solid #1e293b', borderRadius: '16px', padding: '4px 16px', transition: 'all 0.3s' }}>
           <span style={{ fontSize: '1.3rem', marginLeft: '12px' }}>🔍</span>
           <input
             type="text"
-            placeholder="ابحث بالعربي أو الإنجليزي (مثال: ادرينالين، جوارب، DAMA)..."
+            placeholder="ابحث بالنص الحر أو الكلمات الجزئية (مثال: ادرينالين، جوارب، DAMA)..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             style={{ width: '100%', padding: '14px 0', backgroundColor: 'transparent', border: 'none', color: '#ffffff', fontSize: '1.05rem', outline: 'none' }}
@@ -124,7 +154,7 @@ export default function DashboardPage() {
           )}
         </div>
 
-        {/* ⚡ القائمة المنسدلة للنتائج */}
+        {/* ⚡ القائمة المنسدلة لنتائج البحث الذكي المتقدم */}
         {searchTerm.trim() !== '' && (
           <div style={{ position: 'absolute', top: '105%', left: 0, width: '100%', backgroundColor: '#0f172a', border: '1px solid #334155', borderRadius: '14px', boxShadow: '0 20px 25px -5px rgba(0,0,0,0.5)', zIndex: 100, overflow: 'hidden', padding: '6px 0' }}>
             {filteredResults.length > 0 ? (
@@ -158,7 +188,7 @@ export default function DashboardPage() {
                 </div>
               ))
             ) : (
-              <div style={{ padding: '16px', textAlign: 'center', color: '#94a3b8', fontSize: '0.9rem' }}>❌ لم نجد أي نتائج متطابقة للبحث.</div>
+              <div style={{ padding: '16px', textAlign: 'center', color: '#94a3b8', fontSize: '0.9rem' }}>❌ لم نجد أي نتائج تطابقة للبحث المتقدم.</div>
             )}
           </div>
         )}
@@ -177,7 +207,6 @@ export default function DashboardPage() {
           <p style={{ fontSize: '0.85rem', color: '#94a3b8', margin: '0', lineHeight: '1.5' }}>تصفح واستعرض الـ 40 سياسة التنظيمية المعتمدة لوحدة العناية الحثيثة.</p>
         </div>
 
-        {/* 💉 كرت قسم الأدوية والمحاليل - تم تعديل المسمى هنا بنجاح */}
         <div
           onClick={() => router.push('/medications')} 
           style={{ backgroundColor: '#0f172a', border: '1px solid #1e293b', borderRadius: '20px', padding: '32px 24px', textAlign: 'center', cursor: 'pointer', transition: 'all 0.2s' }}
