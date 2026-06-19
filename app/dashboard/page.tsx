@@ -17,7 +17,7 @@ export default function DashboardPage() {
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [selectedPdf, setSelectedPdf] = useState<string | null>(null);
 
-  // 🔍 قاعدة البيانات المركزية (يمكنك إضافة أي أوراق جديدة هنا مستقبلاً)
+  // 🔍 قاعدة البيانات المركزية (تشمل السياسات، الإجراءات، الأدوية، والأوراق)
   const allItems: SearchItem[] = [
     // 📄 قسم السياسات
     { 
@@ -92,7 +92,7 @@ export default function DashboardPage() {
       title: "Amiodarone (Cordarone) - حاسبة الجرعات والمحاليل", 
       type: 'medication', 
       slug: "amiodarone",
-      keywords: ["amiodarone", "cordarone", "أميودارون", "اميودارون", "كوردارون", "تنظيم ضربات", "اضطراب القلت"]
+      keywords: ["amiodarone", "cordarone", "أميودارون", "اميودارون", "كوردارون", "تنظيم ضربات", "اضطراب القلب"]
     },
     { 
       id: 11, 
@@ -102,13 +102,13 @@ export default function DashboardPage() {
       keywords: ["aggrastat", "tirofiban", "أغراستات", "اغراستات", "تيروفيبان", "مسيل", "جلطة محتشمة"]
     },
 
-    // 🖨️ قسم الأوراق الأكثر استخداماً (يمكنك إضافة أي ورقة هنا مستقبلاً لكي تظهر في البحث التلقائي أيضاً)
+    // 🖨️ قسم الأوراق المضافة (تظهر بداخل الكرت الرابع وفي البحث تلقائياً)
     {
       id: 12,
       title: "ورقة طلب وتوصيل المعقمات (CSSD Form)",
       type: 'form',
       pdfUrl: "https://drive.google.com/file/d/1FH_c3jgFS8dvuMyiGaFo88-1KVUhPJd-/preview", 
-      keywords: ["cssd", "تعقيم", "نموذج تعقيم", "اوراق"]
+      keywords: ["cssd", "تعقيم", "نموذج تعقيم", "اوراق", "ملف الأوراق الأكثر استخداما"]
     }
   ];
 
@@ -142,9 +142,6 @@ export default function DashboardPage() {
   };
 
   const filteredResults = getFilteredResults();
-
-  // تصفية العناصر المخصصة لملف الأوراق الأكثر استخداماً فقط لعرضها في الأسفل
-  const formItems = allItems.filter(item => item.type === 'form');
 
   return (
     <div style={{ backgroundColor: '#020617', minHeight: '100vh', padding: '40px 16px', fontFamily: 'sans-serif', color: '#f8fafc' }} dir="rtl">
@@ -215,8 +212,10 @@ export default function DashboardPage() {
         )}
       </div>
 
-      {/* 📁 الأقسام الثلاثة الرئيسية الافتراضية */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '24px', maxWidth: '1100px', margin: '0 auto 48px auto' }}>
+      {/* 📁 شبكة الأقسام الرئيسية المحدثة (تم توزيعها لـ 4 كروت متناسقة تماماً في التصميم والـ Hover والأنيميشن) */}
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '24px', maxWidth: '1200px', margin: '0 auto' }}>
+        
+        {/* كرت السياسات */}
         <div
           onClick={() => router.push('/policies')}
           style={{ backgroundColor: '#0f172a', border: '1px solid #1e293b', borderRadius: '20px', padding: '32px 24px', textAlign: 'center', cursor: 'pointer', transition: 'all 0.2s' }}
@@ -224,10 +223,11 @@ export default function DashboardPage() {
           onMouseLeave={(e) => { e.currentTarget.style.borderColor = '#1e293b'; e.currentTarget.style.transform = 'translateY(0)'; }}
         >
           <div style={{ fontSize: '3.5rem', marginBottom: '16px' }}>📁</div>
-          <h2 style={{ fontSize: '1.35rem', fontWeight: 'bold', color: '#ffffff', margin: '0 0 8px 0' }}>قسم السياسات والبروتوكولات</h2>
+          <h2 style={{ fontSize: '1.25rem', fontWeight: 'bold', color: '#ffffff', margin: '0 0 8px 0' }}>قسم السياسات والبروتوكولات</h2>
           <p style={{ fontSize: '0.85rem', color: '#94a3b8', margin: '0', lineHeight: '1.5' }}>تصفح السياسات التنظيمية المعتمدة لوحدة العناية الحثيثة.</p>
         </div>
 
+        {/* كرت حاسبة الأدوية والمحاليل */}
         <div
           onClick={() => router.push('/medications')} 
           style={{ backgroundColor: '#0f172a', border: '1px solid #1e293b', borderRadius: '20px', padding: '32px 24px', textAlign: 'center', cursor: 'pointer', transition: 'all 0.2s' }}
@@ -235,10 +235,11 @@ export default function DashboardPage() {
           onMouseLeave={(e) => { e.currentTarget.style.borderColor = '#1e293b'; e.currentTarget.style.transform = 'translateY(0)'; }}
         >
           <div style={{ fontSize: '3.5rem', marginBottom: '16px' }}>💉</div>
-          <h2 style={{ fontSize: '1.35rem', fontWeight: 'bold', color: '#ffffff', margin: '0 0 8px 0' }}>حاسبة الأدوية والمحاليل</h2>
+          <h2 style={{ fontSize: '1.25rem', fontWeight: 'bold', color: '#ffffff', margin: '0 0 8px 0' }}>حاسبة الأدوية والمحاليل</h2>
           <p style={{ fontSize: '0.85rem', color: '#94a3b8', margin: '0', lineHeight: '1.5' }}>دليل الأدوية والحاسبات الطبية المعتمدة لبروتوكولات القسم.</p>
         </div>
 
+        {/* كرت الإجراءات التمريضية */}
         <div
           onClick={() => router.push('/procedures')}
           style={{ backgroundColor: '#0f172a', border: '1px solid #1e293b', borderRadius: '20px', padding: '32px 24px', textAlign: 'center', cursor: 'pointer', transition: 'all 0.2s' }}
@@ -246,38 +247,22 @@ export default function DashboardPage() {
           onMouseLeave={(e) => { e.currentTarget.style.borderColor = '#1e293b'; e.currentTarget.style.transform = 'translateY(0)'; }}
         >
           <div style={{ fontSize: '3.5rem', marginBottom: '16px' }}>⚙️</div>
-          <h2 style={{ fontSize: '1.35rem', fontWeight: 'bold', color: '#ffffff', margin: '0 0 8px 0' }}>قسم الإجراءات التمريضية</h2>
-          <p style={{ fontSize: '0.85rem', color: '#94a3b8', margin: '0', lineHeight: '1.5' }}>دليلك الشامل لخطوات العمل والبروتوكولات التطبيقية داخل الوحدة.</p>
+          <h2 style={{ fontSize: '1.25rem', fontWeight: 'bold', color: '#ffffff', margin: '0 0 8px 0' }}>قسم الإجراءات التمريضية</h2>
+          <p style={{ fontSize: '0.85rem', color: '#94a3b8', margin: '0', lineHeight: '1.5' }}>دليلك لخطوات العمل والبروتوكولات التطبيقية داخل الوحدة.</p>
         </div>
-      </div>
 
-      {/* 🖨️ ملف الأوراق الأكثر استخداماً */}
-      <div style={{ maxWidth: '1100px', margin: '0 auto' }}>
-        <h2 style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#ffffff', marginBottom: '20px', display: 'flex', alignItems: 'center', gap: '10px' }}>
-          <span>🖨️</span> ملف الأوراق الأكثر استخداماً
-        </h2>
-        
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '20px' }}>
-          {formItems.length > 0 ? (
-            formItems.map((item) => (
-              <div 
-                key={item.id}
-                onClick={() => item.pdfUrl && setSelectedPdf(item.pdfUrl)}
-                style={{ backgroundColor: '#0f172a', border: '1px solid #1e293b', borderRadius: '16px', padding: '20px', display: 'flex', alignItems: 'center', gap: '16px', cursor: 'pointer', transition: 'all 0.2s' }}
-                onMouseEnter={(e) => e.currentTarget.style.borderColor = '#eab308'}
-                onMouseLeave={(e) => e.currentTarget.style.borderColor = '#1e293b'}
-              >
-                <div style={{ fontSize: '2rem', backgroundColor: '#eab30815', padding: '12px', borderRadius: '12px', color: '#eab308' }}>📄</div>
-                <div>
-                  <h3 style={{ fontSize: '1.05rem', fontWeight: 'bold', color: '#ffffff', margin: '0 0 4px 0' }}>{item.title}</h3>
-                  <p style={{ fontSize: '0.8rem', color: '#94a3b8', margin: 0 }}>اضغط لمشاهدة وطباعة الورقة فوراً</p>
-                </div>
-              </div>
-            ))
-          ) : (
-            <p style={{ color: '#64748b', fontSize: '0.9rem', gridColumn: '1/-1' }}>لا توجد أوراق مضافة حالياً. يمكنك إضافة عناصر جديدة في الكود داخل المصفوفة.</p>
-          )}
+        {/* 🖨️ كرت متناسق تماماً: ملف الأوراق الأكثر استخداماً */}
+        <div
+          onClick={() => router.push('/forms')} // ينقلك لصفحة استعراض الأوراق المخصصة (أو افتح أول ملف مباشرة)
+          style={{ backgroundColor: '#0f172a', border: '1px solid #1e293b', borderRadius: '20px', padding: '32px 24px', textAlign: 'center', cursor: 'pointer', transition: 'all 0.2s' }}
+          onMouseEnter={(e) => { e.currentTarget.style.borderColor = '#eab308'; e.currentTarget.style.transform = 'translateY(-4px)'; }}
+          onMouseLeave={(e) => { e.currentTarget.style.borderColor = '#1e293b'; e.currentTarget.style.transform = 'translateY(0)'; }}
+        >
+          <div style={{ fontSize: '3.5rem', marginBottom: '16px' }}>🖨️</div>
+          <h2 style={{ fontSize: '1.25rem', fontWeight: 'bold', color: '#ffffff', margin: '0 0 8px 0' }}>ملف الأوراق الأكثر استخداماً</h2>
+          <p style={{ fontSize: '0.85rem', color: '#94a3b8', margin: '0', lineHeight: '1.5' }}>دليل النماذج، الشيتات، الاستمارات اليومية الجاهزة للطباعة المباشرة.</p>
         </div>
+
       </div>
 
       {/* 🖥️ شاشة العرض المدمجة المنبثقة لاستعراض الـ PDF */}
