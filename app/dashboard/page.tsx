@@ -92,7 +92,7 @@ export default function DashboardPage() {
       title: "Amiodarone (Cordarone) - حاسبة الجرعات والمحاليل", 
       type: 'medication', 
       slug: "amiodarone",
-      keywords: ["amiodarone", "cordarone", "أميودارون", "اميودارون", "كوردارون", "تنظيم ضربات", "اضطراب القلوب"]
+      keywords: ["amiodarone", "cordarone", "أميودارون", "اميودارون", "كوردارون", "تنظيم ضربات", "اضطراب القلب"]
     },
     { 
       id: 11, 
@@ -137,7 +137,7 @@ export default function DashboardPage() {
   return (
     <div style={{ backgroundColor: '#020617', minHeight: '100vh', padding: '40px 16px', fontFamily: 'sans-serif', color: '#f8fafc' }} dir="rtl">
       
-      {/* هيدر المنصة الرئيسي المحدث بالتأثير المضيء والنص الصحيح */}
+      {/* هيدر المنصة الرئيسي */}
       <div style={{ maxWidth: '800px', margin: '0 auto 40px auto', textAlign: 'center' }}>
         <h1 style={{ 
           fontSize: '2.5rem', 
@@ -213,7 +213,7 @@ export default function DashboardPage() {
       {/* 📁 شبكة الأقسام الأربعة المتناسقة */}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '24px', maxWidth: '1200px', margin: '0 auto' }}>
         
-        {/* كرت السياسات */}
+        {/* كرت السياسات (تم تعديل الوصف هنا) */}
         <div
           onClick={() => router.push('/policies')}
           style={{ backgroundColor: '#0f172a', border: '1px solid #1e293b', borderRadius: '20px', padding: '32px 24px', textAlign: 'center', cursor: 'pointer', transition: 'all 0.2s' }}
@@ -222,7 +222,7 @@ export default function DashboardPage() {
         >
           <div style={{ fontSize: '3.5rem', marginBottom: '16px' }}>📁</div>
           <h2 style={{ fontSize: '1.25rem', fontWeight: 'bold', color: '#ffffff', margin: '0 0 8px 0' }}>قسم السياسات والبروتوكولات</h2>
-          <p style={{ fontSize: '0.85rem', color: '#94a3b8', margin: '0', lineHeight: '1.5' }}>تصفح السياسات التنظيمية المعتمدة لوحدة العناية الحثيثة.</p>
+          <p style={{ fontSize: '0.85rem', color: '#94a3b8', margin: '0', lineHeight: '1.5' }}>تصفح السياسات التنظيمية المعتمدة.</p>
         </div>
 
         {/* كرت حاسبة الأدوية والمحاليل */}
