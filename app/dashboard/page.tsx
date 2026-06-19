@@ -103,16 +103,16 @@ export default function DashboardPage() {
           <p style={{ fontSize: '0.85rem', color: '#94a3b8', margin: '0', lineHeight: '1.5' }}>تصفح واستعرض الـ 40 سياسة التنظيمية المعتمدة لوحدة العناية الحثيثة.</p>
         </div>
 
-        {/* 💉 كرت قسم حاسبة الأدوية - تحديث النص ليوضح الجاهزية الكاملة للقسم */}
+        {/* 💉 كرت قسم حاسبة الأدوية - تم التعديل إلى /medications ليتطابق مع مجلداتك الفلية */}
         <div
-          onClick={() => router.push('/calculators')} 
+          onClick={() => router.push('/medications')} 
           style={{ backgroundColor: '#0f172a', border: '1px solid #1e293b', borderRadius: '20px', padding: '32px 24px', textAlign: 'center', cursor: 'pointer', transition: 'all 0.2s' }}
           onMouseEnter={(e) => { e.currentTarget.style.borderColor = '#ec4899'; e.currentTarget.style.transform = 'translateY(-4px)'; }}
           onMouseLeave={(e) => { e.currentTarget.style.borderColor = '#1e293b'; e.currentTarget.style.transform = 'translateY(0)'; }}
         >
           <div style={{ fontSize: '3.5rem', marginBottom: '16px' }}>💉</div>
           <h2 style={{ fontSize: '1.35rem', fontWeight: 'bold', color: '#ffffff', margin: '0 0 8px 0' }}>حاسبة الأدوية والتسريب</h2>
-          <p style={{ fontSize: '0.85rem', color: '#94a3b8', margin: '0', lineHeight: '1.5' }}>النظام جاهز ومفعّل بالكامل للحساب الفوري الدقيق لجرعات أدوية القسم ومعدلات التدفق الوريدي.</p>
+          <p style={{ fontSize: '0.85rem', color: '#94a3b8', margin: '0', lineHeight: '1.5' }}>دليل الأدوية والحاسبات الطبية المعتمدة لبروتوكولات القسم جاهز ومفعّل بالكامل للاستخدام الفوري المباشر.</p>
         </div>
 
         {/* كرت قسم الإجراءات */}
@@ -129,7 +129,7 @@ export default function DashboardPage() {
 
       </div>
 
-      {/* 🖥️ شاشة العرض المدمجة المنبثقة للـ PDF */}
+      {/* 🖥️ شاشة العرض المدمجة المنبثقة لملفات الـ PDF */}
       {selectedPdf && (
         <div style={{ position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh', backgroundColor: 'rgba(2, 6, 23, 0.98)', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', zIndex: 9999, padding: '24px', boxSizing: 'border-box' }}>
           <div style={{ maxWidth: '1200px', width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px', backgroundColor: '#0f172a', padding: '12px 24px', borderRadius: '16px', border: '1px solid #1e293b', boxSizing: 'border-box' }}>
@@ -141,13 +141,6 @@ export default function DashboardPage() {
           </div>
         </div>
       )}
-
-      {/* الفوتر */}
-      <div style={{ textAlign: 'center', marginTop: '80px' }}>
-        <p style={{ fontSize: '11px', color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-          © All Rights Reserved. Designed & Developed by Suliman Bilal Awad
-        </p>
-      </div>
     </div>
   );
 }
