@@ -13,7 +13,7 @@ export default function PoliciesPage() {
   const router = useRouter();
   const [selectedPdf, setSelectedPdf] = useState<string | null>(null);
 
-  // مصفوفة الـ 40 سياسة - تم تفعيل السياسات الثلاث الأولى بنجاح
+  // مصفوفة الـ 40 سياسة - تم تفعيل السياسات الأربع الأولى بنجاح
   const policies: Policy[] = [
     {
       id: 1,
@@ -28,11 +28,16 @@ export default function PoliciesPage() {
     {
       id: 3,
       title: "Anti-Embolism Stocking",
-      pdfUrl: "https://drive.google.com/file/d/1wO-PvVfnUIYn9bzq3dPielokQ0mmPCy2/preview" // رابط السياسة الثالثة الجديد
+      pdfUrl: "https://drive.google.com/file/d/1wO-PvVfnUIYn9bzq3dPielokQ0mmPCy2/preview"
     },
-    ...Array.from({ length: 37 }, (_, i) => ({
-      id: i + 4,
-      title: `سياسة بروتوكول العناية الحثيثة رقم ${i + 4}`,
+    {
+      id: 4,
+      title: "Assist-ETT",
+      pdfUrl: "https://drive.google.com/file/d/1SWwyAeOwFa435STj4dSLjNNqd6uhXQYR/preview" // رابط السياسة الرابعة الجديد
+    },
+    ...Array.from({ length: 36 }, (_, i) => ({
+      id: i + 5,
+      title: `سياسة بروتوكول العناية الحثيثة رقم ${i + 5}`,
       pdfUrl: ""
     }))
   ];
