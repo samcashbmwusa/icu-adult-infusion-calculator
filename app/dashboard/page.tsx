@@ -17,9 +17,9 @@ export default function DashboardPage() {
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [selectedPdf, setSelectedPdf] = useState<string | null>(null);
 
-  // 🔍 قاعدة البيانات المركزية الشاملة والمطورة (تشمل الأوراق والنماذج الجاهزة للطباعة)
+  // 🔍 قاعدة البيانات المركزية (يمكنك إضافة أي أوراق جديدة هنا مستقبلاً)
   const allItems: SearchItem[] = [
-    // 📄 السياسات
+    // 📄 قسم السياسات
     { 
       id: 1, 
       title: "Allow Natural Death (AND)", 
@@ -35,7 +35,7 @@ export default function DashboardPage() {
       keywords: ["dama", "الخروج رغم النصيحة", "خروج", "توقيع خروج"]
     },
     
-    // ⚙️ الإجراءات العمليّة
+    // ⚙️ قسم الإجراءات العمليّة
     { 
       id: 3, 
       title: "Anti-Embolism Stocking (الإجراء العملي)", 
@@ -92,7 +92,7 @@ export default function DashboardPage() {
       title: "Amiodarone (Cordarone) - حاسبة الجرعات والمحاليل", 
       type: 'medication', 
       slug: "amiodarone",
-      keywords: ["amiodarone", "cordarone", "أميودارون", "اميودارون", "كوردارون", "تنظيم ضربات", "اضطراب القلب"]
+      keywords: ["amiodarone", "cordarone", "أميودارون", "اميودارون", "كوردارون", "تنظيم ضربات", "اضطراب القلت"]
     },
     { 
       id: 11, 
@@ -102,27 +102,13 @@ export default function DashboardPage() {
       keywords: ["aggrastat", "tirofiban", "أغراستات", "اغراستات", "تيروفيبان", "مسيل", "جلطة محتشمة"]
     },
 
-    // 📝 الأوراق والنماذج الأكثر استخداماً
+    // 🖨️ قسم الأوراق الأكثر استخداماً (يمكنك إضافة أي ورقة هنا مستقبلاً لكي تظهر في البحث التلقائي أيضاً)
     {
       id: 12,
       title: "ورقة طلب وتوصيل المعقمات (CSSD Form)",
       type: 'form',
       pdfUrl: "https://drive.google.com/file/d/1FH_c3jgFS8dvuMyiGaFo88-1KVUhPJd-/preview", 
-      keywords: ["cssd", "تعقيم", "مغسلة", "ادوات معقمة", "توصيل تعقيم"]
-    },
-    {
-      id: 13,
-      title: "نموذج الرعاية قبل وبعد قسطرة القلب (Pre/Post Cath Sheet)",
-      type: 'form',
-      pdfUrl: "https://drive.google.com/file/d/1vJUFXvmf8dDb9RKUI7uLRmyiAUE5pGfo/preview", 
-      keywords: ["cath", "pre cath", "post cath", "قسطرة", "القلب", "قسطره", "شيت قسطرة"]
-    },
-    {
-      id: 14,
-      title: "ورقة توزيع المهام والأسرة (Assignment Sheet)",
-      type: 'form',
-      pdfUrl: "https://drive.google.com/file/d/1wO-PvVfnUIYn9bzq3dPielokQ0mmPCy2/preview", 
-      keywords: ["assignment", "مهام", "توزيع", "اسرة", "شفت", "الدوام اليومي"]
+      keywords: ["cssd", "تعقيم", "نموذج تعقيم", "اوراق"]
     }
   ];
 
@@ -157,6 +143,9 @@ export default function DashboardPage() {
 
   const filteredResults = getFilteredResults();
 
+  // تصفية العناصر المخصصة لملف الأوراق الأكثر استخداماً فقط لعرضها في الأسفل
+  const formItems = allItems.filter(item => item.type === 'form');
+
   return (
     <div style={{ backgroundColor: '#020617', minHeight: '100vh', padding: '40px 16px', fontFamily: 'sans-serif', color: '#f8fafc' }} dir="rtl">
       
@@ -176,7 +165,7 @@ export default function DashboardPage() {
           <span style={{ fontSize: '1.3rem', marginLeft: '12px' }}>🔍</span>
           <input
             type="text"
-            placeholder="ابحث عن أوراق، أدوية، سياسات (مثال: cssd، قسطرة، اميودارون)..."
+            placeholder="ابحث عن أوراق، أدوية، سياسات..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             style={{ width: '100%', padding: '14px 0', backgroundColor: 'transparent', border: 'none', color: '#ffffff', fontSize: '1.05rem', outline: 'none' }}
@@ -215,18 +204,18 @@ export default function DashboardPage() {
                     color: item.type === 'policy' ? '#10b981' : item.type === 'procedure' ? '#3b82f6' : item.type === 'medication' ? '#ec4899' : '#eab308', 
                     border: `1px solid ${item.type === 'policy' ? '#10b98130' : item.type === 'procedure' ? '#3b82f630' : item.type === 'medication' ? '#ec489930' : '#eab30830'}` 
                   }}>
-                    {item.type === 'policy' ? '📄 سياسة' : item.type === 'procedure' ? '⚙️ إجراء' : item.type === 'medication' ? '💉 دواء' : '🖨️ نموذج للطباعة'}
+                    {item.type === 'policy' ? '📄 سياسة' : item.type === 'procedure' ? '⚙️ إجراء' : item.type === 'medication' ? '💉 دواء' : '🖨️ نموذج'}
                   </span>
                 </div>
               ))
             ) : (
-              <div style={{ padding: '16px', textAlign: 'center', color: '#94a3b8', fontSize: '0.9rem' }}>❌ لم نجد نتائج متطابقة للبحث.</div>
+              <div style={{ padding: '16px', textAlign: 'center', color: '#94a3b8', fontSize: '0.9rem' }}>❌ لم نجد نتائج متطابقة.</div>
             )}
           </div>
         )}
       </div>
 
-      {/* 📁 الأقسام الرئيسية (3 كروت متناسقة) */}
+      {/* 📁 الأقسام الثلاثة الرئيسية الافتراضية */}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '24px', maxWidth: '1100px', margin: '0 auto 48px auto' }}>
         <div
           onClick={() => router.push('/policies')}
@@ -236,7 +225,7 @@ export default function DashboardPage() {
         >
           <div style={{ fontSize: '3.5rem', marginBottom: '16px' }}>📁</div>
           <h2 style={{ fontSize: '1.35rem', fontWeight: 'bold', color: '#ffffff', margin: '0 0 8px 0' }}>قسم السياسات والبروتوكولات</h2>
-          <p style={{ fontSize: '0.85rem', color: '#94a3b8', margin: '0', lineHeight: '1.5' }}>تصفح واستعرض الـ 40 سياسة التنظيمية المعتمدة لوحدة العناية الحثيثة.</p>
+          <p style={{ fontSize: '0.85rem', color: '#94a3b8', margin: '0', lineHeight: '1.5' }}>تصفح السياسات التنظيمية المعتمدة لوحدة العناية الحثيثة.</p>
         </div>
 
         <div
@@ -247,7 +236,7 @@ export default function DashboardPage() {
         >
           <div style={{ fontSize: '3.5rem', marginBottom: '16px' }}>💉</div>
           <h2 style={{ fontSize: '1.35rem', fontWeight: 'bold', color: '#ffffff', margin: '0 0 8px 0' }}>حاسبة الأدوية والمحاليل</h2>
-          <p style={{ fontSize: '0.85rem', color: '#94a3b8', margin: '0', lineHeight: '1.5' }}>دليل الأدوية والحاسبات الطبية المعتمدة لبروتوكولات القسم جاهز ومفعّل بالكامل.</p>
+          <p style={{ fontSize: '0.85rem', color: '#94a3b8', margin: '0', lineHeight: '1.5' }}>دليل الأدوية والحاسبات الطبية المعتمدة لبروتوكولات القسم.</p>
         </div>
 
         <div
@@ -258,68 +247,44 @@ export default function DashboardPage() {
         >
           <div style={{ fontSize: '3.5rem', marginBottom: '16px' }}>⚙️</div>
           <h2 style={{ fontSize: '1.35rem', fontWeight: 'bold', color: '#ffffff', margin: '0 0 8px 0' }}>قسم الإجراءات التمريضية</h2>
-          <p style={{ fontSize: '0.85rem', color: '#94a3b8', margin: '0', lineHeight: '1.5' }}>تصفح واستعرض دليلك الشامل لخطوات العمل والبروتوكولات التطبيقية.</p>
+          <p style={{ fontSize: '0.85rem', color: '#94a3b8', margin: '0', lineHeight: '1.5' }}>دليلك الشامل لخطوات العمل والبروتوكولات التطبيقية داخل الوحدة.</p>
         </div>
       </div>
 
-      {/* 🖨️ القسم المكتمل: الأوراق والنماذج الأكثر استخداماً جاهزة للطباعة */}
+      {/* 🖨️ ملف الأوراق الأكثر استخداماً */}
       <div style={{ maxWidth: '1100px', margin: '0 auto' }}>
         <h2 style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#ffffff', marginBottom: '20px', display: 'flex', alignItems: 'center', gap: '10px' }}>
-          <span>🖨️</span> النماذج والأوراق الأكثر استخداماً (جاهزة للطباعة)
+          <span>🖨️</span> ملف الأوراق الأكثر استخداماً
         </h2>
         
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '20px' }}>
-          
-          {/* كرت ورقة CSSD */}
-          <div 
-            onClick={() => setSelectedPdf("https://drive.google.com/file/d/1FH_c3jgFS8dvuMyiGaFo88-1KVUhPJd-/preview")}
-            style={{ backgroundColor: '#0f172a', border: '1px solid #1e293b', borderRadius: '16px', padding: '20px', display: 'flex', alignItems: 'center', gap: '16px', cursor: 'pointer', transition: 'all 0.2s' }}
-            onMouseEnter={(e) => e.currentTarget.style.borderColor = '#eab308'}
-            onMouseLeave={(e) => e.currentTarget.style.borderColor = '#1e293b'}
-          >
-            <div style={{ fontSize: '2rem', backgroundColor: '#eab30815', padding: '12px', borderRadius: '12px', color: '#eab308' }}>📄</div>
-            <div>
-              <h3 style={{ fontSize: '1.05rem', fontWeight: 'bold', color: '#ffffff', margin: '0 0 4px 0' }}>ورقة طلب المعقمات (CSSD)</h3>
-              <p style={{ fontSize: '0.8rem', color: '#94a3b8', margin: 0 }}>اضغط لاستعراض وطباعة النموذج فورا</p>
-            </div>
-          </div>
-
-          {/* كرت ورقة pre/post cath */}
-          <div 
-            onClick={() => setSelectedPdf("https://drive.google.com/file/d/1vJUFXvmf8dDb9RKUI7uLRmyiAUE5pGfo/preview")}
-            style={{ backgroundColor: '#0f172a', border: '1px solid #1e293b', borderRadius: '16px', padding: '20px', display: 'flex', alignItems: 'center', gap: '16px', cursor: 'pointer', transition: 'all 0.2s' }}
-            onMouseEnter={(e) => e.currentTarget.style.borderColor = '#eab308'}
-            onMouseLeave={(e) => e.currentTarget.style.borderColor = '#1e293b'}
-          >
-            <div style={{ fontSize: '2rem', backgroundColor: '#eab30815', padding: '12px', borderRadius: '12px', color: '#eab308' }}>💓</div>
-            <div>
-              <h3 style={{ fontSize: '1.05rem', fontWeight: 'bold', color: '#ffffff', margin: '0 0 4px 0' }}>شيت قسطرة القلب (Pre/Post Cath)</h3>
-              <p style={{ fontSize: '0.8rem', color: '#94a3b8', margin: 0 }}>رعاية وتجهيز مريض القسطرة قبل وبعد</p>
-            </div>
-          </div>
-
-          {/* كرت ورقة Assignment */}
-          <div 
-            onClick={() => setSelectedPdf("https://drive.google.com/file/d/1wO-PvVfnUIYn9bzq3dPielokQ0mmPCy2/preview")}
-            style={{ backgroundColor: '#0f172a', border: '1px solid #1e293b', borderRadius: '16px', padding: '20px', display: 'flex', alignItems: 'center', gap: '16px', cursor: 'pointer', transition: 'all 0.2s' }}
-            onMouseEnter={(e) => e.currentTarget.style.borderColor = '#eab308'}
-            onMouseLeave={(e) => e.currentTarget.style.borderColor = '#1e293b'}
-          >
-            <div style={{ fontSize: '2rem', backgroundColor: '#eab30815', padding: '12px', borderRadius: '12px', color: '#eab308' }}>📋</div>
-            <div>
-              <h3 style={{ fontSize: '1.05rem', fontWeight: 'bold', color: '#ffffff', margin: '0 0 4px 0' }}>ورقة توزيع المهام (Assignment)</h3>
-              <p style={{ fontSize: '0.8rem', color: '#94a3b8', margin: 0 }}>جدول توزيع توزيع الأسرة والورديات اليومية</p>
-            </div>
-          </div>
-
+          {formItems.length > 0 ? (
+            formItems.map((item) => (
+              <div 
+                key={item.id}
+                onClick={() => item.pdfUrl && setSelectedPdf(item.pdfUrl)}
+                style={{ backgroundColor: '#0f172a', border: '1px solid #1e293b', borderRadius: '16px', padding: '20px', display: 'flex', alignItems: 'center', gap: '16px', cursor: 'pointer', transition: 'all 0.2s' }}
+                onMouseEnter={(e) => e.currentTarget.style.borderColor = '#eab308'}
+                onMouseLeave={(e) => e.currentTarget.style.borderColor = '#1e293b'}
+              >
+                <div style={{ fontSize: '2rem', backgroundColor: '#eab30815', padding: '12px', borderRadius: '12px', color: '#eab308' }}>📄</div>
+                <div>
+                  <h3 style={{ fontSize: '1.05rem', fontWeight: 'bold', color: '#ffffff', margin: '0 0 4px 0' }}>{item.title}</h3>
+                  <p style={{ fontSize: '0.8rem', color: '#94a3b8', margin: 0 }}>اضغط لمشاهدة وطباعة الورقة فوراً</p>
+                </div>
+              </div>
+            ))
+          ) : (
+            <p style={{ color: '#64748b', fontSize: '0.9rem', gridColumn: '1/-1' }}>لا توجد أوراق مضافة حالياً. يمكنك إضافة عناصر جديدة في الكود داخل المصفوفة.</p>
+          )}
         </div>
       </div>
 
-      {/* 🖥️ شاشة العرض المدمجة المنبثقة لاستعراض النماذج والـ PDF */}
+      {/* 🖥️ شاشة العرض المدمجة المنبثقة لاستعراض الـ PDF */}
       {selectedPdf && (
         <div style={{ position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh', backgroundColor: 'rgba(2, 6, 23, 0.98)', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', zIndex: 9999, padding: '24px', boxSizing: 'border-box' }}>
           <div style={{ maxWidth: '1200px', width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px', backgroundColor: '#0f172a', padding: '12px 24px', borderRadius: '16px', border: '1px solid #1e293b', boxSizing: 'border-box' }}>
-            <span style={{ fontSize: '1rem', fontWeight: 'bold', color: '#ffffff' }}>📄 استعراض النموذج - جاهز للطباعة الفورية المباشرة</span>
+            <span style={{ fontSize: '1rem', fontWeight: 'bold', color: '#ffffff' }}>📄 استعراض المستند - جاهز للطباعة الفورية</span>
             <button onClick={() => setSelectedPdf(null)} style={{ backgroundColor: '#ef4444', border: 'none', color: '#fff', padding: '8px 20px', borderRadius: '12px', cursor: 'pointer', fontWeight: 'bold' }}>إغلاق العرض ✕</button>
           </div>
           <div style={{ maxWidth: '1200px', width: '100%', height: '80vh', backgroundColor: '#1e293b', borderRadius: '16px', overflow: 'hidden', border: '1px solid #334155' }}>
