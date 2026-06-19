@@ -13,7 +13,7 @@ export default function PoliciesPage() {
   const router = useRouter();
   const [selectedPdf, setSelectedPdf] = useState<string | null>(null);
 
-  // مصفوفة الـ 40 سياسة - تم تفعيل السياسات الأربع الأولى بنجاح
+  // مصفوفة الـ 40 سياسة - تم تفعيل السياسات الخمس الأولى بنجاح
   const policies: Policy[] = [
     {
       id: 1,
@@ -33,11 +33,16 @@ export default function PoliciesPage() {
     {
       id: 4,
       title: "Assist-ETT",
-      pdfUrl: "https://drive.google.com/file/d/1SWwyAeOwFa435STj4dSLjNNqd6uhXQYR/preview" // رابط السياسة الرابعة الجديد
+      pdfUrl: "https://drive.google.com/file/d/1SWwyAeOwFa435STj4dSLjNNqd6uhXQYR/preview"
     },
-    ...Array.from({ length: 36 }, (_, i) => ({
-      id: i + 5,
-      title: `سياسة بروتوكول العناية الحثيثة رقم ${i + 5}`,
+    {
+      id: 5,
+      title: "Assisting-Extubation",
+      pdfUrl: "https://drive.google.com/file/d/10rgNJT9f2xXhp2HlcWHvhj4PAhu6xVR8/preview" // رابط السياسة الخامسة الجديد
+    },
+    ...Array.from({ length: 35 }, (_, i) => ({
+      id: i + 6,
+      title: `سياسة بروتوكول العناية الحثيثة رقم ${i + 6}`,
       pdfUrl: ""
     }))
   ];
