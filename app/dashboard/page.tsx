@@ -17,21 +17,21 @@ export default function DashboardPage() {
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [selectedPdf, setSelectedPdf] = useState<string | null>(null);
 
-  // 🔍 قاعدة البيانات المركزية (تشمل السياسات، الإجراءات، الأدوية، والأوراق)
+  // 🔍 قاعدة البيانات المركزية
   const allItems: SearchItem[] = [
     // 📄 قسم السياسات
     { 
       id: 1, 
       title: "Allow Natural Death (AND)", 
       type: 'policy', 
-      pdfUrl: "https://drive.google.com/file/d/1FH_c3jgFS8dvuMyiGaFo88-1KVUhPJd-/preview",
+      pdfUrl: "https://drive.google.com/file/d/1FH_c3jgFS8dvuMyiGaFo88-1KVUhPJd-/view",
       keywords: ["and", "allow natural death", "الموت الطبيعي", "سياسة الموت"]
     },
     { 
       id: 2, 
       title: "الخروج رغم النصيحة الطبية (DAMA)", 
       type: 'policy', 
-      pdfUrl: "https://drive.google.com/file/d/1vJUFXvmf8dDb9RKUI7uLRmyiAUE5pGfo/preview",
+      pdfUrl: "https://drive.google.com/file/d/1vJUFXvmf8dDb9RKUI7uLRmyiAUE5pGfo/view",
       keywords: ["dama", "الخروج رغم النصيحة", "خروج", "توقيع خروج"]
     },
     
@@ -40,21 +40,21 @@ export default function DashboardPage() {
       id: 3, 
       title: "Anti-Embolism Stocking (الإجراء العملي)", 
       type: 'procedure', 
-      pdfUrl: "https://drive.google.com/file/d/1wO-PvVfnUIYn9bzq3dPielokQ0mmPCy2/preview",
+      pdfUrl: "https://drive.google.com/file/d/1wO-PvVfnUIYn9bzq3dPielokQ0mmPCy2/view",
       keywords: ["anti-embolism", "stocking", "الجوارب", "جوارب الجلطة", "الجلطات"]
     },
     { 
       id: 4, 
       title: "Assist-ETT", 
       type: 'procedure', 
-      pdfUrl: "https://drive.google.com/file/d/1SWwyAeOwFa435STj4dSLjNNqd6uhXQYR/preview",
+      pdfUrl: "https://drive.google.com/file/d/1SWwyAeOwFa435STj4dSLjNNqd6uhXQYR/view",
       keywords: ["ett", "assist-ett", "أنبوب رغامي", "تنبيب", "intubation"]
     },
     { 
       id: 5, 
       title: "Assisting-Extubation", 
       type: 'procedure', 
-      pdfUrl: "https://drive.google.com/file/d/10rgNJT9f2xXhp2HlcWHvhj4PAhu6xVR8/preview",
+      pdfUrl: "https://drive.google.com/file/d/10rgNJT9f2xXhp2HlcWHvhj4PAhu6xVR8/view",
       keywords: ["extubation", "assisting-extubation", "سحب الأنبوب", "فصل جهاز التنفس"]
     },
     
@@ -100,15 +100,6 @@ export default function DashboardPage() {
       type: 'medication', 
       slug: "aggrastat",
       keywords: ["aggrastat", "tirofiban", "أغراستات", "اغراستات", "تيروفيبان", "مسيل", "جلطة محتشمة"]
-    },
-
-    // 🖨️ قسم الأوراق المضافة (تظهر بداخل الكرت الرابع وفي البحث تلقائياً)
-    {
-      id: 12,
-      title: "ورقة طلب وتوصيل المعقمات (CSSD Form)",
-      type: 'form',
-      pdfUrl: "https://drive.google.com/file/d/1FH_c3jgFS8dvuMyiGaFo88-1KVUhPJd-/preview", 
-      keywords: ["cssd", "تعقيم", "نموذج تعقيم", "اوراق", "ملف الأوراق الأكثر استخداما"]
     }
   ];
 
@@ -146,14 +137,67 @@ export default function DashboardPage() {
   return (
     <div style={{ backgroundColor: '#020617', minHeight: '100vh', padding: '40px 16px', fontFamily: 'sans-serif', color: '#f8fafc' }} dir="rtl">
       
+      {/* 💥 ستايل الأنيميشن البرمجي المضحك للمطاردة 💥 */}
+      <style dangerouslySetInnerHTML={{__html: `
+        @keyframes funnyChase {
+          0% { transform: translateX(120%); }
+          100% { transform: translateX(-120%); }
+        }
+        @keyframes runningLegs {
+          0%, 100% { transform: rotate(-8deg) translateY(0px); }
+          50% { transform: rotate(8deg) translateY(-4px); }
+        }
+      `}} />
+
       {/* هيدر المنصة الرئيسي */}
-      <div style={{ maxWidth: '800px', margin: '0 auto 40px auto', textAlign: 'center' }}>
+      <div style={{ maxWidth: '800px', margin: '0 auto 24px auto', textAlign: 'center' }}>
         <h1 style={{ fontSize: '2.2rem', fontWeight: '900', color: '#ffffff', margin: '0 0 8px 0' }}>
           منصة العناية الحثيثة الرقمية
         </h1>
         <p style={{ fontSize: '0.95rem', color: '#94a3b8', margin: '0' }}>
           مستشفى الجامعة الأردنية - وحدة العناية المركزة للبالغين
         </p>
+      </div>
+
+      {/* 🏃‍♂️ المشهد الجราفيكي المتحرك والمضحك 🧑‍⚕️ */}
+      <div style={{ 
+        maxWidth: '650px', 
+        margin: '0 auto 32px auto', 
+        backgroundColor: '#0f172a', 
+        border: '1px dashed #334155', 
+        borderRadius: '24px', 
+        height: '70px', 
+        position: 'relative', 
+        overflow: 'hidden',
+        display: 'flex',
+        alignItems: 'center'
+      }}>
+        {/* خطوط حركة وهمية بالخلفية لزيادة الإحساس بالسرعة */}
+        <div style={{ position: 'absolute', width: '100%', display: 'flex', justifyContent: 'space-around', color: '#1e293b', fontSize: '0.8rem', userSelect: 'none' }}>
+          <span>💨</span><span>💨</span><span>💨</span><span>💨</span>
+        </div>
+
+        {/* مجموعة العناصر الراكضة */}
+        <div style={{ 
+          position: 'absolute', 
+          display: 'flex', 
+          alignItems: 'center', 
+          gap: '4px',
+          animation: 'funnyChase 9s infinite linear',
+          whiteSpace: 'nowrap'
+        }}>
+          {/* المريض يهرب بالبجامة الخضراء */}
+          <span style={{ fontSize: '2.4rem', animation: 'runningLegs 0.25s infinite ease-in-out', display: 'inline-block' }}>🏃‍♂️</span>
+          
+          {/* مسافة هروب صغيرة */}
+          <span style={{ width: '15px' }}></span>
+
+          {/* الممرض يلحقه مسرعاً */}
+          <span style={{ fontSize: '2.4rem', animation: 'runningLegs 0.2s infinite ease-in-out', display: 'inline-block', transform: 'scaleX(-1)' }}>🧑‍⚕️</span>
+          
+          {/* الحقنة الكبيرة المضحكة تلحق المريض */}
+          <span style={{ fontSize: '1.6rem', transform: 'rotate(-45deg)', marginTop: '-10px', display: 'inline-block' }}>💉</span>
+        </div>
       </div>
 
       {/* 🔍 شريط البحث المتقدم الشامل والذكي */}
@@ -212,7 +256,7 @@ export default function DashboardPage() {
         )}
       </div>
 
-      {/* 📁 شبكة الأقسام الرئيسية المحدثة (تم توزيعها لـ 4 كروت متناسقة تماماً في التصميم والـ Hover والأنيميشن) */}
+      {/* 📁 شبكة الأقسام الأربعة المتناسقة */}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '24px', maxWidth: '1200px', margin: '0 auto' }}>
         
         {/* كرت السياسات */}
@@ -251,9 +295,9 @@ export default function DashboardPage() {
           <p style={{ fontSize: '0.85rem', color: '#94a3b8', margin: '0', lineHeight: '1.5' }}>دليلك لخطوات العمل والبروتوكولات التطبيقية داخل الوحدة.</p>
         </div>
 
-        {/* 🖨️ كرت متناسق تماماً: ملف الأوراق الأكثر استخداماً */}
+        {/* كرت ملف الأوراق الأكثر استخداماً */}
         <div
-          onClick={() => router.push('/forms')} // ينقلك لصفحة استعراض الأوراق المخصصة (أو افتح أول ملف مباشرة)
+          onClick={() => router.push('/forms')}
           style={{ backgroundColor: '#0f172a', border: '1px solid #1e293b', borderRadius: '20px', padding: '32px 24px', textAlign: 'center', cursor: 'pointer', transition: 'all 0.2s' }}
           onMouseEnter={(e) => { e.currentTarget.style.borderColor = '#eab308'; e.currentTarget.style.transform = 'translateY(-4px)'; }}
           onMouseLeave={(e) => { e.currentTarget.style.borderColor = '#1e293b'; e.currentTarget.style.transform = 'translateY(0)'; }}
