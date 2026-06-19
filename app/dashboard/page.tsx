@@ -103,15 +103,15 @@ export default function DashboardPage() {
           <p style={{ fontSize: '0.85rem', color: '#94a3b8', margin: '0', lineHeight: '1.5' }}>تصفح واستعرض الـ 40 سياسة التنظيمية المعتمدة لوحدة العناية الحثيثة.</p>
         </div>
 
-        {/* 💉 كرت قسم حاسبة الأدوية (تمت إعادته وتثبيته في المنتصف) */}
+        {/* 💉 كرت قسم حاسبة الأدوية - تم تصحيح المسار ليتوجه إلى صفحة الحاسبة مباشرة */}
         <div
-          onClick={() => router.push('/')} // يوجه للمسار الرئيسي لحاسبة التسريب الوريدي
+          onClick={() => router.push('/calculator')} 
           style={{ backgroundColor: '#0f172a', border: '1px solid #1e293b', borderRadius: '20px', padding: '32px 24px', textAlign: 'center', cursor: 'pointer', transition: 'all 0.2s' }}
           onMouseEnter={(e) => { e.currentTarget.style.borderColor = '#ec4899'; e.currentTarget.style.transform = 'translateY(-4px)'; }}
           onMouseLeave={(e) => { e.currentTarget.style.borderColor = '#1e293b'; e.currentTarget.style.transform = 'translateY(0)'; }}
         >
           <div style={{ fontSize: '3.5rem', marginBottom: '16px' }}>💉</div>
-          <h2 style={{ fontSize: '1.35rem', fontWeight: 'bold', color: '#ffffff', margin: '0 0 8px 0' }}>حاسبة الأدوية و المحاليل</h2>
+          <h2 style={{ fontSize: '1.35rem', fontWeight: 'bold', color: '#ffffff', margin: '0 0 8px 0' }}>حاسبة الأدوية والتسريب</h2>
           <p style={{ fontSize: '0.85rem', color: '#94a3b8', margin: '0', lineHeight: '1.5' }}>الحساب الدقيق والفوري لجرعات أدوية العناية الحثيثة ومعدلات التنقيط الوريدي.</p>
         </div>
 
