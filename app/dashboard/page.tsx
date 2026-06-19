@@ -9,7 +9,7 @@ interface SearchItem {
   type: 'policy' | 'procedure' | 'medication';
   pdfUrl?: string;
   slug?: string;
-  keywords: string[]; // ⚡ كلمات مفتاحية ذكية للبحث بالعربي والإنجليزي ومختلف الصيغ
+  keywords: string[];
 }
 
 export default function DashboardPage() {
@@ -58,31 +58,31 @@ export default function DashboardPage() {
       keywords: ["extubation", "assisting-extubation", "سحب الأنبوب", "فصل جهاز التنفس"]
     },
     
-    // 💉 الأدوية والحاسبات الوريدية (إضافة مرادفات ادرينالين ونورادرينالين الشاملة)
+    // 💉 الأدوية والمحاليل الوريدية
     { 
       id: 6, 
-      title: "Noradrenaline (Norepinephrine) - حاسبة الجرعات الوريدية", 
+      title: "Noradrenaline (Norepinephrine) - حاسبة الجرعات والمحاليل الوريدية", 
       type: 'medication', 
       slug: "noradrenaline",
       keywords: ["noradrenaline", "norepinephrine", "adrenaline", "نورأدرينالين", "نورادرينالين", "ادرينالين", "أدرينالين", "داعم", "مقبض"]
     },
     { 
       id: 7, 
-      title: "Dopamine - حاسبة الجرعات الوريدية", 
+      title: "Dopamine - حاسبة الجرعات والمحاليل الوريدية", 
       type: 'medication', 
       slug: "dopamine",
       keywords: ["dopamine", "دوبامين", "داعم قلب"]
     },
     { 
       id: 8, 
-      title: "Dobutamine - حاسبة الجرعات الوريدية", 
+      title: "Dobutamine - حاسبة الجرعات والمحاليل الوريدية", 
       type: 'medication', 
       slug: "dobutamine",
       keywords: ["dobutamine", "دوبوتامين", "منشط قلب"]
     },
     { 
       id: 9, 
-      title: "Nitroglycerin (Tridil) - حاسبة الجرعات الوريدية", 
+      title: "Nitroglycerin (Tridil) - حاسبة الجرعات والمحاليل الوريدية", 
       type: 'medication', 
       slug: "nitglycerin",
       keywords: ["nitroglycerin", "tridil", "تريديل", "نيتروجليسرين", "موسع الشرايين", "ضغط"]
@@ -108,7 +108,7 @@ export default function DashboardPage() {
         </p>
       </div>
 
-      {/* 🔍 شريط البحث الذكي ثنائي اللغة والمصطلحات */}
+      {/* 🔍 شريط البحث الذكي */}
       <div style={{ maxWidth: '650px', margin: '0 auto 48px auto', position: 'relative' }}>
         <div style={{ display: 'flex', alignItems: 'center', backgroundColor: '#0f172a', border: '2px solid #1e293b', borderRadius: '16px', padding: '4px 16px', transition: 'all 0.3s' }}>
           <span style={{ fontSize: '1.3rem', marginLeft: '12px' }}>🔍</span>
@@ -153,7 +153,7 @@ export default function DashboardPage() {
                     color: item.type === 'policy' ? '#10b981' : item.type === 'procedure' ? '#3b82f6' : '#ec4899', 
                     border: `1px solid ${item.type === 'policy' ? '#10b98130' : item.type === 'procedure' ? '#3b82f630' : '#ec489930'}` 
                   }}>
-                    {item.type === 'policy' ? '📄 سياسة' : item.type === 'procedure' ? '⚙️ إجراء عملي' : '💉 دواء وحاسبة'}
+                    {item.type === 'policy' ? '📄 سياسة' : item.type === 'procedure' ? '⚙️ إجراء عملي' : '💉 دواء ومحاليل'}
                   </span>
                 </div>
               ))
@@ -177,6 +177,7 @@ export default function DashboardPage() {
           <p style={{ fontSize: '0.85rem', color: '#94a3b8', margin: '0', lineHeight: '1.5' }}>تصفح واستعرض الـ 40 سياسة التنظيمية المعتمدة لوحدة العناية الحثيثة.</p>
         </div>
 
+        {/* 💉 كرت قسم الأدوية والمحاليل - تم تعديل المسمى هنا بنجاح */}
         <div
           onClick={() => router.push('/medications')} 
           style={{ backgroundColor: '#0f172a', border: '1px solid #1e293b', borderRadius: '20px', padding: '32px 24px', textAlign: 'center', cursor: 'pointer', transition: 'all 0.2s' }}
@@ -184,7 +185,7 @@ export default function DashboardPage() {
           onMouseLeave={(e) => { e.currentTarget.style.borderColor = '#1e293b'; e.currentTarget.style.transform = 'translateY(0)'; }}
         >
           <div style={{ fontSize: '3.5rem', marginBottom: '16px' }}>💉</div>
-          <h2 style={{ fontSize: '1.35rem', fontWeight: 'bold', color: '#ffffff', margin: '0 0 8px 0' }}>حاسبة الأدوية والتسريب</h2>
+          <h2 style={{ fontSize: '1.35rem', fontWeight: 'bold', color: '#ffffff', margin: '0 0 8px 0' }}>حاسبة الأدوية والمحاليل</h2>
           <p style={{ fontSize: '0.85rem', color: '#94a3b8', margin: '0', lineHeight: '1.5' }}>دليل الأدوية والحاسبات الطبية المعتمدة لبروتوكولات القسم جاهز ومفعّل بالكامل للاستخدام الفوري المباشر.</p>
         </div>
 
