@@ -137,67 +137,14 @@ export default function DashboardPage() {
   return (
     <div style={{ backgroundColor: '#020617', minHeight: '100vh', padding: '40px 16px', fontFamily: 'sans-serif', color: '#f8fafc' }} dir="rtl">
       
-      {/* 💥 ستايل الأنيميشن البرمجي المضحك للمطاردة 💥 */}
-      <style dangerouslySetInnerHTML={{__html: `
-        @keyframes funnyChase {
-          0% { transform: translateX(120%); }
-          100% { transform: translateX(-120%); }
-        }
-        @keyframes runningLegs {
-          0%, 100% { transform: rotate(-8deg) translateY(0px); }
-          50% { transform: rotate(8deg) translateY(-4px); }
-        }
-      `}} />
-
       {/* هيدر المنصة الرئيسي */}
-      <div style={{ maxWidth: '800px', margin: '0 auto 24px auto', textAlign: 'center' }}>
+      <div style={{ maxWidth: '800px', margin: '0 auto 40px auto', textAlign: 'center' }}>
         <h1 style={{ fontSize: '2.2rem', fontWeight: '900', color: '#ffffff', margin: '0 0 8px 0' }}>
           منصة العناية الحثيثة الرقمية
         </h1>
         <p style={{ fontSize: '0.95rem', color: '#94a3b8', margin: '0' }}>
           مستشفى الجامعة الأردنية - وحدة العناية المركزة للبالغين
         </p>
-      </div>
-
-      {/* 🏃‍♂️ المشهد الجราفيكي المتحرك والمضحك 🧑‍⚕️ */}
-      <div style={{ 
-        maxWidth: '650px', 
-        margin: '0 auto 32px auto', 
-        backgroundColor: '#0f172a', 
-        border: '1px dashed #334155', 
-        borderRadius: '24px', 
-        height: '70px', 
-        position: 'relative', 
-        overflow: 'hidden',
-        display: 'flex',
-        alignItems: 'center'
-      }}>
-        {/* خطوط حركة وهمية بالخلفية لزيادة الإحساس بالسرعة */}
-        <div style={{ position: 'absolute', width: '100%', display: 'flex', justifyContent: 'space-around', color: '#1e293b', fontSize: '0.8rem', userSelect: 'none' }}>
-          <span>💨</span><span>💨</span><span>💨</span><span>💨</span>
-        </div>
-
-        {/* مجموعة العناصر الراكضة */}
-        <div style={{ 
-          position: 'absolute', 
-          display: 'flex', 
-          alignItems: 'center', 
-          gap: '4px',
-          animation: 'funnyChase 9s infinite linear',
-          whiteSpace: 'nowrap'
-        }}>
-          {/* المريض يهرب بالبجامة الخضراء */}
-          <span style={{ fontSize: '2.4rem', animation: 'runningLegs 0.25s infinite ease-in-out', display: 'inline-block' }}>🏃‍♂️</span>
-          
-          {/* مسافة هروب صغيرة */}
-          <span style={{ width: '15px' }}></span>
-
-          {/* الممرض يلحقه مسرعاً */}
-          <span style={{ fontSize: '2.4rem', animation: 'runningLegs 0.2s infinite ease-in-out', display: 'inline-block', transform: 'scaleX(-1)' }}>🧑‍⚕️</span>
-          
-          {/* الحقنة الكبيرة المضحكة تلحق المريض */}
-          <span style={{ fontSize: '1.6rem', transform: 'rotate(-45deg)', marginTop: '-10px', display: 'inline-block' }}>💉</span>
-        </div>
       </div>
 
       {/* 🔍 شريط البحث المتقدم الشامل والذكي */}
