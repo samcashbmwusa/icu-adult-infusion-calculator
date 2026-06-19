@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation';
 interface SearchItem {
   id: number;
   title: string;
-  type: 'policy' | 'procedure' | 'medication';
+  type: 'policy' | 'procedure' | 'medication' | 'form';
   pdfUrl?: string;
   slug?: string;
   keywords: string[];
@@ -17,7 +17,7 @@ export default function DashboardPage() {
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [selectedPdf, setSelectedPdf] = useState<string | null>(null);
 
-  // 🔍 قاعدة البيانات المركزية الشاملة والمطورة (تم إضافة أميودارون وأغراستات)
+  // 🔍 قاعدة البيانات المركزية الشاملة والمطورة (تشمل الأوراق والنماذج الجاهزة للطباعة)
   const allItems: SearchItem[] = [
     // 📄 السياسات
     { 
@@ -58,7 +58,7 @@ export default function DashboardPage() {
       keywords: ["extubation", "assisting-extubation", "سحب الأنبوب", "فصل جهاز التنفس"]
     },
     
-    // 💉 قسم الأدوية والمحاليل (القائمة المحدثة والشاملة)
+    // 💉 قسم الأدوية والمحاليل
     { 
       id: 6, 
       title: "Noradrenaline (Norepinephrine) - حاسبة الجرعات والمحاليل", 
@@ -100,10 +100,32 @@ export default function DashboardPage() {
       type: 'medication', 
       slug: "aggrastat",
       keywords: ["aggrastat", "tirofiban", "أغراستات", "اغراستات", "تيروفيبان", "مسيل", "جلطة محتشمة"]
+    },
+
+    // 📝 الأوراق والنماذج الأكثر استخداماً (تم ربطها بروابط افتراضية مؤقتة، يمكنك استبدالها بروابط الـ Google Drive الحقيقية الخاصة بك)
+    {
+      id: 12,
+      title: "ورقة طلب وتوصيل المعقمات (CSSD Form)",
+      type: 'form',
+      pdfUrl: "https://drive.google.com/file/d/1FH_c3jgFS8dvuMyiGaFo88-1KVUhPJd-/preview", // استبدلها برابط ورقة CSSD
+      keywords: ["cssd", "تعقيم", "مغسلة", "ادوات معقمة", "توصيل تعقيم"]
+    },
+    {
+      id: 13,
+      title: "نموذج الرعاية قبل وبعد قسطرة القلب (Pre/Post Cath Sheet)",
+      type: 'form',
+      pdfUrl: "https://drive.google.com/file/d/1vJUFXvmf8dDb9RKUI7uLRmyiAUE5pGfo/preview", // استبدلها برابط ورقة القسطرة
+      keywords: ["cath", "pre cath", "post cath", "قسطرة", "القلب", "قسطره", "شيت قسطرة"]
+    },
+    {
+      id: 14,
+      title: "ورقة توزيع المهام والأسرة (Assignment Sheet)",
+      type: 'form',
+      pdfUrl: "https://drive.google.com/file/d/1wO-PvVfnUIYn9bzq3dPielokQ0mmPCy2/preview", // استبدلها برابط ورقة الـ Assignment
+      keywords: ["assignment", "مهام", "توزيع", "اسرة", "شفت", "الدوام اليومي"]
     }
   ];
 
-  // دالة توحيد الحروف لمعالجة الفروقات اللغوية في البحث
   const normalizeText = (text: string): string => {
     return text
       .toLowerCase()
@@ -138,7 +160,7 @@ export default function DashboardPage() {
   return (
     <div style={{ backgroundColor: '#020617', minHeight: '100vh', padding: '40px 16px', fontFamily: 'sans-serif', color: '#f8fafc' }} dir="rtl">
       
-      {/* الهيدر */}
+      {/* هيدر المنصة الرئيسي */}
       <div style={{ maxWidth: '800px', margin: '0 auto 40px auto', textAlign: 'center' }}>
         <h1 style={{ fontSize: '2.2rem', fontWeight: '900', color: '#ffffff', margin: '0 0 8px 0' }}>
           منصة العناية الحثيثة الرقمية
@@ -148,13 +170,13 @@ export default function DashboardPage() {
         </p>
       </div>
 
-      {/* 🔍 شريط البحث المركزي المتقدم والمطور */}
+      {/* 🔍 شريط البحث المتقدم الشامل والذكي */}
       <div style={{ maxWidth: '650px', margin: '0 auto 48px auto', position: 'relative' }}>
         <div style={{ display: 'flex', alignItems: 'center', backgroundColor: '#0f172a', border: '2px solid #1e293b', borderRadius: '16px', padding: '4px 16px', transition: 'all 0.3s' }}>
           <span style={{ fontSize: '1.3rem', marginLeft: '12px' }}>🔍</span>
           <input
             type="text"
-            placeholder="ابحث عن دواء، سياسة، أو إجراء (مثال: اميودارون، اغراستات، ادرينالين)..."
+            placeholder="ابحث عن أوراق، أدوية، سياسات (مثال: cssd، قسطرة، اميودارون)..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             style={{ width: '100%', padding: '14px 0', backgroundColor: 'transparent', border: 'none', color: '#ffffff', fontSize: '1.05rem', outline: 'none' }}
@@ -164,7 +186,7 @@ export default function DashboardPage() {
           )}
         </div>
 
-        {/* النتائج المنسدلة */}
+        {/* قائمة نتائج البحث السريع */}
         {searchTerm.trim() !== '' && (
           <div style={{ position: 'absolute', top: '105%', left: 0, width: '100%', backgroundColor: '#0f172a', border: '1px solid #334155', borderRadius: '14px', boxShadow: '0 20px 25px -5px rgba(0,0,0,0.5)', zIndex: 100, overflow: 'hidden', padding: '6px 0' }}>
             {filteredResults.length > 0 ? (
@@ -189,23 +211,23 @@ export default function DashboardPage() {
                     padding: '4px 10px', 
                     borderRadius: '20px', 
                     fontWeight: 'bold', 
-                    backgroundColor: item.type === 'policy' ? '#10b98120' : item.type === 'procedure' ? '#3b82f620' : '#ec489920', 
-                    color: item.type === 'policy' ? '#10b981' : item.type === 'procedure' ? '#3b82f6' : '#ec4899', 
-                    border: `1px solid ${item.type === 'policy' ? '#10b98130' : item.type === 'procedure' ? '#3b82f630' : '#ec489930'}` 
+                    backgroundColor: item.type === 'policy' ? '#10b98120' : item.type === 'procedure' ? '#3b82f620' : item.type === 'medication' ? '#ec489920' : '#eab30820', 
+                    color: item.type === 'policy' ? '#10b981' : item.type === 'procedure' ? '#3b82f6' : item.type === 'medication' ? '#ec4899' : '#eab308', 
+                    border: `1px solid ${item.type === 'policy' ? '#10b98130' : item.type === 'procedure' ? '#3b82f630' : item.type === 'medication' ? '#ec489930' : '#eab30830'}` 
                   }}>
-                    {item.type === 'policy' ? '📄 سياسة' : item.type === 'procedure' ? '⚙️ إجراء عملي' : '💉 دواء ومحاليل'}
+                    {item.type === 'policy' ? '📄 سياسة' : item.type === 'procedure' ? '⚙️ إجراء' : item.type === 'medication' ? '💉 دواء' : '🖨️ نموذج للطباعة'}
                   </span>
                 </div>
               ))
             ) : (
-              <div style={{ padding: '16px', textAlign: 'center', color: '#94a3b8', fontSize: '0.9rem' }}>❌ لم نجد أي نتائج متطابقة.</div>
+              <div style={{ padding: '16px', textAlign: 'center', color: '#94a3b8', fontSize: '0.9rem' }}>❌ لم نجد نتائج متطابقة للبحث.</div>
             )}
           </div>
         )}
       </div>
 
-      {/* 📁 الكروت الثلاثية */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '24px', maxWidth: '1100px', margin: '0 auto' }}>
+      {/* 📁 الأقسام الرئيسية (3 كروت متناسقة) */}
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '24px', maxWidth: '1100px', margin: '0 auto 48px auto' }}>
         <div
           onClick={() => router.push('/policies')}
           style={{ backgroundColor: '#0f172a', border: '1px solid #1e293b', borderRadius: '20px', padding: '32px 24px', textAlign: 'center', cursor: 'pointer', transition: 'all 0.2s' }}
@@ -225,7 +247,7 @@ export default function DashboardPage() {
         >
           <div style={{ fontSize: '3.5rem', marginBottom: '16px' }}>💉</div>
           <h2 style={{ fontSize: '1.35rem', fontWeight: 'bold', color: '#ffffff', margin: '0 0 8px 0' }}>حاسبة الأدوية والمحاليل</h2>
-          <p style={{ fontSize: '0.85rem', color: '#94a3b8', margin: '0', lineHeight: '1.5' }}>دليل الأدوية والحاسبات الطبية المعتمدة لبروتوكولات القسم جاهز ومفعّل بالكامل للاستخدام الفوري المباشر.</p>
+          <p style={{ fontSize: '0.85rem', color: '#94a3b8', margin: '0', lineHeight: '1.5' }}>دليل الأدوية والحاسبات الطبية المعتمدة لبروتوكولات القسم جاهز ومفعّل بالكامل.</p>
         </div>
 
         <div
@@ -236,22 +258,32 @@ export default function DashboardPage() {
         >
           <div style={{ fontSize: '3.5rem', marginBottom: '16px' }}>⚙️</div>
           <h2 style={{ fontSize: '1.35rem', fontWeight: 'bold', color: '#ffffff', margin: '0 0 8px 0' }}>قسم الإجراءات التمريضية</h2>
-          <p style={{ fontSize: '0.85rem', color: '#94a3b8', margin: '0', lineHeight: '1.5' }}>تصفح واستعرض دليلك الشامل لخطوات العمل والبروتوكولات التطبيقية الميدانية.</p>
+          <p style={{ fontSize: '0.85rem', color: '#94a3b8', margin: '0', lineHeight: '1.5' }}>تصفح واستعرض دليلك الشامل لخطوات العمل والبروتوكولات التطبيقية.</p>
         </div>
       </div>
 
-      {/* شاشة الـ PDF */}
-      {selectedPdf && (
-        <div style={{ position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh', backgroundColor: 'rgba(2, 6, 23, 0.98)', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', zIndex: 9999, padding: '24px', boxSizing: 'border-box' }}>
-          <div style={{ maxWidth: '1200px', width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px', backgroundColor: '#0f172a', padding: '12px 24px', borderRadius: '16px', border: '1px solid #1e293b', boxSizing: 'border-box' }}>
-            <span style={{ fontSize: '1rem', fontWeight: 'bold', color: '#ffffff' }}>📄 محرك البحث المركزي - استعراض المستند بالدقة الكاملة</span>
-            <button onClick={() => setSelectedPdf(null)} style={{ backgroundColor: '#ef4444', border: 'none', color: '#fff', padding: '8px 20px', borderRadius: '12px', cursor: 'pointer', fontWeight: 'bold' }}>إغلاق العرض ✕</button>
+      {/* 🖨️ القسم الجديد: الأوراق والنماذج الأكثر استخداماً (جاهزة للطباعة الفورية) */}
+      <div style={{ maxWidth: '1100px', margin: '0 auto' }}>
+        <h2 style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#ffffff', marginBottom: '20px', display: 'flex', alignItems: 'center', gap: '10px' }}>
+          <span>🖨️</span> النماذج والأوراق الأكثر استخداماً (جاهزة للطباعة)
+        </h2>
+        
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '20px' }}>
+          
+          {/* كرت ورقة CSSD */}
+          <div 
+            onClick={() => setSelectedPdf("https://drive.google.com/file/d/1FH_c3jgFS8dvuMyiGaFo88-1KVUhPJd-/preview")} // اضف رابط ورقتك الحقيقي هنا
+            style={{ backgroundColor: '#0f172a', border: '1px solid #1e293b', borderRadius: '16px', padding: '20px', display: 'flex', alignItems: 'center', gap: '16px', cursor: 'pointer', transition: 'all 0.2s' }}
+            onMouseEnter={(e) => e.currentTarget.style.borderColor = '#eab308'}
+            onMouseLeave={(e) => e.currentTarget.style.borderColor = '#1e293b'}
+          >
+            <div style={{ fontSize: '2rem', backgroundColor: '#eab30815', padding: '12px', borderRadius: '12px', color: '#eab308' }}>📄</div>
+            <div>
+              <h3 style={{ fontSize: '1.05rem', fontWeight: 'bold', color: '#ffffff', margin: '0 0 4px 0' }}>ورقة طلب المعقمات (CSSD)</h3>
+              <p style={{ fontSize: '0.8rem', color: '#94a3b8', margin: 0 }}>اضغط لاستعراض وطباعة النموذج فورا</p>
+            </div>
           </div>
-          <div style={{ maxWidth: '1200px', width: '100%', height: '80vh', backgroundColor: '#1e293b', borderRadius: '16px', overflow: 'hidden', border: '1px solid #334155' }}>
-            <iframe src={selectedPdf} width="100%" height="100%" allow="autoplay" style={{ border: 'none' }}></iframe>
-          </div>
-        </div>
-      )}
-    </div>
-  );
-}
+
+          {/* كرت ورقة pre/post cath */}
+          <div 
+            onClick={() => setSelectedPdf("
