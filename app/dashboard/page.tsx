@@ -103,9 +103,9 @@ export default function DashboardPage() {
           <p style={{ fontSize: '0.85rem', color: '#94a3b8', margin: '0', lineHeight: '1.5' }}>تصفح واستعرض الـ 40 سياسة التنظيمية المعتمدة لوحدة العناية الحثيثة.</p>
         </div>
 
-        {/* 💉 كرت قسم حاسبة الأدوية - تم تصحيح المسار ليتوجه إلى صفحة الحاسبة مباشرة */}
+        {/* 💉 كرت قسم حاسبة الأدوية - تم تثبيت التوجيه للمسار الرئيسي للموقع */}
         <div
-          onClick={() => router.push('/calculator')} 
+          onClick={() => router.push('/')} 
           style={{ backgroundColor: '#0f172a', border: '1px solid #1e293b', borderRadius: '20px', padding: '32px 24px', textAlign: 'center', cursor: 'pointer', transition: 'all 0.2s' }}
           onMouseEnter={(e) => { e.currentTarget.style.borderColor = '#ec4899'; e.currentTarget.style.transform = 'translateY(-4px)'; }}
           onMouseLeave={(e) => { e.currentTarget.style.borderColor = '#1e293b'; e.currentTarget.style.transform = 'translateY(0)'; }}
