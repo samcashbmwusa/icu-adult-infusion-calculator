@@ -88,8 +88,8 @@ export default function DashboardPage() {
         )}
       </div>
 
-      {/* 📁 الأقسام الرئيسية (الكروت التصفحية الأصلية) */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '24px', maxWidth: '900px', margin: '0 auto' }}>
+      {/* 📁 الأقسام الرئيسية (3 كروت متناسقة ومتوازية بالكامل) */}
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '24px', maxWidth: '1100px', margin: '0 auto' }}>
         
         {/* كرت قسم السياسات */}
         <div
@@ -103,6 +103,18 @@ export default function DashboardPage() {
           <p style={{ fontSize: '0.85rem', color: '#94a3b8', margin: '0', lineHeight: '1.5' }}>تصفح واستعرض الـ 40 سياسة التنظيمية المعتمدة لوحدة العناية الحثيثة.</p>
         </div>
 
+        {/* 💉 كرت قسم حاسبة الأدوية (تمت إعادته وتثبيته في المنتصف) */}
+        <div
+          onClick={() => router.push('/')} // يوجه للمسار الرئيسي لحاسبة التسريب الوريدي
+          style={{ backgroundColor: '#0f172a', border: '1px solid #1e293b', borderRadius: '20px', padding: '32px 24px', textAlign: 'center', cursor: 'pointer', transition: 'all 0.2s' }}
+          onMouseEnter={(e) => { e.currentTarget.style.borderColor = '#ec4899'; e.currentTarget.style.transform = 'translateY(-4px)'; }}
+          onMouseLeave={(e) => { e.currentTarget.style.borderColor = '#1e293b'; e.currentTarget.style.transform = 'translateY(0)'; }}
+        >
+          <div style={{ fontSize: '3.5rem', marginBottom: '16px' }}>💉</div>
+          <h2 style={{ fontSize: '1.35rem', fontWeight: 'bold', color: '#ffffff', margin: '0 0 8px 0' }}>حاسبة الأدوية والتسريب</h2>
+          <p style={{ fontSize: '0.85rem', color: '#94a3b8', margin: '0', lineHeight: '1.5' }}>الحساب الدقيق والفوري لجرعات أدوية العناية الحثيثة ومعدلات التنقيط الوريدي.</p>
+        </div>
+
         {/* كرت قسم الإجراءات */}
         <div
           onClick={() => router.push('/procedures')}
@@ -111,8 +123,8 @@ export default function DashboardPage() {
           onMouseLeave={(e) => { e.currentTarget.style.borderColor = '#1e293b'; e.currentTarget.style.transform = 'translateY(0)'; }}
         >
           <div style={{ fontSize: '3.5rem', marginBottom: '16px' }}>⚙️</div>
-          <h2 style={{ fontSize: '1.35rem', fontWeight: 'bold', color: '#ffffff', margin: '0 0 8px 0' }}>قسم الإجراءات التمريضية العادية</h2>
-          <p style={{ fontSize: '0.85rem', color: '#94a3b8', margin: '0', lineHeight: '1.5' }}>تصفح واستعرض دليلك الشامل لخطوات العمل والبروتوكولات التطبيقية.</p>
+          <h2 style={{ fontSize: '1.35rem', fontWeight: 'bold', color: '#ffffff', margin: '0 0 8px 0' }}>قسم الإجراءات التمريضية</h2>
+          <p style={{ fontSize: '0.85rem', color: '#94a3b8', margin: '0', lineHeight: '1.5' }}>تصفح واستعرض دليلك الشامل لخطوات العمل والبروتوكولات التطبيقية الميدانية.</p>
         </div>
 
       </div>
@@ -121,7 +133,7 @@ export default function DashboardPage() {
       {selectedPdf && (
         <div style={{ position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh', backgroundColor: 'rgba(2, 6, 23, 0.98)', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', zIndex: 9999, padding: '24px', boxSizing: 'border-box' }}>
           <div style={{ maxWidth: '1200px', width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px', backgroundColor: '#0f172a', padding: '12px 24px', borderRadius: '16px', border: '1px solid #1e293b', boxSizing: 'border-box' }}>
-            <span style={{ fontSize: '1rem', fontWeight: 'bold', color: '#ffffff' }}>📄 محرك البحث المركزي - xاستعراض المستند بالدقة الكاملة</span>
+            <span style={{ fontSize: '1rem', fontWeight: 'bold', color: '#ffffff' }}>📄 محرك البحث المركزي - استعراض المستند بالدقة الكاملة</span>
             <button onClick={() => setSelectedPdf(null)} style={{ backgroundColor: '#ef4444', border: 'none', color: '#fff', padding: '8px 20px', borderRadius: '12px', cursor: 'pointer', fontWeight: 'bold' }}>إغلاق العرض ✕</button>
           </div>
           <div style={{ maxWidth: '1200px', width: '100%', height: '80vh', backgroundColor: '#1e293b', borderRadius: '16px', overflow: 'hidden', border: '1px solid #334155' }}>
