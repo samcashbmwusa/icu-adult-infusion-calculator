@@ -26,17 +26,12 @@ export default function PoliciesPage() {
     },
     {
       id: 3,
-      title: "Assist-ETT",
-      pdfUrl: "https://drive.google.com/file/d/1SWwyAeOwFa435STj4dSLjNNqd6uhXQYR/preview"
-    },
-    {
-      id: 4,
       title: "Assisting-Extubation",
       pdfUrl: "https://drive.google.com/file/d/10rgNJT9f2xXhp2HlcWHvhj4PAhu6xVR8/preview"
     },
-    ...Array.from({ length: 36 }, (_, i) => ({
-      id: i + 5,
-      title: `سياسة بروتوكول العناية الحثيثة رقم ${i + 5}`,
+    ...Array.from({ length: 37 }, (_, i) => ({
+      id: i + 4,
+      title: `سياسة بروتوكول العناية الحثيثة رقم ${i + 4}`,
       pdfUrl: ""
     }))
   ];

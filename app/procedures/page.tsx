@@ -6,23 +6,28 @@ import { useRouter } from 'next/navigation';
 interface Procedure {
   id: number;
   title: string;
-  pdfUrl: string; // رابط الـ PDF الرسمي المرتبط بالإجراء العملي
+  pdfUrl: string;
 }
 
 export default function ProceduresPage() {
   const router = useRouter();
   const [selectedPdf, setSelectedPdf] = useState<string | null>(null);
 
-  // مصفوفة الإجراءات الطبية - تم نقل واستضافة إجراء الجوارب بنجاح هنا
+  // مصفوفة الإجراءات الطبية - تم إضافة إجراء Assist-ETT بنجاح في المجلد الثاني
   const procedures: Procedure[] = [
     {
       id: 1,
       title: "Anti-Embolism Stocking (الإجراء العملي)",
-      pdfUrl: "https://drive.google.com/file/d/1wO-PvVfnUIYn9bzq3dPielokQ0mmPCy2/preview" // الرابط الخاص بك
+      pdfUrl: "https://drive.google.com/file/d/1wO-PvVfnUIYn9bzq3dPielokQ0mmPCy2/preview"
     },
-    ...Array.from({ length: 39 }, (_, i) => ({
-      id: i + 2,
-      title: `إجراء وبروتوكول تمريضي عملي رقم ${i + 2}`,
+    {
+      id: 2,
+      title: "Assist-ETT",
+      pdfUrl: "https://drive.google.com/file/d/1SWwyAeOwFa435STj4dSLjNNqd6uhXQYR/preview" // رابط ملفك الأصلي الصافي لـ Assist-ETT
+    },
+    ...Array.from({ length: 38 }, (_, i) => ({
+      id: i + 3,
+      title: `إجراء وبروتوكول تمريضي عملي رقم ${i + 3}`,
       pdfUrl: ""
     }))
   ];
@@ -30,7 +35,7 @@ export default function ProceduresPage() {
   return (
     <div 
       style={{
-        backgroundColor: '#020617', // الخلفية السوداء المريحة والملكية للعين
+        backgroundColor: '#020617',
         minHeight: '100vh',
         display: 'flex',
         flexDirection: 'column',
@@ -112,7 +117,7 @@ export default function ProceduresPage() {
               minHeight: '140px'
             }}
             onMouseEnter={(e) => {
-              e.currentTarget.style.borderColor = '#3b82f6'; // لون إضاءة أزرق مميز للإجراءات
+              e.currentTarget.style.borderColor = '#3b82f6';
               e.currentTarget.style.transform = 'translateY(-4px)';
             }}
             onMouseLeave={(e) => {
