@@ -137,10 +137,17 @@ export default function DashboardPage() {
   return (
     <div style={{ backgroundColor: '#020617', minHeight: '100vh', padding: '40px 16px', fontFamily: 'sans-serif', color: '#f8fafc' }} dir="rtl">
       
-      {/* هيدر المنصة الرئيسي */}
+      {/* هيدر المنصة الرئيسي المحدث بتأثير التوهج (Glowing الخط) */}
       <div style={{ maxWidth: '800px', margin: '0 auto 40px auto', textAlign: 'center' }}>
-        <h1 style={{ fontSize: '2.2rem', fontWeight: '900', color: '#ffffff', margin: '0 0 8px 0' }}>
-          منصة العناية الحثيثة الرقمية
+        <h1 style={{ 
+          fontSize: '2.5rem', 
+          fontWeight: '900', 
+          color: '#ffffff', 
+          margin: '0 0 12px 0',
+          letterSpacing: '1px',
+          textShadow: '0 0 10px rgba(56, 189, 248, 0.6), 0 0 20px rgba(56, 189, 248, 0.3), 0 0 30px rgba(14, 165, 233, 0.2)'
+        }}>
+          منصة دليلي
         </h1>
         <p style={{ fontSize: '0.95rem', color: '#94a3b8', margin: '0' }}>
           مستشفى الجامعة الأردنية - وحدة العناية المركزة للبالغين
