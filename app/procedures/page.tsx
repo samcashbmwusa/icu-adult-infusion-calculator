@@ -13,7 +13,7 @@ export default function ProceduresPage() {
   const router = useRouter();
   const [selectedPdf, setSelectedPdf] = useState<string | null>(null);
 
-  // مصفوفة الإجراءات الطبية - تم إضافة إجراء Assist-ETT بنجاح في المجلد الثاني
+  // مصفوفة الإجراءات الطبية - تم إضافة إجراء Assisting-Extubation بنجاح في المجلد الثالث
   const procedures: Procedure[] = [
     {
       id: 1,
@@ -23,11 +23,16 @@ export default function ProceduresPage() {
     {
       id: 2,
       title: "Assist-ETT",
-      pdfUrl: "https://drive.google.com/file/d/1SWwyAeOwFa435STj4dSLjNNqd6uhXQYR/preview" // رابط ملفك الأصلي الصافي لـ Assist-ETT
+      pdfUrl: "https://drive.google.com/file/d/1SWwyAeOwFa435STj4dSLjNNqd6uhXQYR/preview"
     },
-    ...Array.from({ length: 38 }, (_, i) => ({
-      id: i + 3,
-      title: `إجراء وبروتوكول تمريضي عملي رقم ${i + 3}`,
+    {
+      id: 3,
+      title: "Assisting-Extubation",
+      pdfUrl: "https://drive.google.com/file/d/10rgNJT9f2xXhp2HlcWHvhj4PAhu6xVR8/preview" // رابط ملفك الأصلي الصافي لـ Assisting-Extubation
+    },
+    ...Array.from({ length: 37 }, (_, i) => ({
+      id: i + 4,
+      title: `إجراء وبروتوكول تمريضي عملي رقم ${i + 4}`,
       pdfUrl: ""
     }))
   ];

@@ -24,14 +24,9 @@ export default function PoliciesPage() {
       title: "الخروج رغم النصيحة الطبية (DAMA)",
       pdfUrl: "https://drive.google.com/file/d/1vJUFXvmf8dDb9RKUI7uLRmyiAUE5pGfo/preview"
     },
-    {
-      id: 3,
-      title: "Assisting-Extubation",
-      pdfUrl: "https://drive.google.com/file/d/10rgNJT9f2xXhp2HlcWHvhj4PAhu6xVR8/preview"
-    },
-    ...Array.from({ length: 37 }, (_, i) => ({
-      id: i + 4,
-      title: `سياسة بروتوكول العناية الحثيثة رقم ${i + 4}`,
+    ...Array.from({ length: 38 }, (_, i) => ({
+      id: i + 3,
+      title: `سياسة بروتوكول العناية الحثيثة رقم ${i + 3}`,
       pdfUrl: ""
     }))
   ];
