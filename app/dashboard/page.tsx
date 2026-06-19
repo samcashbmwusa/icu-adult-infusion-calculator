@@ -102,26 +102,26 @@ export default function DashboardPage() {
       keywords: ["aggrastat", "tirofiban", "أغراستات", "اغراستات", "تيروفيبان", "مسيل", "جلطة محتشمة"]
     },
 
-    // 📝 الأوراق والنماذج الأكثر استخداماً (تم ربطها بروابط افتراضية مؤقتة، يمكنك استبدالها بروابط الـ Google Drive الحقيقية الخاصة بك)
+    // 📝 الأوراق والنماذج الأكثر استخداماً
     {
       id: 12,
       title: "ورقة طلب وتوصيل المعقمات (CSSD Form)",
       type: 'form',
-      pdfUrl: "https://drive.google.com/file/d/1FH_c3jgFS8dvuMyiGaFo88-1KVUhPJd-/preview", // استبدلها برابط ورقة CSSD
+      pdfUrl: "https://drive.google.com/file/d/1FH_c3jgFS8dvuMyiGaFo88-1KVUhPJd-/preview", 
       keywords: ["cssd", "تعقيم", "مغسلة", "ادوات معقمة", "توصيل تعقيم"]
     },
     {
       id: 13,
       title: "نموذج الرعاية قبل وبعد قسطرة القلب (Pre/Post Cath Sheet)",
       type: 'form',
-      pdfUrl: "https://drive.google.com/file/d/1vJUFXvmf8dDb9RKUI7uLRmyiAUE5pGfo/preview", // استبدلها برابط ورقة القسطرة
+      pdfUrl: "https://drive.google.com/file/d/1vJUFXvmf8dDb9RKUI7uLRmyiAUE5pGfo/preview", 
       keywords: ["cath", "pre cath", "post cath", "قسطرة", "القلب", "قسطره", "شيت قسطرة"]
     },
     {
       id: 14,
       title: "ورقة توزيع المهام والأسرة (Assignment Sheet)",
       type: 'form',
-      pdfUrl: "https://drive.google.com/file/d/1wO-PvVfnUIYn9bzq3dPielokQ0mmPCy2/preview", // استبدلها برابط ورقة الـ Assignment
+      pdfUrl: "https://drive.google.com/file/d/1wO-PvVfnUIYn9bzq3dPielokQ0mmPCy2/preview", 
       keywords: ["assignment", "مهام", "توزيع", "اسرة", "شفت", "الدوام اليومي"]
     }
   ];
@@ -262,7 +262,7 @@ export default function DashboardPage() {
         </div>
       </div>
 
-      {/* 🖨️ القسم الجديد: الأوراق والنماذج الأكثر استخداماً (جاهزة للطباعة الفورية) */}
+      {/* 🖨️ القسم المكتمل: الأوراق والنماذج الأكثر استخداماً جاهزة للطباعة */}
       <div style={{ maxWidth: '1100px', margin: '0 auto' }}>
         <h2 style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#ffffff', marginBottom: '20px', display: 'flex', alignItems: 'center', gap: '10px' }}>
           <span>🖨️</span> النماذج والأوراق الأكثر استخداماً (جاهزة للطباعة)
@@ -272,7 +272,7 @@ export default function DashboardPage() {
           
           {/* كرت ورقة CSSD */}
           <div 
-            onClick={() => setSelectedPdf("https://drive.google.com/file/d/1FH_c3jgFS8dvuMyiGaFo88-1KVUhPJd-/preview")} // اضف رابط ورقتك الحقيقي هنا
+            onClick={() => setSelectedPdf("https://drive.google.com/file/d/1FH_c3jgFS8dvuMyiGaFo88-1KVUhPJd-/preview")}
             style={{ backgroundColor: '#0f172a', border: '1px solid #1e293b', borderRadius: '16px', padding: '20px', display: 'flex', alignItems: 'center', gap: '16px', cursor: 'pointer', transition: 'all 0.2s' }}
             onMouseEnter={(e) => e.currentTarget.style.borderColor = '#eab308'}
             onMouseLeave={(e) => e.currentTarget.style.borderColor = '#1e293b'}
@@ -286,4 +286,48 @@ export default function DashboardPage() {
 
           {/* كرت ورقة pre/post cath */}
           <div 
-            onClick={() => setSelectedPdf("
+            onClick={() => setSelectedPdf("https://drive.google.com/file/d/1vJUFXvmf8dDb9RKUI7uLRmyiAUE5pGfo/preview")}
+            style={{ backgroundColor: '#0f172a', border: '1px solid #1e293b', borderRadius: '16px', padding: '20px', display: 'flex', alignItems: 'center', gap: '16px', cursor: 'pointer', transition: 'all 0.2s' }}
+            onMouseEnter={(e) => e.currentTarget.style.borderColor = '#eab308'}
+            onMouseLeave={(e) => e.currentTarget.style.borderColor = '#1e293b'}
+          >
+            <div style={{ fontSize: '2rem', backgroundColor: '#eab30815', padding: '12px', borderRadius: '12px', color: '#eab308' }}>💓</div>
+            <div>
+              <h3 style={{ fontSize: '1.05rem', fontWeight: 'bold', color: '#ffffff', margin: '0 0 4px 0' }}>شيت قسطرة القلب (Pre/Post Cath)</h3>
+              <p style={{ fontSize: '0.8rem', color: '#94a3b8', margin: 0 }}>رعاية وتجهيز مريض القسطرة قبل وبعد</p>
+            </div>
+          </div>
+
+          {/* كرت ورقة Assignment */}
+          <div 
+            onClick={() => setSelectedPdf("https://drive.google.com/file/d/1wO-PvVfnUIYn9bzq3dPielokQ0mmPCy2/preview")}
+            style={{ backgroundColor: '#0f172a', border: '1px solid #1e293b', borderRadius: '16px', padding: '20px', display: 'flex', alignItems: 'center', gap: '16px', cursor: 'pointer', transition: 'all 0.2s' }}
+            onMouseEnter={(e) => e.currentTarget.style.borderColor = '#eab308'}
+            onMouseLeave={(e) => e.currentTarget.style.borderColor = '#1e293b'}
+          >
+            <div style={{ fontSize: '2rem', backgroundColor: '#eab30815', padding: '12px', borderRadius: '12px', color: '#eab308' }}>📋</div>
+            <div>
+              <h3 style={{ fontSize: '1.05rem', fontWeight: 'bold', color: '#ffffff', margin: '0 0 4px 0' }}>ورقة توزيع المهام (Assignment)</h3>
+              <p style={{ fontSize: '0.8rem', color: '#94a3b8', margin: 0 }}>جدول توزيع توزيع الأسرة والورديات اليومية</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      {/* 🖥️ شاشة العرض المدمجة المنبثقة لاستعراض النماذج والـ PDF */}
+      {selectedPdf && (
+        <div style={{ position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh', backgroundColor: 'rgba(2, 6, 23, 0.98)', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', zIndex: 9999, padding: '24px', boxSizing: 'border-box' }}>
+          <div style={{ maxWidth: '1200px', width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px', backgroundColor: '#0f172a', padding: '12px 24px', borderRadius: '16px', border: '1px solid #1e293b', boxSizing: 'border-box' }}>
+            <span style={{ fontSize: '1rem', fontWeight: 'bold', color: '#ffffff' }}>📄 استعراض النموذج - جاهز للطباعة الفورية المباشرة</span>
+            <button onClick={() => setSelectedPdf(null)} style={{ backgroundColor: '#ef4444', border: 'none', color: '#fff', padding: '8px 20px', borderRadius: '12px', cursor: 'pointer', fontWeight: 'bold' }}>إغلاق العرض ✕</button>
+          </div>
+          <div style={{ maxWidth: '1200px', width: '100%', height: '80vh', backgroundColor: '#1e293b', borderRadius: '16px', overflow: 'hidden', border: '1px solid #334155' }}>
+            <iframe src={selectedPdf} width="100%" height="100%" allow="autoplay" style={{ border: 'none' }}></iframe>
+          </div>
+        </div>
+      )}
+
+    </div>
+  );
+}
