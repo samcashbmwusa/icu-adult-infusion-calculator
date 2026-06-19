@@ -6,14 +6,14 @@ import { useRouter } from 'next/navigation';
 interface Policy {
   id: number;
   title: string;
-  pdfUrl: string; // رابط الـ PDF الرسمي المتصل بسحاب جوجل د those
+  pdfUrl: string; // رابط الـ PDF الرسمي المتصل بسحاب جوجل
 }
 
 export default function PoliciesPage() {
   const router = useRouter();
   const [selectedPdf, setSelectedPdf] = useState<string | null>(null);
 
-  // مصفوفة الـ 40 سياسة - تم تفعيل السياسة الأولى والثانية بنجاح
+  // مصفوفة الـ 40 سياسة - تم تفعيل السياسات الثلاث الأولى بنجاح
   const policies: Policy[] = [
     {
       id: 1,
@@ -23,12 +23,12 @@ export default function PoliciesPage() {
     {
       id: 2,
       title: "الخروج رغم النصيحة الطبية (DAMA)",
-      pdfUrl: "https://drive.google.com/file/d/1vJUFXvmf8dDb9RKUI7uLRmyiAUE5pGfo/preview" // رابط السياسة الثانية الجديد
+      pdfUrl: "https://drive.google.com/file/d/1vJUFXvmf8dDb9RKUI7uLRmyiAUE5pGfo/preview"
     },
     {
       id: 3,
-      title: "سياسة مكافحة العدوى والتعقيم (Infection Control)",
-      pdfUrl: "" // أضف رابط الـ preview الخاص بها لاحقاً بنفس الطريقة
+      title: "Anti-Embolism Stocking",
+      pdfUrl: "https://drive.google.com/file/d/1wO-PvVfnUIYn9bzq3dPielokQ0mmPCy2/preview" // رابط السياسة الثالثة الجديد
     },
     ...Array.from({ length: 37 }, (_, i) => ({
       id: i + 4,
