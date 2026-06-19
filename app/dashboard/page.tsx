@@ -3,13 +3,13 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 
-// تحديث الواجهة لتشمل نوع الأدوية ومسار التوجيه الخاص بها
 interface SearchItem {
   id: number;
   title: string;
   type: 'policy' | 'procedure' | 'medication';
-  pdfUrl?: string; // اختياري لأن الأدوية ستوجه لمسار داخلي
-  slug?: string;   // خاص بالأدوية للانتقال لصفحتها
+  pdfUrl?: string;
+  slug?: string;
+  keywords: string[]; // ⚡ كلمات مفتاحية ذكية للبحث بالعربي والإنجليزي ومختلف الصيغ
 }
 
 export default function DashboardPage() {
@@ -17,27 +17,82 @@ export default function DashboardPage() {
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [selectedPdf, setSelectedPdf] = useState<string | null>(null);
 
-  // 🔍 قاعدة البيانات المركزية الشاملة لكامل الموقع (سياسات، إجراءات، أدوية)
+  // 🔍 قاعدة البيانات المركزية الشاملة والمطورة بالكلمات المفتاحية
   const allItems: SearchItem[] = [
     // 📄 السياسات
-    { id: 1, title: "Allow Natural Death (AND)", type: 'policy', pdfUrl: "https://drive.google.com/file/d/1FH_c3jgFS8dvuMyiGaFo88-1KVUhPJd-/preview" },
-    { id: 2, title: "الخروج رغم النصيحة الطبية (DAMA)", type: 'policy', pdfUrl: "https://drive.google.com/file/d/1vJUFXvmf8dDb9RKUI7uLRmyiAUE5pGfo/preview" },
+    { 
+      id: 1, 
+      title: "Allow Natural Death (AND)", 
+      type: 'policy', 
+      pdfUrl: "https://drive.google.com/file/d/1FH_c3jgFS8dvuMyiGaFo88-1KVUhPJd-/preview",
+      keywords: ["and", "allow natural death", "الموت الطبيعي", "سياسة الموت"]
+    },
+    { 
+      id: 2, 
+      title: "الخروج رغم النصيحة الطبية (DAMA)", 
+      type: 'policy', 
+      pdfUrl: "https://drive.google.com/file/d/1vJUFXvmf8dDb9RKUI7uLRmyiAUE5pGfo/preview",
+      keywords: ["dama", "الخروج رغم النصيحة", "خروج", "توقيع خروج"]
+    },
     
     // ⚙️ الإجراءات العمليّة
-    { id: 3, title: "Anti-Embolism Stocking (الإجراء العملي)", type: 'procedure', pdfUrl: "https://drive.google.com/file/d/1wO-PvVfnUIYn9bzq3dPielokQ0mmPCy2/preview" },
-    { id: 4, title: "Assist-ETT", type: 'procedure', pdfUrl: "https://drive.google.com/file/d/1SWwyAeOwFa435STj4dSLjNNqd6uhXQYR/preview" },
-    { id: 5, title: "Assisting-Extubation", type: 'procedure', pdfUrl: "https://drive.google.com/file/d/10rgNJT9f2xXhp2HlcWHvhj4PAhu6xVR8/preview" },
+    { 
+      id: 3, 
+      title: "Anti-Embolism Stocking (الإجراء العملي)", 
+      type: 'procedure', 
+      pdfUrl: "https://drive.google.com/file/d/1wO-PvVfnUIYn9bzq3dPielokQ0mmPCy2/preview",
+      keywords: ["anti-embolism", "stocking", "الجوارب", "جوارب الجلطة", "الجلطات"]
+    },
+    { 
+      id: 4, 
+      title: "Assist-ETT", 
+      type: 'procedure', 
+      pdfUrl: "https://drive.google.com/file/d/1SWwyAeOwFa435STj4dSLjNNqd6uhXQYR/preview",
+      keywords: ["ett", "assist-ett", "أنبوب رغامي", "تنبيب", "intubation"]
+    },
+    { 
+      id: 5, 
+      title: "Assisting-Extubation", 
+      type: 'procedure', 
+      pdfUrl: "https://drive.google.com/file/d/10rgNJT9f2xXhp2HlcWHvhj4PAhu6xVR8/preview",
+      keywords: ["extubation", "assisting-extubation", "سحب الأنبوب", "فصل جهاز التنفس"]
+    },
     
-    // 💉 الأدوية والحاسبات الوريدية (تم دمجها هنا للبحث الشامل)
-    { id: 6, title: "Noradrenaline (Norepinephrine) - حاسبة الجرعات الوريدية", type: 'medication', slug: "noradrenaline" },
-    { id: 7, title: "Dopamine - حاسبة الجرعات الوريدية", type: 'medication', slug: "dopamine" },
-    { id: 8, title: "Dobutamine - حاسبة الجرعات الوريدية", type: 'medication', slug: "dobutamine" },
-    { id: 9, title: "Nitroglycerin (Tridil) - حاسبة الجرعات الوريدية", type: 'medication', slug: "nitroglycerin" },
+    // 💉 الأدوية والحاسبات الوريدية (إضافة مرادفات ادرينالين ونورادرينالين الشاملة)
+    { 
+      id: 6, 
+      title: "Noradrenaline (Norepinephrine) - حاسبة الجرعات الوريدية", 
+      type: 'medication', 
+      slug: "noradrenaline",
+      keywords: ["noradrenaline", "norepinephrine", "adrenaline", "نورأدرينالين", "نورادرينالين", "ادرينالين", "أدرينالين", "داعم", "مقبض"]
+    },
+    { 
+      id: 7, 
+      title: "Dopamine - حاسبة الجرعات الوريدية", 
+      type: 'medication', 
+      slug: "dopamine",
+      keywords: ["dopamine", "دوبامين", "داعم قلب"]
+    },
+    { 
+      id: 8, 
+      title: "Dobutamine - حاسبة الجرعات الوريدية", 
+      type: 'medication', 
+      slug: "dobutamine",
+      keywords: ["dobutamine", "دوبوتامين", "منشط قلب"]
+    },
+    { 
+      id: 9, 
+      title: "Nitroglycerin (Tridil) - حاسبة الجرعات الوريدية", 
+      type: 'medication', 
+      slug: "nitglycerin",
+      keywords: ["nitroglycerin", "tridil", "تريديل", "نيتروجليسرين", "موسع الشرايين", "ضغط"]
+    },
   ];
 
-  // تصفية النتائج بناءً على النص المكتوب في شريط البحث
+  // تصفية النتائج الذكية بفضل الـ keywords
   const filteredResults = searchTerm.trim() === '' ? [] : allItems.filter(item =>
-    item.title.toLowerCase().includes(searchTerm.toLowerCase())
+    item.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    item.keywords.some(keyword => keyword.toLowerCase().includes(searchTerm.toLowerCase()))
   );
 
   return (
@@ -53,13 +108,13 @@ export default function DashboardPage() {
         </p>
       </div>
 
-      {/* 🔍 شريط البحث المركزي الكبير الذكي الشامل */}
+      {/* 🔍 شريط البحث الذكي ثنائي اللغة والمصطلحات */}
       <div style={{ maxWidth: '650px', margin: '0 auto 48px auto', position: 'relative' }}>
         <div style={{ display: 'flex', alignItems: 'center', backgroundColor: '#0f172a', border: '2px solid #1e293b', borderRadius: '16px', padding: '4px 16px', transition: 'all 0.3s' }}>
           <span style={{ fontSize: '1.3rem', marginLeft: '12px' }}>🔍</span>
           <input
             type="text"
-            placeholder="ابحث عن أي دواء، سياسة، أو إجراء طبي هنا..."
+            placeholder="ابحث بالعربي أو الإنجليزي (مثال: ادرينالين، جوارب، DAMA)..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             style={{ width: '100%', padding: '14px 0', backgroundColor: 'transparent', border: 'none', color: '#ffffff', fontSize: '1.05rem', outline: 'none' }}
@@ -69,7 +124,7 @@ export default function DashboardPage() {
           )}
         </div>
 
-        {/* ⚡ قائمة نتائج البحث الفورية المنسدلة الشاملة */}
+        {/* ⚡ القائمة المنسدلة للنتائج */}
         {searchTerm.trim() !== '' && (
           <div style={{ position: 'absolute', top: '105%', left: 0, width: '100%', backgroundColor: '#0f172a', border: '1px solid #334155', borderRadius: '14px', boxShadow: '0 20px 25px -5px rgba(0,0,0,0.5)', zIndex: 100, overflow: 'hidden', padding: '6px 0' }}>
             {filteredResults.length > 0 ? (
@@ -79,10 +134,8 @@ export default function DashboardPage() {
                   onClick={() => {
                     setSearchTerm('');
                     if (item.type === 'medication' && item.slug) {
-                      // إذا كان دواءً، ينتقل فوراً إلى صفحة الأدوية أو الحاسبة الخاصة به
                       router.push(`/medications/${item.slug}`);
                     } else if (item.pdfUrl) {
-                      // إذا كانت سياسة أو إجراء، يفتح الـ PDF المدمج
                       setSelectedPdf(item.pdfUrl);
                     }
                   }}
@@ -91,8 +144,6 @@ export default function DashboardPage() {
                   onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
                 >
                   <span style={{ fontWeight: '600', color: '#e2e8f0', fontSize: '0.95rem' }}>{item.title}</span>
-                  
-                  {/* شارة التمييز الملونة بناءً على نوع النتيجة */}
                   <span style={{ 
                     fontSize: '0.75rem', 
                     padding: '4px 10px', 
@@ -113,10 +164,8 @@ export default function DashboardPage() {
         )}
       </div>
 
-      {/* 📁 الأقسام الرئيسية (3 كروت متناسقة ومتوازية بالكامل) */}
+      {/* 📁 الأقسام الرئيسية (3 كروت متناسقة) */}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '24px', maxWidth: '1100px', margin: '0 auto' }}>
-        
-        {/* كرت قسم السياسات */}
         <div
           onClick={() => router.push('/policies')}
           style={{ backgroundColor: '#0f172a', border: '1px solid #1e293b', borderRadius: '20px', padding: '32px 24px', textAlign: 'center', cursor: 'pointer', transition: 'all 0.2s' }}
@@ -128,7 +177,6 @@ export default function DashboardPage() {
           <p style={{ fontSize: '0.85rem', color: '#94a3b8', margin: '0', lineHeight: '1.5' }}>تصفح واستعرض الـ 40 سياسة التنظيمية المعتمدة لوحدة العناية الحثيثة.</p>
         </div>
 
-        {/* 💉 كرت قسم حاسبة الأدوية الموجه إلى المجلد الصحيح المعتمد في مشروعك */}
         <div
           onClick={() => router.push('/medications')} 
           style={{ backgroundColor: '#0f172a', border: '1px solid #1e293b', borderRadius: '20px', padding: '32px 24px', textAlign: 'center', cursor: 'pointer', transition: 'all 0.2s' }}
@@ -140,7 +188,6 @@ export default function DashboardPage() {
           <p style={{ fontSize: '0.85rem', color: '#94a3b8', margin: '0', lineHeight: '1.5' }}>دليل الأدوية والحاسبات الطبية المعتمدة لبروتوكولات القسم جاهز ومفعّل بالكامل للاستخدام الفوري المباشر.</p>
         </div>
 
-        {/* كرت قسم الإجراءات */}
         <div
           onClick={() => router.push('/procedures')}
           style={{ backgroundColor: '#0f172a', border: '1px solid #1e293b', borderRadius: '20px', padding: '32px 24px', textAlign: 'center', cursor: 'pointer', transition: 'all 0.2s' }}
@@ -151,10 +198,9 @@ export default function DashboardPage() {
           <h2 style={{ fontSize: '1.35rem', fontWeight: 'bold', color: '#ffffff', margin: '0 0 8px 0' }}>قسم الإجراءات التمريضية</h2>
           <p style={{ fontSize: '0.85rem', color: '#94a3b8', margin: '0', lineHeight: '1.5' }}>تصفح واستعرض دليلك الشامل لخطوات العمل والبروتوكولات التطبيقية الميدانية.</p>
         </div>
-
       </div>
 
-      {/* 🖥️ شاشة العرض المدمجة المنبثقة لملفات الـ PDF */}
+      {/* 🖥️ شاشة العرض المدمجة المنبثقة للـ PDF */}
       {selectedPdf && (
         <div style={{ position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh', backgroundColor: 'rgba(2, 6, 23, 0.98)', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', zIndex: 9999, padding: '24px', boxSizing: 'border-box' }}>
           <div style={{ maxWidth: '1200px', width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px', backgroundColor: '#0f172a', padding: '12px 24px', borderRadius: '16px', border: '1px solid #1e293b', boxSizing: 'border-box' }}>
