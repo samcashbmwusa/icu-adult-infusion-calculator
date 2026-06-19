@@ -6,29 +6,29 @@ import { useRouter } from 'next/navigation';
 interface Policy {
   id: number;
   title: string;
-  pdfUrl: string; // رابط الـ PDF الرسمي المتصل بسحاب جوجل
+  pdfUrl: string; // رابط الـ PDF الرسمي المتصل بسحاب جوجل د those
 }
 
 export default function PoliciesPage() {
   const router = useRouter();
   const [selectedPdf, setSelectedPdf] = useState<string | null>(null);
 
-  // مصفوفة الـ 40 سياسة - تم ربط السياسة الأولى برابط الـ PDF الأصلي الخاص بك بنجاح
+  // مصفوفة الـ 40 سياسة - تم تفعيل السياسة الأولى والثانية بنجاح
   const policies: Policy[] = [
     {
       id: 1,
       title: "Allow Natural Death (AND)",
-      pdfUrl: "https://drive.google.com/file/d/1FH_c3jgFS8dvuMyiGaFo88-1KVUhPJd-/preview" // رابط ملفك الأصلي الصافي
+      pdfUrl: "https://drive.google.com/file/d/1FH_c3jgFS8dvuMyiGaFo88-1KVUhPJd-/preview"
     },
     {
       id: 2,
-      title: "إدارة الأدوية الخطرة (High-Alert Medications)",
-      pdfUrl: "" // أضف رابط الـ preview الخاص بها لاحقاً بنفس الطريقة
+      title: "الخروج رغم النصيحة الطبية (DAMA)",
+      pdfUrl: "https://drive.google.com/file/d/1vJUFXvmf8dDb9RKUI7uLRmyiAUE5pGfo/preview" // رابط السياسة الثانية الجديد
     },
     {
       id: 3,
       title: "سياسة مكافحة العدوى والتعقيم (Infection Control)",
-      pdfUrl: ""
+      pdfUrl: "" // أضف رابط الـ preview الخاص بها لاحقاً بنفس الطريقة
     },
     ...Array.from({ length: 37 }, (_, i) => ({
       id: i + 4,
