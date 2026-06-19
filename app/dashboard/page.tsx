@@ -17,7 +17,7 @@ export default function DashboardPage() {
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [selectedPdf, setSelectedPdf] = useState<string | null>(null);
 
-  // 🔍 قاعدة البيانات المركزية الشاملة والمطورة بالكلمات المفتاحية
+  // 🔍 قاعدة البيانات المركزية الشاملة والمطورة (تم إضافة أميودارون وأغراستات)
   const allItems: SearchItem[] = [
     // 📄 السياسات
     { 
@@ -58,61 +58,71 @@ export default function DashboardPage() {
       keywords: ["extubation", "assisting-extubation", "سحب الأنبوب", "فصل جهاز التنفس"]
     },
     
-    // 💉 الأدوية والمحاليل الوريدية
+    // 💉 قسم الأدوية والمحاليل (القائمة المحدثة والشاملة)
     { 
       id: 6, 
-      title: "Noradrenaline (Norepinephrine) - حاسبة الجرعات والمحاليل الوريدية", 
+      title: "Noradrenaline (Norepinephrine) - حاسبة الجرعات والمحاليل", 
       type: 'medication', 
       slug: "noradrenaline",
       keywords: ["noradrenaline", "norepinephrine", "adrenaline", "نورأدرينالين", "نورادرينالين", "ادرينالين", "أدرينالين", "داعم", "مقبض"]
     },
     { 
       id: 7, 
-      title: "Dopamine - حاسبة الجرعات والمحاليل الوريدية", 
+      title: "Dopamine - حاسبة الجرعات والمحاليل", 
       type: 'medication', 
       slug: "dopamine",
       keywords: ["dopamine", "دوبامين", "داعم قلب"]
     },
     { 
       id: 8, 
-      title: "Dobutamine - حاسبة الجرعات والمحاليل الوريدية", 
+      title: "Dobutamine - حاسبة الجرعات والمحاليل", 
       type: 'medication', 
       slug: "dobutamine",
       keywords: ["dobutamine", "دوبوتامين", "منشط قلب"]
     },
     { 
       id: 9, 
-      title: "Nitroglycerin (Tridil) - حاسبة الجرعات والمحاليل الوريدية", 
+      title: "Nitroglycerin (Tridil) - حاسبة الجرعات والمحاليل", 
       type: 'medication', 
-      slug: "nitglycerin",
+      slug: "nitroglycerin",
       keywords: ["nitroglycerin", "tridil", "تريديل", "نيتروجليسرين", "موسع الشرايين", "ضغط"]
     },
+    { 
+      id: 10, 
+      title: "Amiodarone (Cordarone) - حاسبة الجرعات والمحاليل", 
+      type: 'medication', 
+      slug: "amiodarone",
+      keywords: ["amiodarone", "cordarone", "أميودارون", "اميودارون", "كوردارون", "تنظيم ضربات", "اضطراب القلب"]
+    },
+    { 
+      id: 11, 
+      title: "Aggrastat (Tirofiban) - حاسبة الجرعات والمحاليل", 
+      type: 'medication', 
+      slug: "aggrastat",
+      keywords: ["aggrastat", "tirofiban", "أغراستات", "اغراستات", "تيروفيبان", "مسيل", "جلطة محتشمة"]
+    }
   ];
 
-  // دالة متقدمة لتنظيف النصوص وتوحيد الأحرف (تسهيل مطابقة العربي والإنجليزي)
+  // دالة توحيد الحروف لمعالجة الفروقات اللغوية في البحث
   const normalizeText = (text: string): string => {
     return text
       .toLowerCase()
-      .replace(/[أإآا]/g, 'ا') // تحويل كل أشكال الألف إلى ألف عادية
-      .replace(/[ةه]/g, 'ه')   // توحيد التاء المربوطة والهاء
+      .replace(/[أإآا]/g, 'ا')
+      .replace(/[ةه]/g, 'ه')
       .trim();
   };
 
-  // 🛠️ خوارزمية الفلترة والبحث المتقدم الذكي
   const getFilteredResults = () => {
     const query = normalizeText(searchTerm);
     if (!query) return [];
 
-    // تقسيم جملة البحث إلى كلمات منفصلة لدعم البحث العشوائي المتعدد
     const searchWords = query.split(/\s+/);
 
     return allItems.filter(item => {
-      // توحيد نصوص عناصر المحتوى الأساسية والمفاتيح
       const normalizedTitle = normalizeText(item.title);
       const normalizedKeywords = item.keywords.map(kw => normalizeText(kw));
       const normalizedType = normalizeText(item.type);
 
-      // يجب أن تطابق كل كلمة من كلمات البحث جزءاً من العنوان أو الكلمات المفتاحية
       return searchWords.every(word => {
         return (
           normalizedTitle.includes(word) ||
@@ -128,7 +138,7 @@ export default function DashboardPage() {
   return (
     <div style={{ backgroundColor: '#020617', minHeight: '100vh', padding: '40px 16px', fontFamily: 'sans-serif', color: '#f8fafc' }} dir="rtl">
       
-      {/* هيدر الصفحة الرئيسية */}
+      {/* الهيدر */}
       <div style={{ maxWidth: '800px', margin: '0 auto 40px auto', textAlign: 'center' }}>
         <h1 style={{ fontSize: '2.2rem', fontWeight: '900', color: '#ffffff', margin: '0 0 8px 0' }}>
           منصة العناية الحثيثة الرقمية
@@ -138,13 +148,13 @@ export default function DashboardPage() {
         </p>
       </div>
 
-      {/* 🔍 شريط البحث الذكي المتقدم المحسّن */}
+      {/* 🔍 شريط البحث المركزي المتقدم والمطور */}
       <div style={{ maxWidth: '650px', margin: '0 auto 48px auto', position: 'relative' }}>
         <div style={{ display: 'flex', alignItems: 'center', backgroundColor: '#0f172a', border: '2px solid #1e293b', borderRadius: '16px', padding: '4px 16px', transition: 'all 0.3s' }}>
           <span style={{ fontSize: '1.3rem', marginLeft: '12px' }}>🔍</span>
           <input
             type="text"
-            placeholder="ابحث بالنص الحر أو الكلمات الجزئية (مثال: ادرينالين، جوارب، DAMA)..."
+            placeholder="ابحث عن دواء، سياسة، أو إجراء (مثال: اميودارون، اغراستات، ادرينالين)..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             style={{ width: '100%', padding: '14px 0', backgroundColor: 'transparent', border: 'none', color: '#ffffff', fontSize: '1.05rem', outline: 'none' }}
@@ -154,7 +164,7 @@ export default function DashboardPage() {
           )}
         </div>
 
-        {/* ⚡ القائمة المنسدلة لنتائج البحث الذكي المتقدم */}
+        {/* النتائج المنسدلة */}
         {searchTerm.trim() !== '' && (
           <div style={{ position: 'absolute', top: '105%', left: 0, width: '100%', backgroundColor: '#0f172a', border: '1px solid #334155', borderRadius: '14px', boxShadow: '0 20px 25px -5px rgba(0,0,0,0.5)', zIndex: 100, overflow: 'hidden', padding: '6px 0' }}>
             {filteredResults.length > 0 ? (
@@ -188,13 +198,13 @@ export default function DashboardPage() {
                 </div>
               ))
             ) : (
-              <div style={{ padding: '16px', textAlign: 'center', color: '#94a3b8', fontSize: '0.9rem' }}>❌ لم نجد أي نتائج تطابقة للبحث المتقدم.</div>
+              <div style={{ padding: '16px', textAlign: 'center', color: '#94a3b8', fontSize: '0.9rem' }}>❌ لم نجد أي نتائج متطابقة.</div>
             )}
           </div>
         )}
       </div>
 
-      {/* 📁 الأقسام الرئيسية (3 كروت متناسقة) */}
+      {/* 📁 الكروت الثلاثية */}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '24px', maxWidth: '1100px', margin: '0 auto' }}>
         <div
           onClick={() => router.push('/policies')}
@@ -230,7 +240,7 @@ export default function DashboardPage() {
         </div>
       </div>
 
-      {/* 🖥️ شاشة العرض المدمجة المنبثقة للـ PDF */}
+      {/* شاشة الـ PDF */}
       {selectedPdf && (
         <div style={{ position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh', backgroundColor: 'rgba(2, 6, 23, 0.98)', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', zIndex: 9999, padding: '24px', boxSizing: 'border-box' }}>
           <div style={{ maxWidth: '1200px', width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px', backgroundColor: '#0f172a', padding: '12px 24px', borderRadius: '16px', border: '1px solid #1e293b', boxSizing: 'border-box' }}>
