@@ -41,15 +41,15 @@ export default function LoginPage() {
       color: '#f8fafc' 
     }} dir="rtl">
       
-      {/* 🧩 حاقن حركات الأنيميشن (الوهج الدائري وحركة الحلقة حول العنوان) */}
+      {/* 🧩 حاقن حركات الأنيميشن (حركة إطار الصورة وحركة الشهاب الدائري حول العنوان) */}
       <style dangerouslySetInnerHTML={{__html: `
         @keyframes rotateProfileGlow {
           0% { transform: rotate(0deg); }
           100% { transform: rotate(360deg); }
         }
-        @keyframes spinTitleCircle {
-          0% { transform: translate(-50%, -50%) rotate(0deg); }
-          100% { transform: translate(-50%, -50%) rotate(360deg); }
+        @keyframes orbitTitleMeteor {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
         }
       `}} />
 
@@ -66,7 +66,6 @@ export default function LoginPage() {
           overflow: 'hidden',
           boxShadow: '0 0 20px rgba(56, 189, 248, 0.5)'
         }}>
-          {/* تأثير الوهج المتحرك في الخلفية */}
           <div style={{
             position: 'absolute',
             width: '140%',
@@ -76,7 +75,6 @@ export default function LoginPage() {
             zIndex: 1
           }} />
           
-          {/* الصورة الشخصية المثبتة فوق الوهج */}
           <img 
             src="/profile.jpg" 
             alt="User Profile" 
@@ -104,29 +102,43 @@ export default function LoginPage() {
         boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.5)' 
       }}>
         
-        <div style={{ marginBottom: '28px', textAlign: 'center', position: 'relative' }}>
+        <div style={{ marginBottom: '28px', textAlign: 'center' }}>
           
-          {/* 🌀 حاوية العنوان المضافة لها الدائرة التلفّ بشكل مستمر ولطيف */}
+          {/* 🌀 الحاوية الذكية للعنوان مع مدار الشهاب الصغير */}
           <div style={{ 
             position: 'relative', 
             display: 'inline-block', 
-            padding: '10px 24px'
+            padding: '12px 36px',
+            marginBottom: '6px'
           }}>
-            {/* الدائرة المضيئة اللطيفة التي تلف حول الكلمة */}
+            
+            {/* 🌠 مدار دائرة النيون الصغيرة (تدور ببطء شديد على مدار 5 ثوانٍ) */}
             <div style={{
               position: 'absolute',
-              top: '50%',
-              left: '50%',
+              top: '0',
+              left: '0',
               width: '100%',
               height: '100%',
-              border: '2px dashed rgba(56, 189, 248, 0.4)',
-              borderRadius: '50px',
-              animation: 'spinTitleCircle 8s linear infinite',
+              borderRadius: '30px',
+              animation: 'orbitTitleMeteor 5s linear infinite',
               pointerEvents: 'none',
-              boxShadow: '0 0 10px rgba(56, 189, 248, 0.1)'
-            }} />
+              zIndex: 1
+            }}>
+              {/* الدائرة الصغيرة المتوهجة (الشهاب) */}
+              <div style={{
+                position: 'absolute',
+                top: '-4px',
+                left: '50%',
+                transform: 'translateX(-50%)',
+                width: '8px',
+                height: '8px',
+                borderRadius: '50%',
+                backgroundColor: '#38bdf8',
+                boxShadow: '0 0 10px #38bdf8, 0 0 20px #38bdf8, 0 0 30px #0284c7'
+              }} />
+            </div>
 
-            {/* عنوان المنصة المتوهج */}
+            {/* عنوان المنصة المتوهج المستقر في المنتصف */}
             <h1 style={{ 
               fontSize: '2.6rem', 
               fontWeight: '900', 
@@ -141,7 +153,7 @@ export default function LoginPage() {
             </h1>
           </div>
           
-          {/* 🧑‍⚕️ سطر إسناد التصميم والإعداد */}
+          {/* 🧑‍⚕️ سطر إسناد التصميم والإعداد والجهة الرسمية */}
           <p style={{
             fontSize: '0.95rem',
             color: '#38bdf8',
