@@ -41,51 +41,78 @@ export default function LoginPage() {
       color: '#f8fafc' 
     }} dir="rtl">
       
-      {/* 🧩 حاقن كود الحركة الدورانية للوميض النيون بشكل غير مرئي داخل الصفحة */}
+      {/* 🧩 حاقن تأثير حركة المذنب أو الشهاب الدائري حول الصورة */}
       <style dangerouslySetInnerHTML={{__html: `
-        @keyframes rotateGlow {
+        @keyframes meteorOrbit {
           0% { transform: rotate(0deg); }
           100% { transform: rotate(360deg); }
         }
       `}} />
 
-      {/* 🖼️ حاوية الصورة المزودة بوميض نيون يتحرك بشكل دائري بسرعة خفيفة */}
+      {/* 🖼️ حاوية الصورة المزودة بتأثير الشهاب الطائف يدور بسرعة خفيفة */}
       <div style={{ marginBottom: '28px', textAlign: 'center' }}>
         <div style={{
           position: 'relative',
-          width: '126px',
-          height: '126px',
+          width: '136px',
+          height: '136px',
           borderRadius: '50%',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          overflow: 'hidden',
-          boxShadow: '0 0 20px rgba(56, 189, 248, 0.4)'
+          backgroundColor: 'transparent',
         }}>
-          {/* خلفية الوميض الدائرية التي تدور في الخلف لتصنع حركة النيون */}
+          
+          {/* 🌠 حلقة مدار الشهاب المضيء - تدور بزاوية 360 درجة ببطء وراحة */}
           <div style={{
             position: 'absolute',
-            width: '150%',
-            height: '150%',
-            background: 'conic-gradient(from 0deg, transparent 30%, #38bdf8 70%, transparent 100%)',
-            animation: 'rotateGlow 4s linear infinite', // الحركة دائرية بسرعة خفيفة (4 ثوانٍ للدورة الكاملة)
-            zIndex: 1
-          }} />
+            width: '100%',
+            height: '100%',
+            borderRadius: '50%',
+            animation: 'meteorOrbit 3.5s linear infinite', // يستغرق 3.5 ثانية للطواف حول الصورة
+            zIndex: 1,
+            pointerEvents: 'none'
+          }}>
+            {/* رأس الشهاب المضيء المتوهج (المذنب) */}
+            <div style={{
+              position: 'absolute',
+              top: '-3px',
+              left: '50%',
+              transform: 'translateX(-50%)',
+              width: '10px',
+              height: '10px',
+              borderRadius: '50%',
+              backgroundColor: '#38bdf8',
+              // ذيل التوهج النيون للشهاب
+              boxShadow: '0 0 10px #38bdf8, 0 0 20px #38bdf8, 0 0 35px #0284c7, 0 0 50px #0284c7'
+            }} />
+          </div>
+
+          {/* الإطار الأسود الفاصل بين المدار والصورة ليعطي تباين وعمق بصري */}
+          <div style={{
+            width: '124px',
+            height: '124px',
+            borderRadius: '50%',
+            backgroundColor: '#020617',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            zIndex: 2,
+            boxShadow: 'inset 0 0 10px rgba(0, 0, 0, 0.8)'
+          }}>
+            {/* صورتك الشخصية */}
+            <img 
+              src="/profile.jpg" 
+              alt="User Profile" 
+              style={{ 
+                width: '120px', 
+                height: '120px', 
+                borderRadius: '50%', 
+                objectFit: 'cover', 
+                border: '2px solid #1e293b'
+              }} 
+            />
+          </div>
           
-          {/* الإطار الداخلي لحماية حواف الصورة الثابتة */}
-          <img 
-            src="/profile.jpg" 
-            alt="User Profile" 
-            style={{ 
-              width: '120px', 
-              height: '120px', 
-              borderRadius: '50%', 
-              objectFit: 'cover', 
-              border: '3px solid #0f172a',
-              position: 'relative',
-              zIndex: 2
-            }} 
-          />
         </div>
       </div>
 
