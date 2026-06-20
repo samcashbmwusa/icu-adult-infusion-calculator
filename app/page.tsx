@@ -13,21 +13,18 @@ export default function LoginPage() {
     setMounted(true);
   }, []);
 
-  const executeMobileLogin = () => {
-    const cleanUser = username.trim();
-    const cleanPass = password.trim();
-    const cleanKey = licenseKey.trim();
+  if (!mounted) return null;
 
-    if (cleanUser !== '' && cleanPass !== '' && cleanKey !== '') {
-      setError('');
-      // 🚀 توجيه إلى المسار الجديد تماماً لكسر كاش الهاتف بشكل قاطع
-      window.location.href = '/panel';
-    } else {
+  // Simple validation check to display error text if fields are missing
+  const checkFieldsBeforeRedirect = () => {
+    if (username.trim() === '' || password.trim() === '' || licenseKey.trim() === '') {
       setError('❌ يرجى إدخال اسم المستخدم، كلمة المرور، ورمز الترخيص بشكل صحيح.');
+    } else {
+      setError('');
     }
   };
 
-  if (!mounted) return null;
+  const isFormValid = username.trim() !== '' && password.trim() !== '' && licenseKey.trim() !== '';
 
   return (
     <div style={{ 
@@ -69,7 +66,7 @@ export default function LoginPage() {
         }
       `}} />
 
-      {/* 🖼️ الحاوية المتوهجة للصورة الشخصية */}
+      {/* 🖼️ Profile Image */}
       <div style={{ marginBottom: '28px', textAlign: 'center' }}>
         <div style={{
           position: 'relative',
@@ -107,7 +104,7 @@ export default function LoginPage() {
         </div>
       </div>
 
-      {/* 🔐 صندوق تسجيل الدخول */}
+      {/* 🔐 Login Box Wrapper */}
       <div style={{ 
         maxWidth: '500px', 
         width: '100%', 
@@ -212,9 +209,10 @@ export default function LoginPage() {
             </div>
           )}
 
-          <button 
-            type="button"
-            onClick={executeMobileLogin}
+          {/* 🔗 The Ultimate Fix: standard HTML Anchor Link acting as the sign-in button */}
+          <a 
+            href={isFormValid ? "/panel" : "#"}
+            onClick={checkFieldsBeforeRedirect}
             style={{ 
               width: '100%', 
               padding: '14px', 
@@ -222,15 +220,18 @@ export default function LoginPage() {
               color: '#ffffff', 
               fontSize: '1rem', 
               fontWeight: 'bold', 
-              border: 'none', 
               borderRadius: '12px', 
+              textAlign: 'center',
+              textDecoration: 'none',
               cursor: 'pointer',
+              display: 'block',
+              boxSizing: 'border-box',
               touchAction: 'manipulation',
               marginTop: '8px' 
             }}
           >
             التحقق وتفويض الدخول 🔓
-          </button>
+          </a>
         </div>
 
         <div style={{ 
