@@ -38,22 +38,27 @@ export default function LoginPage() {
       justifyContent: 'center', 
       padding: '40px 16px', 
       fontFamily: 'sans-serif', 
-      color: '#f8fafc' 
+      color: '#f8fafc',
+      overflowX: 'hidden'
     }} dir="rtl">
       
-      {/* 🧩 حاقن حركات الأنيميشن (حركة إطار الصورة وحركة الشهاب الدائري حول العنوان) */}
+      {/* 🧩 حاقن الحركات ثلاثية الأبعاد (3D Orbit Animations) */}
       <style dangerouslySetInnerHTML={{__html: `
         @keyframes rotateProfileGlow {
           0% { transform: rotate(0deg); }
           100% { transform: rotate(360deg); }
         }
-        @keyframes orbitTitleMeteor {
-          0% { transform: rotate(0deg); }
-          100% { transform: rotate(360deg); }
+        @keyframes moonOrbit3D {
+          0% { transform: rotateX(70deg) rotateY(15deg) rotate(0deg); }
+          100% { transform: rotateX(70deg) rotateY(15deg) rotate(360deg); }
+        }
+        @keyframes moonDepth {
+          0%, 100% { z-index: 3; filter: drop-shadow(0 0 12px #38bdf8); }
+          50% { z-index: 1; filter: drop-shadow(0 0 2px #0284c7); opacity: 0.4; }
         }
       `}} />
 
-      {/* 🖼️ حاوية الصورة مع الوهج المتحرك الدائري */}
+      {/* 🖼️ حاوية الصورة الشخصية المتوهجة دوارنياً */}
       <div style={{ marginBottom: '28px', textAlign: 'center' }}>
         <div style={{
           position: 'relative',
@@ -104,41 +109,42 @@ export default function LoginPage() {
         
         <div style={{ marginBottom: '28px', textAlign: 'center' }}>
           
-          {/* 🌀 الحاوية الذكية للعنوان مع مدار الشهاب الصغير */}
+          {/* 🌌 الفضاء الخاص بكوكب العنوان ومدار القمر الاصطناعي */}
           <div style={{ 
             position: 'relative', 
             display: 'inline-block', 
-            padding: '12px 36px',
-            marginBottom: '6px'
+            padding: '12px 40px',
+            perspective: '1000px' // تفعيل البعد الثالث والعمق الفضائي
           }}>
             
-            {/* 🌠 مدار دائرة النيون الصغيرة (تدور ببطء شديد على مدار 5 ثوانٍ) */}
+            {/* 🪐 مدار القمر التخيلّي ثلاثي الأبعاد المائل حول كلمة منصة دليلي */}
             <div style={{
               position: 'absolute',
-              top: '0',
-              left: '0',
-              width: '100%',
-              height: '100%',
-              borderRadius: '30px',
-              animation: 'orbitTitleMeteor 5s linear infinite',
-              pointerEvents: 'none',
-              zIndex: 1
+              top: '-10%',
+              left: '-10%',
+              width: '120%',
+              height: '120%',
+              borderRadius: '50%',
+              transformStyle: 'preserve-3d',
+              animation: 'moonOrbit3D 6s linear infinite', // سرعة دوران القمر الهادئة
+              pointerEvents: 'none'
             }}>
-              {/* الدائرة الصغيرة المتوهجة (الشهاب) */}
+              {/* الدائرة الصغيرة المتوهجة (القمر) المزودة بحركة عمق ديناميكية تفصل المرور الأمامي والخلفي */}
               <div style={{
                 position: 'absolute',
-                top: '-4px',
+                top: '0',
                 left: '50%',
-                transform: 'translateX(-50%)',
-                width: '8px',
-                height: '8px',
+                width: '10px',
+                height: '10px',
                 borderRadius: '50%',
                 backgroundColor: '#38bdf8',
-                boxShadow: '0 0 10px #38bdf8, 0 0 20px #38bdf8, 0 0 30px #0284c7'
+                boxShadow: '0 0 10px #38bdf8, 0 0 20px #0284c7',
+                transform: 'translate(-50%, -50%)',
+                animation: 'moonDepth 6s linear infinite'
               }} />
             </div>
 
-            {/* عنوان المنصة المتوهج المستقر في المنتصف */}
+            {/* كوكب "منصة دليلي" المستقر بثبات في مركز المدار الفلكي */}
             <h1 style={{ 
               fontSize: '2.6rem', 
               fontWeight: '900', 
@@ -147,13 +153,13 @@ export default function LoginPage() {
               letterSpacing: '1px', 
               textShadow: '0 0 7px #fff, 0 0 15px rgba(56, 189, 248, 0.9), 0 0 30px rgba(56, 189, 248, 0.7)',
               position: 'relative',
-              zIndex: 2
+              zIndex: 2 // يقع في المنتصف ليمر القمر من خلفه ومن أمامه
             }}>
               منصة دليلي
             </h1>
           </div>
           
-          {/* 🧑‍⚕️ سطر إسناد التصميم والإعداد والجهة الرسمية */}
+          {/* 🧑‍⚕️ سطر إسناد التصميم والإعداد */}
           <p style={{
             fontSize: '0.95rem',
             color: '#38bdf8',
