@@ -1,291 +1,192 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-// تأمين استيراد الـ Router ليتوافق تماماً مع مجلد (app) في Next.js
 import { useRouter } from 'next/navigation';
-
-interface SearchItem {
-  id: number;
-  title: string;
-  type: 'policy' | 'procedure' | 'medication' | 'form';
-  pdfUrl?: string;
-  slug?: string;
-  keywords: string[];
-}
 
 export default function DashboardPage() {
   const router = useRouter();
-  const [searchTerm, setSearchTerm] = useState<string>('');
-  const [selectedPdf, setSelectedPdf] = useState<string | null>(null);
   const [mounted, setMounted] = useState(false);
 
-  // لحل مشاكل الـ Hydration والتأكد من جاهزية المكون في المتصفح
   useEffect(() => {
     setMounted(true);
   }, []);
 
-  // 🔍 قاعدة البيانات المركزية
-  const allItems: SearchItem[] = [
-    { 
-      id: 1, 
-      title: "Allow Natural Death (AND)", 
-      type: 'policy', 
-      pdfUrl: "https://drive.google.com/file/d/1FH_c3jgFS8dvuMyiGaFo88-1KVUhPJd-/view",
-      keywords: ["and", "allow natural death", "الموت الطبيعي", "سياسة الموت"]
-    },
-    { 
-      id: 2, 
-      title: "الخروج رغم النصيحة الطبية (DAMA)", 
-      type: 'policy', 
-      pdfUrl: "https://drive.google.com/file/d/1vJUFXvmf8dDb9RKUI7uLRmyiAUE5pGfo/view",
-      keywords: ["dama", "الخروج رغم النصيحة", "خروج", "توقيع خروج"]
-    },
-    { 
-      id: 3, 
-      title: "Anti-Embolism Stocking (الإجراء العملي)", 
-      type: 'procedure', 
-      pdfUrl: "https://drive.google.com/file/d/1wO-PvVfnUIYn9bzq3dPielokQ0mmPCy2/view",
-      keywords: ["anti-embolism", "stocking", "الجوارب", "جوارب الجلطة", "الجلطات"]
-    },
-    { 
-      id: 4, 
-      title: "Assist-ETT", 
-      type: 'procedure', 
-      pdfUrl: "https://drive.google.com/file/d/1SWwyAeOwFa435STj4dSLjNNqd6uhXQYR/view",
-      keywords: ["ett", "assist-ett", "أنبوب رغامي", "تنبيب", "intubation"]
-    },
-    { 
-      id: 5, 
-      title: "Assisting-Extubation", 
-      type: 'procedure', 
-      pdfUrl: "https://drive.google.com/file/d/10rgNJT9f2xXhp2HlcWHvhj4PAhu6xVR8/view",
-      keywords: ["extubation", "assisting-extubation", "سحب الأنبوب", "فصل جهاز التنفس"]
-    },
-    { 
-      id: 6, 
-      title: "Noradrenaline (Norepinephrine) - حاسبة الجرعات والمحاليل", 
-      type: 'medication', 
-      slug: "noradrenaline",
-      keywords: ["noradrenaline", "norepinephrine", "adrenaline", "نورأدرينالين", "نورادرينالين", "ادرينالين", "أدرينالين", "داعم", "مقبض"]
-    },
-    { 
-      id: 7, 
-      title: "Dopamine - حاسبة الجرعات والمحاليل", 
-      type: 'medication', 
-      slug: "dopamine",
-      keywords: ["dopamine", "دوبامين", "داعم قلب"]
-    },
-    { 
-      id: 8, 
-      title: "Dobutamine - حاسبة الجرعات والمحاليل", 
-      type: 'medication', 
-      slug: "dobutamine",
-      keywords: ["dobutamine", "دوبوتامين", "منشط قلب"]
-    },
-    { 
-      id: 9, 
-      title: "Nitroglycerin (Tridil) - حاسبة الجرعات والمحاليل", 
-      type: 'medication', 
-      slug: "nitroglycerin",
-      keywords: ["nitroglycerin", "tridil", "تريديل", "نيتروجليسرين", "موسع الشرايين", "ضغط"]
-    },
-    { 
-      id: 10, 
-      title: "Amiodarone (Cordarone) - حاسبة الجرعات والمحاليل", 
-      type: 'medication', 
-      slug: "amiodarone",
-      keywords: ["amiodarone", "cordarone", "أميودارون", "اميودارون", "كوردارون", "تنظيم ضربات", "اضطراب القلب"]
-    },
-    { 
-      id: 11, 
-      title: "Aggrastat (Tirofiban) - حاسبة الجرعات والمحاليل", 
-      type: 'medication', 
-      slug: "aggrastat",
-      keywords: ["aggrastat", "tirofiban", "أغراستات", "اغراستات", "تيروفيبان", "مسيل", "جلطة محتشمة"]
-    }
-  ];
-
-  const normalizeText = (text: string): string => {
-    return text
-      .toLowerCase()
-      .replace(/[أإآا]/g, 'ا')
-      .replace(/[ةه]/g, 'ه')
-      .trim();
+  const handleLogout = () => {
+    router.push('/');
   };
-
-  const getFilteredResults = () => {
-    const query = normalizeText(searchTerm);
-    if (!query) return [];
-
-    const searchWords = query.split(/\s+/);
-
-    return allItems.filter(item => {
-      const normalizedTitle = normalizeText(item.title);
-      const normalizedKeywords = item.keywords.map(kw => normalizeText(kw));
-      const normalizedType = normalizeText(item.type);
-
-      return searchWords.every(word => {
-        return (
-          normalizedTitle.includes(word) ||
-          normalizedType.includes(word) ||
-          normalizedKeywords.some(keyword => keyword.includes(word))
-        );
-      });
-    });
-  };
-
-  const filteredResults = getFilteredResults();
 
   if (!mounted) return null;
 
   return (
-    <div style={{ backgroundColor: '#020617', minHeight: '100vh', padding: '40px 16px', fontFamily: 'sans-serif', color: '#f8fafc' }} dir="rtl">
+    <div style={{ 
+      backgroundColor: '#020617', 
+      minHeight: '100vh', 
+      color: '#f8fafc', 
+      fontFamily: 'sans-serif' 
+    }} dir="rtl">
       
-      {/* هيدر المنصة الرئيسي المحدث بتأثير نيون متوهج قوي (Glowing Effect) */}
-      <div style={{ maxWidth: '900px', margin: '0 auto 40px auto', textAlign: 'center' }}>
-        <h1 style={{ 
-          fontSize: '3rem', 
-          fontWeight: '900', 
-          color: '#ffffff', 
-          margin: '0 0 16px 0',
-          letterSpacing: '1.5px',
-          textShadow: '0 0 7px #fff, 0 0 15px rgba(56, 189, 248, 0.9), 0 0 30px rgba(56, 189, 248, 0.7), 0 0 45px rgba(14, 165, 233, 0.5)'
+      {/* 🧩 حاقن أنيميشن تتبع الزوايا الهندسية للفريم (نفس تأثير صفحة الدخول تماماً) */}
+      <style dangerouslySetInnerHTML={{__html: `
+        @keyframes topTrace {
+          0% { left: 100%; width: 0%; }
+          25% { left: 0%; width: 100%; }
+          50%, 100% { left: 0%; width: 0%; }
+        }
+        @keyframes leftTrace {
+          0%, 25% { top: 0%; height: 0%; }
+          50% { top: 0%; height: 100%; }
+          75%, 100% { top: 100%; height: 0%; }
+        }
+        @keyframes bottomTrace {
+          0%, 50% { left: 0%; width: 0%; }
+          75% { left: 0%; width: 100%; }
+          100% { left: 100%; width: 0%; }
+        }
+        @keyframes rightTrace {
+          0%, 75% { top: 100%; height: 0%; }
+          100% { top: 0%; height: 100%; }
+        }
+      `}} />
+
+      {/* 📋 شريط التنقل العلوي (Navbar) */}
+      <header style={{
+        backgroundColor: '#0f172a',
+        borderBottom: '1px solid #1e293b',
+        padding: '16px 24px',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'between',
+        boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
+        position: 'sticky',
+        top: 0,
+        zIndex: 50
+      }}>
+        <div style={{ display: 'flex', width: '100%', alignItems: 'center', justifyContent: 'space-between' }}>
+          
+          {/* 🔲 حاوية العنوان الذكية الملتفة بالفريم الضوئي التتبعي في الداشبورد */}
+          <div style={{ 
+            position: 'relative', 
+            display: 'inline-block', 
+            borderRadius: '10px',
+            backgroundColor: '#0f172a',
+            border: '1px solid #1e293b',
+            overflow: 'hidden',
+            padding: '2px'
+          }}>
+            
+            {/* 1. الخط العلوي (يمشي من اليمين إلى اليسار) */}
+            <div style={{
+              position: 'absolute',
+              top: '0',
+              right: '0',
+              height: '2px',
+              backgroundColor: '#38bdf8',
+              boxShadow: '0 0 8px #38bdf8',
+              animation: 'topTrace 4s linear infinite'
+            }} />
+
+            {/* 2. الخط الأيسر (ينزل من الأعلى إلى الأسفل) */}
+            <div style={{
+              position: 'absolute',
+              left: '0',
+              top: '0',
+              width: '2px',
+              backgroundColor: '#38bdf8',
+              boxShadow: '0 0 8px #38bdf8',
+              animation: 'leftTrace 4s linear infinite'
+            }} />
+
+            {/* 3. الخط السفلي (يمشي من اليسار إلى اليمين) */}
+            <div style={{
+              position: 'absolute',
+              bottom: '0',
+              left: '0',
+              height: '2px',
+              backgroundColor: '#38bdf8',
+              boxShadow: '0 0 8px #38bdf8',
+              animation: 'bottomTrace 4s linear infinite'
+            }} />
+
+            {/* 4. الخط الأيمن (يصعد من الأسفل إلى الأعلى) */}
+            <div style={{
+              position: 'absolute',
+              right: '0',
+              bottom: '0',
+              width: '2px',
+              backgroundColor: '#38bdf8',
+              boxShadow: '0 0 8px #38bdf8',
+              animation: 'rightTrace 4s linear infinite'
+            }} />
+
+            {/* الحاوية الداخلية لعرض اسم المنصة بحجم متناسق مع شريط الداشبورد العلوي */}
+            <div style={{
+              backgroundColor: '#0f172a',
+              padding: '6px 20px',
+              borderRadius: '8px',
+            }}>
+              <span style={{ 
+                fontSize: '1.4rem', 
+                fontWeight: '800', 
+                color: '#ffffff',
+                letterSpacing: '0.5px',
+                textShadow: '0 0 6px rgba(56, 189, 248, 0.6)'
+              }}>
+                منصة دليلي
+              </span>
+            </div>
+          </div>
+
+          {/* زر تسجيل الخروج وعبارة الترحيب */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+            <span style={{ fontSize: '0.9rem', color: '#94a3b8', fontWeight: '500' }}>
+              مرحباً بك في النظام الآمن للرعاية والبروتوكولات التمريضية
+            </span>
+            <button 
+              onClick={handleLogout}
+              style={{
+                backgroundColor: '#7f1d1d40',
+                border: '1px solid #ef444440',
+                color: '#f87171',
+                padding: '8px 16px',
+                borderRadius: '8px',
+                fontSize: '0.85rem',
+                fontWeight: '600',
+                cursor: 'pointer',
+                transition: 'all 0.2s'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.backgroundColor = '#ef4444';
+                e.currentTarget.style.color = '#ffffff';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.backgroundColor = '#7f1d1d40';
+                e.currentTarget.style.color = '#f87171';
+              }}
+            >
+              تسجيل الخروج 🚪
+            </button>
+          </div>
+
+        </div>
+      </header>
+
+      {/* 📊 محتوى لوحة التحكم الرئيسي (Main Dashboard Space) */}
+      <main style={{ padding: '40px 24px', maxWidth: '1200px', margin: '0 auto' }}>
+        <div style={{ 
+          backgroundColor: '#0f172a', 
+          border: '1px solid #1e293b', 
+          borderRadius: '16px', 
+          padding: '24px',
+          boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.3)'
         }}>
-          منصة دليلي
-        </h1>
-        <p style={{ 
-          fontSize: '0.95rem', 
-          color: '#cbd5e1', 
-          margin: '0 auto', 
-          fontWeight: '500', 
-          lineHeight: '1.7',
-          maxWidth: '700px',
-          borderRight: '3px solid #ef4444', 
-          paddingRight: '12px',
-          display: 'inline-block',
-          textAlign: 'right'
-        }}>
-          نظام دليلي يضم الأدوية، بروتوكولات، وإجراءات تمريضية - نظام محمي ويمنع تداوله أو إعادة استخدامه تحت المساءلة القانونية
-        </p>
-      </div>
-
-      {/* 🔍 شريط البحث */}
-      <div style={{ maxWidth: '650px', margin: '0 auto 48px auto', position: 'relative' }}>
-        <div style={{ display: 'flex', alignItems: 'center', backgroundColor: '#0f172a', border: '2px solid #1e293b', borderRadius: '16px', padding: '4px 16px', transition: 'all 0.3s' }}>
-          <span style={{ fontSize: '1.3rem', marginLeft: '12px' }}>🔍</span>
-          <input
-            type="text"
-            placeholder="ابحث عن أوراق، أدوية، سياسات..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            style={{ width: '100%', padding: '14px 0', backgroundColor: 'transparent', border: 'none', color: '#ffffff', fontSize: '1.05rem', outline: 'none' }}
-          />
-          {searchTerm && (
-            <button onClick={() => setSearchTerm('')} style={{ backgroundColor: 'transparent', border: 'none', color: '#64748b', cursor: 'pointer', fontSize: '1.1rem' }}>✕</button>
-          )}
+          <h2 style={{ fontSize: '1.5rem', fontWeight: '700', color: '#ffffff', marginBottom: '12px' }}>
+            لوحة الإجراءات والخدمات المعتمدة
+          </h2>
+          <p style={{ color: '#94a3b8', fontSize: '0.95rem', lineHeight: '1.6' }}>
+            مرحباً بك في الواجهة الرئيسية لمنصة دليلي التمريضية الرقمية. يمكنك الآن استعراض كافة حواسب المحاليل الوريدية (Infusion Calculators)، حسابات أدوية العناية الحثيثة (ICU Central Drugs)، والبروتوكولات الطبية المحمية قانونياً.
+          </p>
         </div>
-
-        {/* قائمة نتائج البحث */}
-        {searchTerm.trim() !== '' && (
-          <div style={{ position: 'absolute', top: '105%', left: 0, width: '100%', backgroundColor: '#0f172a', border: '1px solid #334155', borderRadius: '14px', boxShadow: '0 20px 25px -5px rgba(0,0,0,0.5)', zIndex: 100, overflow: 'hidden', padding: '6px 0' }}>
-            {filteredResults.length > 0 ? (
-              filteredResults.map((item, index) => (
-                <div
-                  key={item.id}
-                  onClick={() => {
-                    setSearchTerm('');
-                    if (item.type === 'medication' && item.slug) {
-                      router.push(`/medications/${item.slug}`);
-                    } else if (item.pdfUrl) {
-                      setSelectedPdf(item.pdfUrl);
-                    }
-                  }}
-                  style={{ padding: '14px 20px', cursor: 'pointer', borderBottom: index !== filteredResults.length - 1 ? '1px solid #1e293b' : 'none', display: 'flex', justifyContent: 'space-between', alignItems: 'center', transition: 'background 0.2s' }}
-                  onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#1e293b'}
-                  onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
-                >
-                  <span style={{ fontWeight: '600', color: '#e2e8f0', fontSize: '0.95rem' }}>{item.title}</span>
-                  <span style={{ 
-                    fontSize: '0.75rem', 
-                    padding: '4px 10px', 
-                    borderRadius: '20px', 
-                    fontWeight: 'bold', 
-                    backgroundColor: item.type === 'policy' ? '#10b98120' : item.type === 'procedure' ? '#3b82f620' : item.type === 'medication' ? '#ec489920' : '#eab30820', 
-                    color: item.type === 'policy' ? '#10b981' : item.type === 'procedure' ? '#3b82f6' : item.type === 'medication' ? '#ec4899' : '#eab308', 
-                    border: `1px solid ${item.type === 'policy' ? '#10b98130' : item.type === 'procedure' ? '#3b82f630' : item.type === 'medication' ? '#ec489930' : '#eab30830'}` 
-                  }}>
-                    {item.type === 'policy' ? '📄 سياسة' : item.type === 'procedure' ? '⚙️ إجراء' : item.type === 'medication' ? '💉 دواء' : '🖨️ نموذج'}
-                  </span>
-                </div>
-              ))
-            ) : (
-              <div style={{ padding: '16px', textAlign: 'center', color: '#94a3b8', fontSize: '0.9rem' }}>❌ لم نجد نتائج متطابقة.</div>
-            )}
-          </div>
-        )}
-      </div>
-
-      {/* 📁 شبكة الأقسام */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '24px', maxWidth: '1200px', margin: '0 auto' }}>
-        
-        <div
-          onClick={() => router.push('/policies')}
-          style={{ backgroundColor: '#0f172a', border: '1px solid #1e293b', borderRadius: '20px', padding: '32px 24px', textAlign: 'center', cursor: 'pointer', transition: 'all 0.2s' }}
-          onMouseEnter={(e) => { e.currentTarget.style.borderColor = '#10b981'; e.currentTarget.style.transform = 'translateY(-4px)'; }}
-          onMouseLeave={(e) => { e.currentTarget.style.borderColor = '#1e293b'; e.currentTarget.style.transform = 'translateY(0)'; }}
-        >
-          <div style={{ fontSize: '3.5rem', marginBottom: '16px' }}>📁</div>
-          <h2 style={{ fontSize: '1.25rem', fontWeight: 'bold', color: '#ffffff', margin: '0 0 8px 0' }}>قسم السياسات والبروتوكولات</h2>
-          <p style={{ fontSize: '0.85rem', color: '#94a3b8', margin: '0', lineHeight: '1.5' }}>تصفح السياسات التنظيمية المعتمدة.</p>
-        </div>
-
-        <div
-          onClick={() => router.push('/medications')} 
-          style={{ backgroundColor: '#0f172a', border: '1px solid #1e293b', borderRadius: '20px', padding: '32px 24px', textAlign: 'center', cursor: 'pointer', transition: 'all 0.2s' }}
-          onMouseEnter={(e) => { e.currentTarget.style.borderColor = '#ec4899'; e.currentTarget.style.transform = 'translateY(-4px)'; }}
-          onMouseLeave={(e) => { e.currentTarget.style.borderColor = '#1e293b'; e.currentTarget.style.transform = 'translateY(0)'; }}
-        >
-          <div style={{ fontSize: '3.5rem', marginBottom: '16px' }}>💉</div>
-          <h2 style={{ fontSize: '1.25rem', fontWeight: 'bold', color: '#ffffff', margin: '0 0 8px 0' }}>حاسبة الأدوية والمحاليل</h2>
-          <p style={{ fontSize: '0.85rem', color: '#94a3b8', margin: '0', lineHeight: '1.5' }}>دليل الأدوية والحاسبات الطبية المعتمدة لبروتوكولات القسم.</p>
-        </div>
-
-        <div
-          onClick={() => router.push('/procedures')}
-          style={{ backgroundColor: '#0f172a', border: '1px solid #1e293b', borderRadius: '20px', padding: '32px 24px', textAlign: 'center', cursor: 'pointer', transition: 'all 0.2s' }}
-          onMouseEnter={(e) => { e.currentTarget.style.borderColor = '#3b82f6'; e.currentTarget.style.transform = 'translateY(-4px)'; }}
-          onMouseLeave={(e) => { e.currentTarget.style.borderColor = '#1e293b'; e.currentTarget.style.transform = 'translateY(0)'; }}
-        >
-          <div style={{ fontSize: '3.5rem', marginBottom: '16px' }}>⚙️</div>
-          <h2 style={{ fontSize: '1.25rem', fontWeight: 'bold', color: '#ffffff', margin: '0 0 8px 0' }}>قسم الإجراءات التمريضية</h2>
-          <p style={{ fontSize: '0.85rem', color: '#94a3b8', margin: '0', lineHeight: '1.5' }}>دليلك لخطوات العمل والبروتوكولات التطبيقية داخل الوحدة.</p>
-        </div>
-
-        <div
-          onClick={() => router.push('/forms')}
-          style={{ backgroundColor: '#0f172a', border: '1px solid #1e293b', borderRadius: '20px', padding: '32px 24px', textAlign: 'center', cursor: 'pointer', transition: 'all 0.2s' }}
-          onMouseEnter={(e) => { e.currentTarget.style.borderColor = '#eab308'; e.currentTarget.style.transform = 'translateY(-4px)'; }}
-          onMouseLeave={(e) => { e.currentTarget.style.borderColor = '#1e293b'; e.currentTarget.style.transform = 'translateY(0)'; }}
-        >
-          <div style={{ fontSize: '3.5rem', marginBottom: '16px' }}>🖨️</div>
-          <h2 style={{ fontSize: '1.25rem', fontWeight: 'bold', color: '#ffffff', margin: '0 0 8px 0' }}>ملف الأوراق الأكثر استخداماً</h2>
-          <p style={{ fontSize: '0.85rem', color: '#94a3b8', margin: '0', lineHeight: '1.5' }}>دليل النماذج، الشيتات، الاستمارات اليومية الجاهزة للطباعة المباشرة.</p>
-        </div>
-
-      </div>
-
-      {/* 🖥️ شاشة العرض المدمجة المنبثقة لاستعراض الـ PDF */}
-      {selectedPdf && (
-        <div style={{ position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh', backgroundColor: 'rgba(2, 6, 23, 0.98)', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', zIndex: 9999, padding: '24px', boxSizing: 'border-box' }}>
-          <div style={{ maxWidth: '1200px', width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px', backgroundColor: '#0f172a', padding: '12px 24px', borderRadius: '16px', border: '1px solid #1e293b', boxSizing: 'border-box' }}>
-            <span style={{ fontSize: '1rem', fontWeight: 'bold', color: '#ffffff' }}>📄 استعراض المستند - جاهز للطباعة الفورية</span>
-            <button onClick={() => setSelectedPdf(null)} style={{ backgroundColor: '#ef4444', border: 'none', color: '#fff', padding: '8px 20px', borderRadius: '12px', cursor: 'pointer', fontWeight: 'bold' }}>إغلاق العرض ✕</button>
-          </div>
-          <div style={{ maxWidth: '1200px', width: '100%', height: '80vh', backgroundColor: '#1e293b', borderRadius: '16px', overflow: 'hidden', border: '1px solid #334155' }}>
-            <iframe src={selectedPdf} width="100%" height="100%" allow="autoplay" style={{ border: 'none' }}></iframe>
-          </div>
-        </div>
-      )}
+      </main>
 
     </div>
   );
