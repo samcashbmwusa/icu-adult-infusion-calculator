@@ -85,7 +85,7 @@ export default function DashboardPage() {
         <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
           <div style={{ textAlign: 'left' }}>
             <span style={{ display: 'block', fontSize: '0.85rem', color: '#38bdf8', fontWeight: '600' }}>مستشفى الجامعة الأردنية</span>
-            <span style={{ display: 'block', fontSize: '0.75rem', color: '#64748b' }}>قسم العناية الحثيثة ICU</span>
+            <span style={{ display: 'block', fontSize: '0.75rem', color: '#64748b' }}>   دائرة التمريض </span>
           </div>
           <button 
             onClick={() => router.push('/')}
