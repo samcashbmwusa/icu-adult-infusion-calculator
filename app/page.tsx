@@ -2,8 +2,6 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-// استيراد الصورة برمجياً لتجنب مشاكل الامتداد والكاش تماماً
-import profileImg from '../public/profile.jpg'; 
 
 export default function LoginPage() {
   const router = useRouter();
@@ -12,6 +10,9 @@ export default function LoginPage() {
   const [licenseKey, setLicenseKey] = useState('');
   const [error, setError] = useState('');
   const [mounted, setMounted] = useState(false);
+  
+  // إدارة حالة الخطأ في تحميل الصورة لعرض رابط بديل فوراً إذا فِشل السيرفر في قراءة الملف المحلي
+  const [imgSrc, setImgSrc] = useState('/profile.jpg');
 
   useEffect(() => {
     setMounted(true);
@@ -20,7 +21,6 @@ export default function LoginPage() {
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
     
-    // التحقق الأصلي من الحقول الثلاثة لتفويض الدخول
     if (username.trim() !== '' && password.trim() !== '' && licenseKey.trim() !== '') {
       setError('');
       router.push('/dashboard');
@@ -44,11 +44,17 @@ export default function LoginPage() {
       color: '#f8fafc' 
     }} dir="rtl">
       
-      {/* 🖼️ صورتك الشخصية مع إطار نيون متوهج قوي وملفت للانتباه (Glowing Frame) */}
+      {/* 🖼️ صورتك الشخصية مع الإطار المتوهج وإدارة الفشل الآمن في التحميل */}
       <div style={{ marginBottom: '28px', textAlign: 'center' }}>
         <img 
-          src={profileImg.src} 
+          src={imgSrc} 
           alt="User Profile" 
+          onError={() => {
+            // إذا فشل المتصفح في العثور على /profile.jpg محلياً، يحول فوراً إلى امتداد jpeg التبادلي كخيار آمن
+            if (imgSrc === '/profile.jpg') {
+              setImgSrc('/profile.jpeg');
+            }
+          }}
           style={{ 
             width: '120px', 
             height: '120px', 
@@ -60,7 +66,7 @@ export default function LoginPage() {
         />
       </div>
 
-      {/* 🔐 صندوق تسجيل الدخول المطور */}
+      {/* 🔐 صندوق تسجيل الدخول */}
       <div style={{ 
         maxWidth: '500px', 
         width: '100%', 
@@ -71,7 +77,6 @@ export default function LoginPage() {
         boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.5)' 
       }}>
         
-        {/* عنوان المنصة المضيء والنص القانوني */}
         <div style={{ marginBottom: '28px', textAlign: 'center' }}>
           <h1 style={{ 
             fontSize: '2.6rem', 
@@ -98,10 +103,8 @@ export default function LoginPage() {
           </p>
         </div>
 
-        {/* نموذج تسجيل الدخول بالثلاثة حقول الأصلية */}
         <form onSubmit={handleLogin} style={{ display: 'flex', flexDirection: 'column', gap: '18px' }}>
           
-          {/* اسم المستخدم */}
           <div style={{ textAlign: 'right' }}>
             <label htmlFor="username" style={{ display: 'block', fontSize: '0.85rem', color: '#94a3b8', marginBottom: '6px', fontWeight: '600' }}>اسم المستخدم:</label>
             <input
@@ -116,7 +119,6 @@ export default function LoginPage() {
             />
           </div>
 
-          {/* كلمة المرور */}
           <div style={{ textAlign: 'right' }}>
             <label htmlFor="password" style={{ display: 'block', fontSize: '0.85rem', color: '#94a3b8', marginBottom: '6px', fontWeight: '600' }}>كلمة المرور:</label>
             <input
@@ -131,13 +133,12 @@ export default function LoginPage() {
             />
           </div>
 
-          {/* رمز الترخيص */}
           <div style={{ textAlign: 'right' }}>
             <label htmlFor="licenseKey" style={{ display: 'block', fontSize: '0.85rem', color: '#94a3b8', marginBottom: '6px', fontWeight: '600' }}>رمز الترخيص الحصري:</label>
             <input
               id="licenseKey"
               type="text"
-              placeholder="أدخل رمز الترخيص المعمد"
+              placeholder="أدخل رمز الترخيص المعتمد"
               value={licenseKey}
               onChange={(e) => setLicenseKey(e.target.value)}
               style={{ width: '100%', padding: '12px 14px', backgroundColor: '#020617', border: '1px solid #1e293b', borderRadius: '12px', color: '#ffffff', fontSize: '0.95rem', outline: 'none', boxSizing: 'border-box' }}
