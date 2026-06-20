@@ -42,15 +42,30 @@ export default function LoginPage() {
       overflowX: 'hidden'
     }} dir="rtl">
       
-      {/* 🧩 حاقن الأنيميشن لإطار الصورة والخيط المتحرك حول العنوان */}
+      {/* 🧩 حاقن الأنيميشن الدقيق لتتبع زوايا الفريم الهندسي خطوة بخطوة */}
       <style dangerouslySetInnerHTML={{__html: `
         @keyframes rotateProfileGlow {
           0% { transform: rotate(0deg); }
           100% { transform: rotate(360deg); }
         }
-        @keyframes borderTrace {
-          0% { background-position: 0% 0%; }
-          100% { background-position: 200% 0%; }
+        @keyframes topTrace {
+          0% { left: 100%; width: 0%; }
+          25% { left: 0%; width: 100%; }
+          50%, 100% { left: 0%; width: 0%; }
+        }
+        @keyframes leftTrace {
+          0%, 25% { top: 0%; height: 0%; }
+          50% { top: 0%; height: 100%; }
+          75%, 100% { top: 100%; height: 0%; }
+        }
+        @keyframes bottomTrace {
+          0%, 50% { left: 0%; width: 0%; }
+          75% { left: 0%; width: 100%; }
+          100% { left: 100%; width: 0%; }
+        }
+        @keyframes rightTrace {
+          0%, 75% { top: 100%; height: 0%; }
+          100% { top: 0%; height: 100%; }
         }
       `}} />
 
@@ -105,34 +120,74 @@ export default function LoginPage() {
         
         <div style={{ marginBottom: '28px', textAlign: 'center' }}>
           
-          {/* 🔲 حاوية العنوان المزودة بالفريم المتحرك (يسير من الأعلى اليمين نحو اليسار فالأسفل فاليمين فالأعلى) */}
+          {/* 🔲 حاوية العنوان المزودة بالفريم التتبعي الذكي المستمر */}
           <div style={{ 
             position: 'relative', 
             display: 'inline-block', 
-            padding: '12px 36px',
-            borderRadius: '16px',
+            borderRadius: '14px',
             backgroundColor: '#0f172a',
-            // هنا نصنع الفريم المضيء المتحرك عبر تدرج لوني خطي منساب
-            backgroundImage: 'linear-gradient(90deg, #38bdf8, transparent, #38bdf8, transparent, #38bdf8)',
-            backgroundSize: '200% 100%',
-            animation: 'borderTrace 4s linear infinite',
-            padding: '3px', // سمك الخط المتحرك
+            border: '1px solid #1e293b',
+            overflow: 'hidden',
+            padding: '2px' 
           }}>
             
-            {/* الحاوية الداخلية لضمان ظهور خط الإطار بشكل نظيف وحاد */}
+            {/* 1. الخط العلوي (يمشي من اليمين إلى اليسار) */}
+            <div style={{
+              position: 'absolute',
+              top: '0',
+              right: '0',
+              height: '2px',
+              backgroundColor: '#38bdf8',
+              boxShadow: '0 0 8px #38bdf8',
+              animation: 'topTrace 4s linear infinite'
+            }} />
+
+            {/* 2. الخط الأيسر (ينزل من الأعلى إلى الأسفل) */}
+            <div style={{
+              position: 'absolute',
+              left: '0',
+              top: '0',
+              width: '2px',
+              backgroundColor: '#38bdf8',
+              boxShadow: '0 0 8px #38bdf8',
+              animation: 'leftTrace 4s linear infinite'
+            }} />
+
+            {/* 3. الخط السفلي (يمشي من اليسار إلى اليمين) */}
+            <div style={{
+              position: 'absolute',
+              bottom: '0',
+              left: '0',
+              height: '2px',
+              backgroundColor: '#38bdf8',
+              boxShadow: '0 0 8px #38bdf8',
+              animation: 'bottomTrace 4s linear infinite'
+            }} />
+
+            {/* 4. الخط الأيمن (يصعد من الأسفل إلى الأعلى) */}
+            <div style={{
+              position: 'absolute',
+              right: '0',
+              bottom: '0',
+              width: '2px',
+              backgroundColor: '#38bdf8',
+              boxShadow: '0 0 8px #38bdf8',
+              animation: 'rightTrace 4s linear infinite'
+            }} />
+
+            {/* الحاوية الداخلية لعرض النص بوضوح وثبات */}
             <div style={{
               backgroundColor: '#0f172a',
-              padding: '12px 36px',
-              borderRadius: '14px',
+              padding: '12px 40px',
+              borderRadius: '12px',
             }}>
-              {/* العنوان المستقر بجمالية تامة */}
               <h1 style={{ 
                 fontSize: '2.6rem', 
                 fontWeight: '900', 
                 color: '#ffffff', 
                 margin: '0', 
                 letterSpacing: '1px', 
-                textShadow: '0 0 7px #fff, 0 0 15px rgba(56, 189, 248, 0.6)' 
+                textShadow: '0 0 7px #fff, 0 0 15px rgba(56, 189, 248, 0.5)' 
               }}>
                 منصة دليلي
               </h1>
