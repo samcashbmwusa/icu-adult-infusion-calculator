@@ -42,19 +42,15 @@ export default function LoginPage() {
       overflowX: 'hidden'
     }} dir="rtl">
       
-      {/* 🧩 حاقن الأنيميشن ثلاثي الأبعاد المطور لضبط الدوران البيضاوي والعمق الخارجي */}
+      {/* 🧩 حاقن الأنيميشن لإطار الصورة والخيط المتحرك حول العنوان */}
       <style dangerouslySetInnerHTML={{__html: `
         @keyframes rotateProfileGlow {
           0% { transform: rotate(0deg); }
           100% { transform: rotate(360deg); }
         }
-        @keyframes cosmicOrbit {
-          0% { transform: rotateX(75deg) rotateY(20deg) rotate(0deg); }
-          100% { transform: rotateX(75deg) rotateY(20deg) rotate(360deg); }
-        }
-        @keyframes cosmicDepth {
-          0%, 100% { z-index: 10; opacity: 1; filter: drop-shadow(0 0 20px #38bdf8); transform: scale(1.3); }
-          50% { z-index: 1; opacity: 0.25; filter: drop-shadow(0 0 6px #0284c7); transform: scale(0.75); }
+        @keyframes borderTrace {
+          0% { background-position: 0% 0%; }
+          100% { background-position: 200% 0%; }
         }
       `}} />
 
@@ -109,55 +105,38 @@ export default function LoginPage() {
         
         <div style={{ marginBottom: '28px', textAlign: 'center' }}>
           
-          {/* 🌌 الفضاء الحاضن للمدار ثلاثي الأبعاد المائل حول كلمة منصة دليلي */}
+          {/* 🔲 حاوية العنوان المزودة بالفريم المتحرك (يسير من الأعلى اليمين نحو اليسار فالأسفل فاليمين فالأعلى) */}
           <div style={{ 
             position: 'relative', 
             display: 'inline-block', 
-            padding: '16px 48px',
-            perspective: '1200px'
+            padding: '12px 36px',
+            borderRadius: '16px',
+            backgroundColor: '#0f172a',
+            // هنا نصنع الفريم المضيء المتحرك عبر تدرج لوني خطي منساب
+            backgroundImage: 'linear-gradient(90deg, #38bdf8, transparent, #38bdf8, transparent, #38bdf8)',
+            backgroundSize: '200% 100%',
+            animation: 'borderTrace 4s linear infinite',
+            padding: '3px', // سمك الخط المتحرك
           }}>
             
-            {/* 🪐 المدار البيضاوي الكبير المائل */}
+            {/* الحاوية الداخلية لضمان ظهور خط الإطار بشكل نظيف وحاد */}
             <div style={{
-              position: 'absolute',
-              top: '-20%',
-              left: '-25%',
-              width: '150%',
-              height: '140%',
-              borderRadius: '50%',
-              transformStyle: 'preserve-3d',
-              animation: 'cosmicOrbit 5s linear infinite', 
-              pointerEvents: 'none'
+              backgroundColor: '#0f172a',
+              padding: '12px 36px',
+              borderRadius: '14px',
             }}>
-              {/* 🔮 الكرة المجسمة المتوهجة (3D Sphere Globe) بتأثير الظل النوري الخارجي والداخلي */}
-              <div style={{
-                position: 'absolute',
-                top: '0',
-                left: '50%',
-                width: '20px', // زيادة طفيفة في الحجم لتوضيح التجسيم الكروي
-                height: '20px',
-                borderRadius: '50%',
-                // تدرج شعاعي يعطي إضاءة ثلاثية الأبعاد (نقطة ضوء بيضاء مائلة تليها تدرج أزرق نيون ثم ظل معتم)
-                background: 'radial-gradient(circle at 30% 30%, #ffffff 0%, #38bdf8 40%, #0284c7 70%, #0f172a 100%)',
-                boxShadow: '0 0 15px #38bdf8, 0 0 30px rgba(56, 189, 248, 0.6), inset -2px -2px 6px rgba(0,0,0,0.6)',
-                transform: 'translate(-50%, -50%)',
-                animation: 'cosmicDepth 5s linear infinite'
-              }} />
+              {/* العنوان المستقر بجمالية تامة */}
+              <h1 style={{ 
+                fontSize: '2.6rem', 
+                fontWeight: '900', 
+                color: '#ffffff', 
+                margin: '0', 
+                letterSpacing: '1px', 
+                textShadow: '0 0 7px #fff, 0 0 15px rgba(56, 189, 248, 0.6)' 
+              }}>
+                منصة دليلي
+              </h1>
             </div>
-
-            {/* العنوان الثابت في مركز المجرة */}
-            <h1 style={{ 
-              fontSize: '2.6rem', 
-              fontWeight: '900', 
-              color: '#ffffff', 
-              margin: '0', 
-              letterSpacing: '1px', 
-              textShadow: '0 0 7px #fff, 0 0 15px rgba(56, 189, 248, 0.9), 0 0 30px rgba(56, 189, 248, 0.7)',
-              position: 'relative',
-              zIndex: 5 
-            }}>
-              منصة دليلي
-            </h1>
           </div>
           
           {/* 🧑‍⚕️ سطر إسناد التصميم والإعداد */}
@@ -221,7 +200,7 @@ export default function LoginPage() {
             <input
               id="licenseKey"
               type="text"
-              placeholder="أدخل رمز الترخيص المعتمد"
+              placeholder="أدخل رمز الترخيص المعمد"
               value={licenseKey}
               onChange={(e) => setLicenseKey(e.target.value)}
               style={{ width: '100%', padding: '12px 14px', backgroundColor: '#020617', border: '1px solid #1e293b', borderRadius: '12px', color: '#ffffff', fontSize: '0.95rem', outline: 'none', boxSizing: 'border-box' }}
