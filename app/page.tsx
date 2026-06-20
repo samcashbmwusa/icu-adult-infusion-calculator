@@ -20,7 +20,8 @@ export default function LoginPage() {
     
     if (username.trim() !== '' && password.trim() !== '' && licenseKey.trim() !== '') {
       setError('');
-      router.push('/dashboard');
+      // استخدام window.location.href لضمان التوافق المطلق مع متصفحات الموبايل واللمس
+      window.location.href = '/dashboard';
     } else {
       setError('❌ يرجى إدخال اسم المستخدم، كلمة المرور، ورمز الترخيص بشكل صحيح.');
     }
@@ -42,7 +43,7 @@ export default function LoginPage() {
       overflowX: 'hidden'
     }} dir="rtl">
       
-      {/* 🧩 حاقن الأنيميشن الدقيق لتتبع زوايا الفريم الهندسي خطوة بخطوة */}
+      {/* 🧩 حاقن الأنيميشن لإطار الصورة والخيط المتحرك حول العنوان */}
       <style dangerouslySetInnerHTML={{__html: `
         @keyframes rotateProfileGlow {
           0% { transform: rotate(0deg); }
@@ -131,56 +132,12 @@ export default function LoginPage() {
             padding: '2px' 
           }}>
             
-            {/* 1. الخط العلوي (يمشي من اليمين إلى اليسار) */}
-            <div style={{
-              position: 'absolute',
-              top: '0',
-              right: '0',
-              height: '2px',
-              backgroundColor: '#38bdf8',
-              boxShadow: '0 0 8px #38bdf8',
-              animation: 'topTrace 4s linear infinite'
-            }} />
+            <div style={{ position: 'absolute', top: '0', right: '0', height: '2px', backgroundColor: '#38bdf8', boxShadow: '0 0 8px #38bdf8', animation: 'topTrace 4s linear infinite' }} />
+            <div style={{ position: 'absolute', left: '0', top: '0', width: '2px', backgroundColor: '#38bdf8', boxShadow: '0 0 8px #38bdf8', animation: 'leftTrace 4s linear infinite' }} />
+            <div style={{ position: 'absolute', bottom: '0', left: '0', height: '2px', backgroundColor: '#38bdf8', boxShadow: '0 0 8px #38bdf8', animation: 'bottomTrace 4s linear infinite' }} />
+            <div style={{ position: 'absolute', right: '0', bottom: '0', width: '2px', backgroundColor: '#38bdf8', boxShadow: '0 0 8px #38bdf8', animation: 'rightTrace 4s linear infinite' }} />
 
-            {/* 2. الخط الأيسر (ينزل من الأعلى إلى الأسفل) */}
-            <div style={{
-              position: 'absolute',
-              left: '0',
-              top: '0',
-              width: '2px',
-              backgroundColor: '#38bdf8',
-              boxShadow: '0 0 8px #38bdf8',
-              animation: 'leftTrace 4s linear infinite'
-            }} />
-
-            {/* 3. الخط السفلي (يمشي من اليسار إلى اليمين) */}
-            <div style={{
-              position: 'absolute',
-              bottom: '0',
-              left: '0',
-              height: '2px',
-              backgroundColor: '#38bdf8',
-              boxShadow: '0 0 8px #38bdf8',
-              animation: 'bottomTrace 4s linear infinite'
-            }} />
-
-            {/* 4. الخط الأيمن (يصعد من الأسفل إلى الأعلى) */}
-            <div style={{
-              position: 'absolute',
-              right: '0',
-              bottom: '0',
-              width: '2px',
-              backgroundColor: '#38bdf8',
-              boxShadow: '0 0 8px #38bdf8',
-              animation: 'rightTrace 4s linear infinite'
-            }} />
-
-            {/* الحاوية الداخلية لعرض النص بوضوح وثبات */}
-            <div style={{
-              backgroundColor: '#0f172a',
-              padding: '12px 40px',
-              borderRadius: '12px',
-            }}>
+            <div style={{ backgroundColor: '#0f172a', padding: '12px 40px', borderRadius: '12px' }}>
               <h1 style={{ 
                 fontSize: '2.6rem', 
                 fontWeight: '900', 
@@ -231,8 +188,6 @@ export default function LoginPage() {
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               style={{ width: '100%', padding: '12px 14px', backgroundColor: '#020617', border: '1px solid #1e293b', borderRadius: '12px', color: '#ffffff', fontSize: '0.95rem', outline: 'none', boxSizing: 'border-box' }}
-              onFocus={(e) => e.currentTarget.style.borderColor = '#38bdf8'}
-              onBlur={(e) => e.currentTarget.style.borderColor = '#1e293b'}
             />
           </div>
 
@@ -245,8 +200,6 @@ export default function LoginPage() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               style={{ width: '100%', padding: '12px 14px', backgroundColor: '#020617', border: '1px solid #1e293b', borderRadius: '12px', color: '#ffffff', fontSize: '0.95rem', outline: 'none', boxSizing: 'border-box' }}
-              onFocus={(e) => e.currentTarget.style.borderColor = '#38bdf8'}
-              onBlur={(e) => e.currentTarget.style.borderColor = '#1e293b'}
             />
           </div>
 
@@ -255,12 +208,10 @@ export default function LoginPage() {
             <input
               id="licenseKey"
               type="text"
-              placeholder="أدخل رمز الترخيص المعتمد"
+              placeholder="أدخل رمز الترخيص المعمد"
               value={licenseKey}
               onChange={(e) => setLicenseKey(e.target.value)}
               style={{ width: '100%', padding: '12px 14px', backgroundColor: '#020617', border: '1px solid #1e293b', borderRadius: '12px', color: '#ffffff', fontSize: '0.95rem', outline: 'none', boxSizing: 'border-box' }}
-              onFocus={(e) => e.currentTarget.style.borderColor = '#38bdf8'}
-              onBlur={(e) => e.currentTarget.style.borderColor = '#1e293b'}
             />
           </div>
 
@@ -270,7 +221,23 @@ export default function LoginPage() {
             </div>
           )}
 
-          <button type="submit" style={{ width: '100%', padding: '14px', backgroundColor: '#0284c7', color: '#ffffff', fontSize: '1rem', fontWeight: 'bold', border: 'none', borderRadius: '12px', cursor: 'pointer', transition: 'background-color 0.2s', marginTop: '8px' }} onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#0369a1'} onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#0284c7'}>
+          {/* زر تفويض الدخول المدعم بخصائص اللمس الذكية للهواتف الذكية */}
+          <button 
+            type="submit" 
+            style={{ 
+              width: '100%', 
+              padding: '14px', 
+              backgroundColor: '#0284c7', 
+              color: '#ffffff', 
+              fontSize: '1rem', 
+              fontWeight: 'bold', 
+              border: 'none', 
+              borderRadius: '12px', 
+              cursor: 'pointer',
+              touchAction: 'manipulation', // منع زووم المتصفح عند النقر المكرر وتحسين سرعة استجابة اللمس لقفل الموبايل
+              marginTop: '8px' 
+            }}
+          >
             التحقق وتفويض الدخول 🔓
           </button>
         </form>
