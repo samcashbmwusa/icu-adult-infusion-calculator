@@ -41,20 +41,52 @@ export default function LoginPage() {
       color: '#f8fafc' 
     }} dir="rtl">
       
-      {/* 🖼️ الصورة الشخصية الدائرية المتوهجة */}
+      {/* 🧩 حاقن كود الحركة الدورانية للوميض النيون بشكل غير مرئي داخل الصفحة */}
+      <style dangerouslySetInnerHTML={{__html: `
+        @keyframes rotateGlow {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
+        }
+      `}} />
+
+      {/* 🖼️ حاوية الصورة المزودة بوميض نيون يتحرك بشكل دائري بسرعة خفيفة */}
       <div style={{ marginBottom: '28px', textAlign: 'center' }}>
-        <img 
-          src="/profile.jpg" 
-          alt="User Profile" 
-          style={{ 
-            width: '120px', 
-            height: '120px', 
-            borderRadius: '50%', 
-            objectFit: 'cover', 
-            border: '3px solid #38bdf8',
-            boxShadow: '0 0 15px #38bdf8, 0 0 30px rgba(56, 189, 248, 0.6), 0 0 45px rgba(56, 189, 248, 0.3)'
-          }} 
-        />
+        <div style={{
+          position: 'relative',
+          width: '126px',
+          height: '126px',
+          borderRadius: '50%',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          overflow: 'hidden',
+          boxShadow: '0 0 20px rgba(56, 189, 248, 0.4)'
+        }}>
+          {/* خلفية الوميض الدائرية التي تدور في الخلف لتصنع حركة النيون */}
+          <div style={{
+            position: 'absolute',
+            width: '150%',
+            height: '150%',
+            background: 'conic-gradient(from 0deg, transparent 30%, #38bdf8 70%, transparent 100%)',
+            animation: 'rotateGlow 4s linear infinite', // الحركة دائرية بسرعة خفيفة (4 ثوانٍ للدورة الكاملة)
+            zIndex: 1
+          }} />
+          
+          {/* الإطار الداخلي لحماية حواف الصورة الثابتة */}
+          <img 
+            src="/profile.jpg" 
+            alt="User Profile" 
+            style={{ 
+              width: '120px', 
+              height: '120px', 
+              borderRadius: '50%', 
+              objectFit: 'cover', 
+              border: '3px solid #0f172a',
+              position: 'relative',
+              zIndex: 2
+            }} 
+          />
+        </div>
       </div>
 
       {/* 🔐 صندوق تسجيل الدخول */}
@@ -69,17 +101,30 @@ export default function LoginPage() {
       }}>
         
         <div style={{ marginBottom: '28px', textAlign: 'center' }}>
+          {/* عنوان المنصة المتوهج */}
           <h1 style={{ 
             fontSize: '2.6rem', 
             fontWeight: '900', 
             color: '#ffffff', 
-            margin: '0 0 14px 0', 
+            margin: '0 0 8px 0', 
             letterSpacing: '1px', 
             textShadow: '0 0 7px #fff, 0 0 15px rgba(56, 189, 248, 0.9), 0 0 30px rgba(56, 189, 248, 0.7)' 
           }}>
             منصة دليلي
           </h1>
           
+          {/* 🧑‍⚕️ سطر إسناد التصميم والإعداد والجهة الرسمية */}
+          <p style={{
+            fontSize: '0.95rem',
+            color: '#38bdf8',
+            fontWeight: '600',
+            margin: '0 0 16px 0',
+            letterSpacing: '0.5px'
+          }}>
+            تصميم وإعداد الممرض: سليمان بلال أحمد عوض — مستشفى الجامعة الأردنية
+          </p>
+          
+          {/* النص القانوني */}
           <p style={{ 
             fontSize: '0.85rem', 
             color: '#cbd5e1', 
@@ -149,7 +194,7 @@ export default function LoginPage() {
           </button>
         </form>
 
-        {/* 📜 عبارة حفظ الحقوق القانونية بالإنجليزية أسفل زر الدخول مباشرة */}
+        {/* 📜 حفظ الحقوق القانونية بالإنجليزية */}
         <div style={{ 
           marginTop: '24px', 
           textAlign: 'center', 
