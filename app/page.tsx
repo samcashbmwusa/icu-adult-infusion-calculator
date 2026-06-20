@@ -41,10 +41,10 @@ export default function LoginPage() {
       color: '#f8fafc' 
     }} dir="rtl">
       
-      {/* 🖼️ صورتك الشخصية مع إطار متوهج قوي وملفت للانتباه (Glowing Frame) */}
+      {/* 🖼️ تعديل الامتداد إلى .jpeg ليتوافق مع تفاصيل الصورة في 59.png مع الإطار المتوهج */}
       <div style={{ marginBottom: '28px', textAlign: 'center' }}>
         <img 
-          src="/profile.jpg" 
+          src="/profile.jpeg" 
           alt="User Profile" 
           style={{ 
             width: '120px', 
@@ -52,7 +52,6 @@ export default function LoginPage() {
             borderRadius: '50%', 
             objectFit: 'cover', 
             border: '3px solid #38bdf8',
-            // تأثير التوهج النيون المحيط بالإطار الدائري للصورة
             boxShadow: '0 0 15px #38bdf8, 0 0 30px rgba(56, 189, 248, 0.6), 0 0 45px rgba(56, 189, 248, 0.3)'
           }} 
         />
