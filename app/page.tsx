@@ -1,10 +1,8 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
 
 export default function LoginPage() {
-  const router = useRouter();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [licenseKey, setLicenseKey] = useState('');
@@ -16,14 +14,18 @@ export default function LoginPage() {
   }, []);
 
   const handleLogin = (e: React.FormEvent) => {
-    // 🛑 منع المتصفح تماماً من إنعاش الصفحة عند الضغط على الزر
     e.preventDefault();
     e.stopPropagation();
     
-    if (username.trim() !== '' && password.trim() !== '' && licenseKey.trim() !== '') {
+    // Clear any trailing spaces that mobile keyboards love to add automatically
+    const cleanUser = username.trim();
+    const cleanPass = password.trim();
+    const cleanKey = licenseKey.trim();
+
+    if (cleanUser !== '' && cleanPass !== '' && cleanKey !== '') {
       setError('');
-      // 🚀 الانتقال المضمون والسلس المتوافق مع الموبايل والكمبيوتر دون إنعاش
-      router.push('/dashboard');
+      // 🚀 The ultimate native browser redirect: Bulletproof for all mobile webviews
+      window.location.replace('/dashboard');
     } else {
       setError('❌ يرجى إدخال اسم المستخدم، كلمة المرور، ورمز الترخيص بشكل صحيح.');
     }
@@ -186,7 +188,6 @@ export default function LoginPage() {
             <input
               id="username"
               type="text"
-              required
               placeholder="أدخل اسم المستخدم"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
@@ -199,7 +200,6 @@ export default function LoginPage() {
             <input
               id="password"
               type="password"
-              required
               placeholder="••••••••"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
@@ -212,7 +212,6 @@ export default function LoginPage() {
             <input
               id="licenseKey"
               type="text"
-              required
               placeholder="أدخل رمز الترخيص المعمد"
               value={licenseKey}
               onChange={(e) => setLicenseKey(e.target.value)}
@@ -226,7 +225,7 @@ export default function LoginPage() {
             </div>
           )}
 
-          {/* زر تفويض الدخول الثابت */}
+          {/* زر تفويض الدخول الأساسي المستقر */}
           <button 
             type="submit" 
             style={{ 
