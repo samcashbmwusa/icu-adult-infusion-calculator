@@ -10,9 +10,6 @@ export default function LoginPage() {
   const [licenseKey, setLicenseKey] = useState('');
   const [error, setError] = useState('');
   const [mounted, setMounted] = useState(false);
-  
-  // إدارة حالة الخطأ في تحميل الصورة لعرض رابط بديل فوراً إذا فِشل السيرفر في قراءة الملف المحلي
-  const [imgSrc, setImgSrc] = useState('/profile.jpg');
 
   useEffect(() => {
     setMounted(true);
@@ -44,17 +41,11 @@ export default function LoginPage() {
       color: '#f8fafc' 
     }} dir="rtl">
       
-      {/* 🖼️ صورتك الشخصية مع الإطار المتوهج وإدارة الفشل الآمن في التحميل */}
+      {/* 🖼️ صورتك الشخصية المدمجة عبر رابط Google Drive المباشر مع الإطار المتوهج */}
       <div style={{ marginBottom: '28px', textAlign: 'center' }}>
         <img 
-          src={imgSrc} 
+          src="https://docs.google.com/uc?export=view&id=1SasSdD6YDSYPBIV2kb6mtXtfVwpkRtOK" 
           alt="User Profile" 
-          onError={() => {
-            // إذا فشل المتصفح في العثور على /profile.jpg محلياً، يحول فوراً إلى امتداد jpeg التبادلي كخيار آمن
-            if (imgSrc === '/profile.jpg') {
-              setImgSrc('/profile.jpeg');
-            }
-          }}
           style={{ 
             width: '120px', 
             height: '120px', 
