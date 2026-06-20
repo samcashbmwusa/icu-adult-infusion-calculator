@@ -42,7 +42,7 @@ export default function LoginPage() {
       overflowX: 'hidden'
     }} dir="rtl">
       
-      {/* 🧩 حاقن الأنيميشن ثلاثي الأبعاد المطور لضبط الدوران البيضاوي والعمق الخارجي */}
+      {/* 🧩 حاقن الأنيميشن ثلاثي الأبعاد المصحح لضبط الدوران البيضاوي والعمق الخارجي */}
       <style dangerouslySetInnerHTML={{__html: `
         @keyframes rotateProfileGlow {
           0% { transform: rotate(0deg); }
@@ -58,7 +58,7 @@ export default function LoginPage() {
         }
       `}} />
 
-      {/* 🖼️ حاوية الصورة الشخصية الدائرية المتوهجة دوارنياً */}
+      {/* 🖼️ حاوية الصورة الشخصية الدائرية المتوهجة دوراناً */}
       <div style={{ marginBottom: '28px', textAlign: 'center' }}>
         <div style={{
           position: 'relative',
@@ -126,7 +126,7 @@ export default function LoginPage() {
               height: '140%',
               borderRadius: '50%',
               transformStyle: 'preserve-3d',
-              animation: 'cosicOrbit 5s linear infinite', // سرعة دوران هادئة وواضحة (5 ثوانٍ)
+              animation: 'cosmicOrbit 5s linear infinite', // تم إصلاح اسم الأنيميشن هنا
               pointerEvents: 'none'
             }}>
               {/* 🌕 الدائرة الكبيرة الواضحة (القمر المتوهج) مع تباين العمق الأمامي والخلفي */}
@@ -134,7 +134,7 @@ export default function LoginPage() {
                 position: 'absolute',
                 top: '0',
                 left: '50%',
-                width: '16px', // تكبير حجم الدائرة لتصبح واضحة تماماً
+                width: '16px', 
                 height: '16px',
                 borderRadius: '50%',
                 backgroundColor: '#38bdf8',
@@ -144,7 +144,7 @@ export default function LoginPage() {
               }} />
             </div>
 
-            {/* العنوان الثابت في مركز المجرة (يمر المدار خلفه وأمامه برمجياً) */}
+            {/* العنوان الثابت في مركز المجرة */}
             <h1 style={{ 
               fontSize: '2.6rem', 
               fontWeight: '900', 
@@ -153,7 +153,7 @@ export default function LoginPage() {
               letterSpacing: '1px', 
               textShadow: '0 0 7px #fff, 0 0 15px rgba(56, 189, 248, 0.9), 0 0 30px rgba(56, 189, 248, 0.7)',
               position: 'relative',
-              zIndex: 5 // يقع برمجياً في المنتصف بين العمق الأمامي (10) والعمق الخلفي (1) للمدار
+              zIndex: 5 
             }}>
               منصة دليلي
             </h1>
@@ -194,7 +194,7 @@ export default function LoginPage() {
               type="text"
               placeholder="أدخل اسم المستخدم"
               value={username}
-              onChange={{e => setUsername(e.target.value)}}
+              onChange={(e) => setUsername(e.target.value)} // تم إصلاح صياغة الـ Arrow Function هنا
               style={{ width: '100%', padding: '12px 14px', backgroundColor: '#020617', border: '1px solid #1e293b', borderRadius: '12px', color: '#ffffff', fontSize: '0.95rem', outline: 'none', boxSizing: 'border-box' }}
               onFocus={(e) => e.currentTarget.style.borderColor = '#38bdf8'}
               onBlur={(e) => e.currentTarget.style.borderColor = '#1e293b'}
@@ -208,7 +208,7 @@ export default function LoginPage() {
               type="password"
               placeholder="••••••••"
               value={password}
-              onChange={{e => setPassword(e.target.value)}}
+              onChange={(e) => setPassword(e.target.value)} // تم إصلاح صياغة الـ Arrow Function هنا
               style={{ width: '100%', padding: '12px 14px', backgroundColor: '#020617', border: '1px solid #1e293b', borderRadius: '12px', color: '#ffffff', fontSize: '0.95rem', outline: 'none', boxSizing: 'border-box' }}
               onFocus={(e) => e.currentTarget.style.borderColor = '#38bdf8'}
               onBlur={(e) => e.currentTarget.style.borderColor = '#1e293b'}
@@ -222,7 +222,7 @@ export default function LoginPage() {
               type="text"
               placeholder="أدخل رمز الترخيص المعمد"
               value={licenseKey}
-              onChange={{e => setLicenseKey(e.target.value)}}
+              onChange={(e) => setLicenseKey(e.target.value)} // تم إصلاح صياغة الـ Arrow Function هنا
               style={{ width: '100%', padding: '12px 14px', backgroundColor: '#020617', border: '1px solid #1e293b', borderRadius: '12px', color: '#ffffff', fontSize: '0.95rem', outline: 'none', boxSizing: 'border-box' }}
               onFocus={(e) => e.currentTarget.style.borderColor = '#38bdf8'}
               onBlur={(e) => e.currentTarget.style.borderColor = '#1e293b'}
