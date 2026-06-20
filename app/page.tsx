@@ -9,7 +9,7 @@ export default function LoginPage() {
   const [error, setError] = useState('');
   const [mounted, setMounted] = useState(false);
 
-  // لمنع مشاكل الـ Hydration والتأكد من جاهزية الواجهة في المتصفح
+  // لحل مشاكل تباين الهيدريشن وضمان التوافق الكامل مع السيرفر
   useEffect(() => {
     setMounted(true);
   }, []);
@@ -17,7 +17,7 @@ export default function LoginPage() {
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
     
-    // يمكنك تعديل كلمة المرور المعتمدة لنظامك هنا
+    // التحقق من الباسورد المعتمد للمشروع للدخول إلى لوحة التحكم
     if (password === '1234' || password === 'admin' || password === 'ICU2026') {
       setError('');
       router.push('/dashboard');
@@ -41,7 +41,7 @@ export default function LoginPage() {
       color: '#f8fafc' 
     }} dir="rtl">
       
-      {/* 🔐 صندوق تسجيل الدخول الرئيسي المحدث */}
+      {/* 🔐 صندوق تسجيل الدخول الرئيسي */}
       <div style={{ 
         maxWidth: '550px', 
         width: '100%', 
@@ -53,7 +53,7 @@ export default function LoginPage() {
         textAlign: 'center' 
       }}>
         
-        {/* العناوين وتأثير التوهج النيون النيون (Glowing Neon) القوي والملفت */}
+        {/* العناوين وتأثير التوهج النيون (Glowing Neon) الملفت للانتباه */}
         <div style={{ marginBottom: '32px' }}>
           <h1 style={{ 
             fontSize: '3rem', 
@@ -66,7 +66,7 @@ export default function LoginPage() {
             منصة دليلي
           </h1>
           
-          {/* النص القانوني والتعريفي الجديد والمحمي */}
+          {/* النص القانوني والتعريفي الصارم والجديد */}
           <p style={{ 
             fontSize: '0.9rem', 
             color: '#cbd5e1', 
@@ -81,10 +81,10 @@ export default function LoginPage() {
           </p>
         </div>
 
-        {/* نموذج إدخال كلمة المرور */}
+        {/* نموذج إدخال كلمة المرور للتحقق */}
         <form onSubmit={handleLogin} style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
           <div style={{ textAlign: 'right' }}>
-            <label htmlFor="password" style={{ block: 'inline-block', fontSize: '0.9rem', color: '#94a3b8', marginBottom: '8px', fontWeight: '600' }}>
+            <label htmlFor="password" style={{ display: 'inline-block', fontSize: '0.9rem', color: '#94a3b8', marginBottom: '8px', fontWeight: '600' }}>
               أدخل كلمة مرور النظام المشفرة للوصول:
             </label>
             <input
@@ -111,14 +111,14 @@ export default function LoginPage() {
             />
           </div>
 
-          {/* رسالة الخطأ عند إدخال باسوورد خاطئ */}
+          {/* رسالة الخطأ */}
           {error && (
             <div style={{ color: '#f87171', fontSize: '0.85rem', fontWeight: 'bold', backgroundColor: '#7f1d1d20', padding: '10px', borderRadius: '10px', border: '1px solid #7f1d1d40' }}>
               {error}
             </div>
           )}
 
-          {/* زر الدخول الأزرق المتناسق */}
+          {/* زر الدخول */}
           <button 
             type="submit"
             style={{ 
@@ -131,7 +131,7 @@ export default function LoginPage() {
               border: 'none', 
               borderRadius: '14px', 
               cursor: 'pointer', 
-              transition: 'background-color 0.2s, transform 0.1s' 
+              transition: 'background-color 0.2s' 
             }}
             onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#0369a1'}
             onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#0284c7'}
