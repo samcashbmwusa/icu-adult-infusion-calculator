@@ -148,7 +148,7 @@ export default function DashboardPage() {
           >
             <div style={{ fontSize: '2.5rem', marginBottom: '16px' }}>💊</div>
             <h3 style={{ fontSize: '1.2rem', fontWeight: '700', color: '#ffffff', marginBottom: '8px' }}>الأدوية</h3>
-            <p style={{ color: '#64748b', fontSize: '0.85rem', lineHeight: '1.5' }}>أدلة حاسبات المحاليل، خلط الأدوية عالية الخطورة، وبروتوكولات المعايرة المستمرة.</p>
+            <p style={{ color: '#64748b', fontSize: '0.85rem', lineHeight: '1.5' }}>أدلة حاسبات المحاليل، تخفيف الأدوية عالية الخطورة، وبروتوكولات المعايرة المستمرة.</p>
           </div>
 
           {/* مجلد 3: بروتوكولات وسياسات (لوحة سياسات 📋) */}
