@@ -41,78 +41,55 @@ export default function LoginPage() {
       color: '#f8fafc' 
     }} dir="rtl">
       
-      {/* 🧩 حاقن تأثير حركة المذنب أو الشهاب الدائري حول الصورة */}
+      {/* 🧩 حاقن حركات الأنيميشن (الوهج الدائري وحركة الحلقة حول العنوان) */}
       <style dangerouslySetInnerHTML={{__html: `
-        @keyframes meteorOrbit {
+        @keyframes rotateProfileGlow {
           0% { transform: rotate(0deg); }
           100% { transform: rotate(360deg); }
         }
+        @keyframes spinTitleCircle {
+          0% { transform: translate(-50%, -50%) rotate(0deg); }
+          100% { transform: translate(-50%, -50%) rotate(360deg); }
+        }
       `}} />
 
-      {/* 🖼️ حاوية الصورة المزودة بتأثير الشهاب الطائف يدور بسرعة خفيفة */}
+      {/* 🖼️ حاوية الصورة مع الوهج المتحرك الدائري */}
       <div style={{ marginBottom: '28px', textAlign: 'center' }}>
         <div style={{
           position: 'relative',
-          width: '136px',
-          height: '136px',
+          width: '128px',
+          height: '128px',
           borderRadius: '50%',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          backgroundColor: 'transparent',
+          overflow: 'hidden',
+          boxShadow: '0 0 20px rgba(56, 189, 248, 0.5)'
         }}>
-          
-          {/* 🌠 حلقة مدار الشهاب المضيء - تدور بزاوية 360 درجة ببطء وراحة */}
+          {/* تأثير الوهج المتحرك في الخلفية */}
           <div style={{
             position: 'absolute',
-            width: '100%',
-            height: '100%',
-            borderRadius: '50%',
-            animation: 'meteorOrbit 3.5s linear infinite', // يستغرق 3.5 ثانية للطواف حول الصورة
-            zIndex: 1,
-            pointerEvents: 'none'
-          }}>
-            {/* رأس الشهاب المضيء المتوهج (المذنب) */}
-            <div style={{
-              position: 'absolute',
-              top: '-3px',
-              left: '50%',
-              transform: 'translateX(-50%)',
-              width: '10px',
-              height: '10px',
-              borderRadius: '50%',
-              backgroundColor: '#38bdf8',
-              // ذيل التوهج النيون للشهاب
-              boxShadow: '0 0 10px #38bdf8, 0 0 20px #38bdf8, 0 0 35px #0284c7, 0 0 50px #0284c7'
-            }} />
-          </div>
-
-          {/* الإطار الأسود الفاصل بين المدار والصورة ليعطي تباين وعمق بصري */}
-          <div style={{
-            width: '124px',
-            height: '124px',
-            borderRadius: '50%',
-            backgroundColor: '#020617',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            zIndex: 2,
-            boxShadow: 'inset 0 0 10px rgba(0, 0, 0, 0.8)'
-          }}>
-            {/* صورتك الشخصية */}
-            <img 
-              src="/profile.jpg" 
-              alt="User Profile" 
-              style={{ 
-                width: '120px', 
-                height: '120px', 
-                borderRadius: '50%', 
-                objectFit: 'cover', 
-                border: '2px solid #1e293b'
-              }} 
-            />
-          </div>
+            width: '140%',
+            height: '140%',
+            background: 'conic-gradient(from 0deg, transparent 20%, #38bdf8 50%, transparent 80%)',
+            animation: 'rotateProfileGlow 3s linear infinite',
+            zIndex: 1
+          }} />
           
+          {/* الصورة الشخصية المثبتة فوق الوهج */}
+          <img 
+            src="/profile.jpg" 
+            alt="User Profile" 
+            style={{ 
+              width: '120px', 
+              height: '120px', 
+              borderRadius: '50%', 
+              objectFit: 'cover', 
+              border: '3px solid #0f172a',
+              position: 'relative',
+              zIndex: 2
+            }} 
+          />
         </div>
       </div>
 
@@ -123,29 +100,53 @@ export default function LoginPage() {
         backgroundColor: '#0f172a', 
         border: '1px solid #1e293b', 
         borderRadius: '24px', 
-        padding: '36px 28px', 
+        padding: '40px 28px 36px 28px', 
         boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.5)' 
       }}>
         
-        <div style={{ marginBottom: '28px', textAlign: 'center' }}>
-          {/* عنوان المنصة المتوهج */}
-          <h1 style={{ 
-            fontSize: '2.6rem', 
-            fontWeight: '900', 
-            color: '#ffffff', 
-            margin: '0 0 8px 0', 
-            letterSpacing: '1px', 
-            textShadow: '0 0 7px #fff, 0 0 15px rgba(56, 189, 248, 0.9), 0 0 30px rgba(56, 189, 248, 0.7)' 
-          }}>
-            منصة دليلي
-          </h1>
+        <div style={{ marginBottom: '28px', textAlign: 'center', position: 'relative' }}>
           
-          {/* 🧑‍⚕️ سطر إسناد التصميم والإعداد والجهة الرسمية */}
+          {/* 🌀 حاوية العنوان المضافة لها الدائرة التلفّ بشكل مستمر ولطيف */}
+          <div style={{ 
+            position: 'relative', 
+            display: 'inline-block', 
+            padding: '10px 24px'
+          }}>
+            {/* الدائرة المضيئة اللطيفة التي تلف حول الكلمة */}
+            <div style={{
+              position: 'absolute',
+              top: '50%',
+              left: '50%',
+              width: '100%',
+              height: '100%',
+              border: '2px dashed rgba(56, 189, 248, 0.4)',
+              borderRadius: '50px',
+              animation: 'spinTitleCircle 8s linear infinite',
+              pointerEvents: 'none',
+              boxShadow: '0 0 10px rgba(56, 189, 248, 0.1)'
+            }} />
+
+            {/* عنوان المنصة المتوهج */}
+            <h1 style={{ 
+              fontSize: '2.6rem', 
+              fontWeight: '900', 
+              color: '#ffffff', 
+              margin: '0', 
+              letterSpacing: '1px', 
+              textShadow: '0 0 7px #fff, 0 0 15px rgba(56, 189, 248, 0.9), 0 0 30px rgba(56, 189, 248, 0.7)',
+              position: 'relative',
+              zIndex: 2
+            }}>
+              منصة دليلي
+            </h1>
+          </div>
+          
+          {/* 🧑‍⚕️ سطر إسناد التصميم والإعداد */}
           <p style={{
             fontSize: '0.95rem',
             color: '#38bdf8',
             fontWeight: '600',
-            margin: '0 0 16px 0',
+            margin: '14px 0 16px 0',
             letterSpacing: '0.5px'
           }}>
             تصميم وإعداد الممرض: سليمان بلال أحمد عوض — مستشفى الجامعة الأردنية
