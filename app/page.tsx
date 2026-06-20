@@ -16,12 +16,14 @@ export default function LoginPage() {
   }, []);
 
   const handleLogin = (e: React.FormEvent) => {
+    // 🛑 منع المتصفح تماماً من إنعاش الصفحة عند الضغط على الزر
     e.preventDefault();
+    e.stopPropagation();
     
     if (username.trim() !== '' && password.trim() !== '' && licenseKey.trim() !== '') {
       setError('');
-      // استخدام window.location.href لضمان التوافق المطلق مع متصفحات الموبايل واللمس
-      window.location.href = '/dashboard';
+      // 🚀 الانتقال المضمون والسلس المتوافق مع الموبايل والكمبيوتر دون إنعاش
+      router.push('/dashboard');
     } else {
       setError('❌ يرجى إدخال اسم المستخدم، كلمة المرور، ورمز الترخيص بشكل صحيح.');
     }
@@ -184,6 +186,7 @@ export default function LoginPage() {
             <input
               id="username"
               type="text"
+              required
               placeholder="أدخل اسم المستخدم"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
@@ -196,6 +199,7 @@ export default function LoginPage() {
             <input
               id="password"
               type="password"
+              required
               placeholder="••••••••"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
@@ -208,6 +212,7 @@ export default function LoginPage() {
             <input
               id="licenseKey"
               type="text"
+              required
               placeholder="أدخل رمز الترخيص المعمد"
               value={licenseKey}
               onChange={(e) => setLicenseKey(e.target.value)}
@@ -221,7 +226,7 @@ export default function LoginPage() {
             </div>
           )}
 
-          {/* زر تفويض الدخول المدعم بخصائص اللمس الذكية للهواتف الذكية */}
+          {/* زر تفويض الدخول الثابت */}
           <button 
             type="submit" 
             style={{ 
@@ -234,7 +239,7 @@ export default function LoginPage() {
               border: 'none', 
               borderRadius: '12px', 
               cursor: 'pointer',
-              touchAction: 'manipulation', // منع زووم المتصفح عند النقر المكرر وتحسين سرعة استجابة اللمس لقفل الموبايل
+              touchAction: 'manipulation',
               marginTop: '8px' 
             }}
           >
