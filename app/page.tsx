@@ -255,7 +255,7 @@ export default function LoginPage() {
             <input
               id="licenseKey"
               type="text"
-              placeholder="أدخل رمز الترخيص المعمد"
+              placeholder="أدخل رمز الترخيص المعتمد"
               value={licenseKey}
               onChange={(e) => setLicenseKey(e.target.value)}
               style={{ width: '100%', padding: '12px 14px', backgroundColor: '#020617', border: '1px solid #1e293b', borderRadius: '12px', color: '#ffffff', fontSize: '0.95rem', outline: 'none', boxSizing: 'border-box' }}
