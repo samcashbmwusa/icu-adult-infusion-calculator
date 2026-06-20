@@ -14,16 +14,8 @@ export default function LoginPage() {
   }, []);
 
  const handleMobileLogin = () => {
-const cleanUser = username.trim();
-const cleanPass = password.trim();
-const cleanKey = licenseKey.trim();
-
-if (!cleanUser || !cleanPass || !cleanKey) {
-setError(
-'❌ يرجى إدخال اسم المستخدم، كلمة المرور، ورمز الترخيص بشكل صحيح.'
-);
-return;
-}
+  setError('TEST: The new app/page.tsx code is running.');
+};
 
 setError('');
 
