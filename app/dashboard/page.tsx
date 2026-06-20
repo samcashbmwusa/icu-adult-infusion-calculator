@@ -1,6 +1,7 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+// تأمين استيراد الـ Router ليتوافق تماماً مع مجلد (app) في Next.js
 import { useRouter } from 'next/navigation';
 
 interface SearchItem {
@@ -16,10 +17,15 @@ export default function DashboardPage() {
   const router = useRouter();
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [selectedPdf, setSelectedPdf] = useState<string | null>(null);
+  const [mounted, setMounted] = useState(false);
+
+  // لحل مشاكل الـ Hydration والتأكد من جاهزية المكون في المتصفح
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   // 🔍 قاعدة البيانات المركزية
   const allItems: SearchItem[] = [
-    // 📄 قسم السياسات
     { 
       id: 1, 
       title: "Allow Natural Death (AND)", 
@@ -34,8 +40,6 @@ export default function DashboardPage() {
       pdfUrl: "https://drive.google.com/file/d/1vJUFXvmf8dDb9RKUI7uLRmyiAUE5pGfo/view",
       keywords: ["dama", "الخروج رغم النصيحة", "خروج", "توقيع خروج"]
     },
-    
-    // ⚙️ قسم الإجراءات العمليّة
     { 
       id: 3, 
       title: "Anti-Embolism Stocking (الإجراء العملي)", 
@@ -57,8 +61,6 @@ export default function DashboardPage() {
       pdfUrl: "https://drive.google.com/file/d/10rgNJT9f2xXhp2HlcWHvhj4PAhu6xVR8/view",
       keywords: ["extubation", "assisting-extubation", "سحب الأنبوب", "فصل جهاز التنفس"]
     },
-    
-    // 💉 قسم الأدوية والمحاليل
     { 
       id: 6, 
       title: "Noradrenaline (Norepinephrine) - حاسبة الجرعات والمحاليل", 
@@ -134,6 +136,8 @@ export default function DashboardPage() {
 
   const filteredResults = getFilteredResults();
 
+  if (!mounted) return null;
+
   return (
     <div style={{ backgroundColor: '#020617', minHeight: '100vh', padding: '40px 16px', fontFamily: 'sans-serif', color: '#f8fafc' }} dir="rtl">
       
@@ -165,7 +169,7 @@ export default function DashboardPage() {
         </p>
       </div>
 
-      {/* 🔍 شريط البحث المتقدم الشامل والذكي */}
+      {/* 🔍 شريط البحث */}
       <div style={{ maxWidth: '650px', margin: '0 auto 48px auto', position: 'relative' }}>
         <div style={{ display: 'flex', alignItems: 'center', backgroundColor: '#0f172a', border: '2px solid #1e293b', borderRadius: '16px', padding: '4px 16px', transition: 'all 0.3s' }}>
           <span style={{ fontSize: '1.3rem', marginLeft: '12px' }}>🔍</span>
@@ -181,13 +185,13 @@ export default function DashboardPage() {
           )}
         </div>
 
-        {/* قائمة نتائج البحث السريع */}
+        {/* قائمة نتائج البحث */}
         {searchTerm.trim() !== '' && (
           <div style={{ position: 'absolute', top: '105%', left: 0, width: '100%', backgroundColor: '#0f172a', border: '1px solid #334155', borderRadius: '14px', boxShadow: '0 20px 25px -5px rgba(0,0,0,0.5)', zIndex: 100, overflow: 'hidden', padding: '6px 0' }}>
             {filteredResults.length > 0 ? (
               filteredResults.map((item, index) => (
                 <div
-                  key={index}
+                  key={item.id}
                   onClick={() => {
                     setSearchTerm('');
                     if (item.type === 'medication' && item.slug) {
@@ -221,10 +225,9 @@ export default function DashboardPage() {
         )}
       </div>
 
-      {/* 📁 شبكة الأقسام الأربعة المتناسقة */}
+      {/* 📁 شبكة الأقسام */}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '24px', maxWidth: '1200px', margin: '0 auto' }}>
         
-        {/* كرت السياسات */}
         <div
           onClick={() => router.push('/policies')}
           style={{ backgroundColor: '#0f172a', border: '1px solid #1e293b', borderRadius: '20px', padding: '32px 24px', textAlign: 'center', cursor: 'pointer', transition: 'all 0.2s' }}
@@ -236,7 +239,6 @@ export default function DashboardPage() {
           <p style={{ fontSize: '0.85rem', color: '#94a3b8', margin: '0', lineHeight: '1.5' }}>تصفح السياسات التنظيمية المعتمدة.</p>
         </div>
 
-        {/* كرت حاسبة الأدوية والمحاليل */}
         <div
           onClick={() => router.push('/medications')} 
           style={{ backgroundColor: '#0f172a', border: '1px solid #1e293b', borderRadius: '20px', padding: '32px 24px', textAlign: 'center', cursor: 'pointer', transition: 'all 0.2s' }}
@@ -248,7 +250,6 @@ export default function DashboardPage() {
           <p style={{ fontSize: '0.85rem', color: '#94a3b8', margin: '0', lineHeight: '1.5' }}>دليل الأدوية والحاسبات الطبية المعتمدة لبروتوكولات القسم.</p>
         </div>
 
-        {/* كرت الإجراءات التمريضية */}
         <div
           onClick={() => router.push('/procedures')}
           style={{ backgroundColor: '#0f172a', border: '1px solid #1e293b', borderRadius: '20px', padding: '32px 24px', textAlign: 'center', cursor: 'pointer', transition: 'all 0.2s' }}
@@ -260,7 +261,6 @@ export default function DashboardPage() {
           <p style={{ fontSize: '0.85rem', color: '#94a3b8', margin: '0', lineHeight: '1.5' }}>دليلك لخطوات العمل والبروتوكولات التطبيقية داخل الوحدة.</p>
         </div>
 
-        {/* كرت ملف الأوراق الأكثر استخداماً */}
         <div
           onClick={() => router.push('/forms')}
           style={{ backgroundColor: '#0f172a', border: '1px solid #1e293b', borderRadius: '20px', padding: '32px 24px', textAlign: 'center', cursor: 'pointer', transition: 'all 0.2s' }}
