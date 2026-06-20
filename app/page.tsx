@@ -13,21 +13,25 @@ export default function LoginPage() {
     setMounted(true);
   }, []);
 
-  const handleLogin = (e: React.FormEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    
-    // Clear any trailing spaces that mobile keyboards love to add automatically
+  const handleLoginClick = () => {
+    // Clean trailing spaces mobile keyboards love to inject
     const cleanUser = username.trim();
     const cleanPass = password.trim();
     const cleanKey = licenseKey.trim();
 
     if (cleanUser !== '' && cleanPass !== '' && cleanKey !== '') {
       setError('');
-      // 🚀 The ultimate native browser redirect: Bulletproof for all mobile webviews
+      // Standard native location swap - completely separate from form submission lifecycles
       window.location.replace('/dashboard');
     } else {
       setError('❌ يرجى إدخال اسم المستخدم، كلمة المرور، ورمز الترخيص بشكل صحيح.');
+    }
+  };
+
+  // Allow laptop users to still use the "Enter" key smoothly without a form wrapper
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter') {
+      handleLoginClick();
     }
   };
 
@@ -47,7 +51,7 @@ export default function LoginPage() {
       overflowX: 'hidden'
     }} dir="rtl">
       
-      {/* 🧩 حاقن الأنيميشن لإطار الصورة والخيط المتحرك حول العنوان */}
+      {/* 🧩 الأنيميشن لإطار الصورة والخيط المتحرك حول العنوان */}
       <style dangerouslySetInnerHTML={{__html: `
         @keyframes rotateProfileGlow {
           0% { transform: rotate(0deg); }
@@ -74,7 +78,7 @@ export default function LoginPage() {
         }
       `}} />
 
-      {/* 🖼️ حاوية الصورة الشخصية الدائرية المتوهجة دوراناً */}
+      {/* 🖼️ حاوية الصورة الشخصية الدائرية المتوهجة */}
       <div style={{ marginBottom: '28px', textAlign: 'center' }}>
         <div style={{
           position: 'relative',
@@ -112,7 +116,7 @@ export default function LoginPage() {
         </div>
       </div>
 
-      {/* 🔐 صندوق تسجيل الدخول */}
+      {/* 🔐 صندوق تسجيل الدخول (Div Container - No HTML Form Element) */}
       <div style={{ 
         maxWidth: '500px', 
         width: '100%', 
@@ -125,7 +129,7 @@ export default function LoginPage() {
         
         <div style={{ marginBottom: '28px', textAlign: 'center' }}>
           
-          {/* 🔲 حاوية العنوان المزودة بالفريم التتبعي الذكي المستمر */}
+          {/* 🔲 حاوية العنوان المزودة بالفريم التتبعي الذكي */}
           <div style={{ 
             position: 'relative', 
             display: 'inline-block', 
@@ -155,7 +159,6 @@ export default function LoginPage() {
             </div>
           </div>
           
-          {/* 🧑‍⚕️ سطر إسناد التصميم والإعداد */}
           <p style={{
             fontSize: '0.95rem',
             color: '#38bdf8',
@@ -166,7 +169,6 @@ export default function LoginPage() {
             تصميم وإعداد الممرض: سليمان بلال أحمد عوض — مستشفى الجامعة الأردنية
           </p>
           
-          {/* النص القانوني */}
           <p style={{ 
             fontSize: '0.85rem', 
             color: '#cbd5e1', 
@@ -181,7 +183,8 @@ export default function LoginPage() {
           </p>
         </div>
 
-        <form onSubmit={handleLogin} style={{ display: 'flex', flexDirection: 'column', gap: '18px' }}>
+        {/* حقول الإدخال بدون تاغ Form لمنع ريفريش الموبايل */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '18px' }} onKeyDown={handleKeyDown}>
           
           <div style={{ textAlign: 'right' }}>
             <label htmlFor="username" style={{ display: 'block', fontSize: '0.85rem', color: '#94a3b8', marginBottom: '6px', fontWeight: '600' }}>اسم المستخدم:</label>
@@ -225,9 +228,9 @@ export default function LoginPage() {
             </div>
           )}
 
-          {/* زر تفويض الدخول الأساسي المستقر */}
+          {/* زر مستقل تماماً يعتمد علىonClick لمنع الـ Submit Refresh نهائياً */}
           <button 
-            type="submit" 
+            onClick={handleLoginClick}
             style={{ 
               width: '100%', 
               padding: '14px', 
@@ -244,9 +247,8 @@ export default function LoginPage() {
           >
             التحقق وتفويض الدخول 🔓
           </button>
-        </form>
+        </div>
 
-        {/* 📜 حفظ الحقوق القانونية بالإنجليزية */}
         <div style={{ 
           marginTop: '24px', 
           textAlign: 'center', 
