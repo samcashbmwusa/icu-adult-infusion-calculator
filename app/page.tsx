@@ -13,25 +13,17 @@ export default function LoginPage() {
     setMounted(true);
   }, []);
 
-  const handleLoginClick = () => {
-    // Clean trailing spaces mobile keyboards love to inject
+  const executeMobileLogin = () => {
     const cleanUser = username.trim();
     const cleanPass = password.trim();
     const cleanKey = licenseKey.trim();
 
     if (cleanUser !== '' && cleanPass !== '' && cleanKey !== '') {
       setError('');
-      // Standard native location swap - completely separate from form submission lifecycles
-      window.location.replace('/dashboard');
+      // 🌟 خدعة كسر الكاش: إضافة وسم إصدار ديناميكي لإجبار الموبايل على الانتقال الفوري بدون ريفريش
+      window.location.href = '/dashboard?v=2026';
     } else {
       setError('❌ يرجى إدخال اسم المستخدم، كلمة المرور، ورمز الترخيص بشكل صحيح.');
-    }
-  };
-
-  // Allow laptop users to still use the "Enter" key smoothly without a form wrapper
-  const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter') {
-      handleLoginClick();
     }
   };
 
@@ -51,7 +43,6 @@ export default function LoginPage() {
       overflowX: 'hidden'
     }} dir="rtl">
       
-      {/* 🧩 الأنيميشن لإطار الصورة والخيط المتحرك حول العنوان */}
       <style dangerouslySetInnerHTML={{__html: `
         @keyframes rotateProfileGlow {
           0% { transform: rotate(0deg); }
@@ -78,7 +69,7 @@ export default function LoginPage() {
         }
       `}} />
 
-      {/* 🖼️ حاوية الصورة الشخصية الدائرية المتوهجة */}
+      {/* 🖼️ الحاوية المتوهجة للصورة الشخصية */}
       <div style={{ marginBottom: '28px', textAlign: 'center' }}>
         <div style={{
           position: 'relative',
@@ -116,7 +107,7 @@ export default function LoginPage() {
         </div>
       </div>
 
-      {/* 🔐 صندوق تسجيل الدخول (Div Container - No HTML Form Element) */}
+      {/* 🔐 صندوق تسجيل الدخول */}
       <div style={{ 
         maxWidth: '500px', 
         width: '100%', 
@@ -128,8 +119,6 @@ export default function LoginPage() {
       }}>
         
         <div style={{ marginBottom: '28px', textAlign: 'center' }}>
-          
-          {/* 🔲 حاوية العنوان المزودة بالفريم التتبعي الذكي */}
           <div style={{ 
             position: 'relative', 
             display: 'inline-block', 
@@ -139,7 +128,6 @@ export default function LoginPage() {
             overflow: 'hidden',
             padding: '2px' 
           }}>
-            
             <div style={{ position: 'absolute', top: '0', right: '0', height: '2px', backgroundColor: '#38bdf8', boxShadow: '0 0 8px #38bdf8', animation: 'topTrace 4s linear infinite' }} />
             <div style={{ position: 'absolute', left: '0', top: '0', width: '2px', backgroundColor: '#38bdf8', boxShadow: '0 0 8px #38bdf8', animation: 'leftTrace 4s linear infinite' }} />
             <div style={{ position: 'absolute', bottom: '0', left: '0', height: '2px', backgroundColor: '#38bdf8', boxShadow: '0 0 8px #38bdf8', animation: 'bottomTrace 4s linear infinite' }} />
@@ -183,13 +171,12 @@ export default function LoginPage() {
           </p>
         </div>
 
-        {/* حقول الإدخال بدون تاغ Form لمنع ريفريش الموبايل */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '18px' }} onKeyDown={handleKeyDown}>
+        {/* حقول مستقلة تماماً خارج أي نطاق للـ Form */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '18px' }}>
           
           <div style={{ textAlign: 'right' }}>
-            <label htmlFor="username" style={{ display: 'block', fontSize: '0.85rem', color: '#94a3b8', marginBottom: '6px', fontWeight: '600' }}>اسم المستخدم:</label>
+            <label style={{ display: 'block', fontSize: '0.85rem', color: '#94a3b8', marginBottom: '6px', fontWeight: '600' }}>اسم المستخدم:</label>
             <input
-              id="username"
               type="text"
               placeholder="أدخل اسم المستخدم"
               value={username}
@@ -199,9 +186,8 @@ export default function LoginPage() {
           </div>
 
           <div style={{ textAlign: 'right' }}>
-            <label htmlFor="password" style={{ display: 'block', fontSize: '0.85rem', color: '#94a3b8', marginBottom: '6px', fontWeight: '600' }}>كلمة المرور:</label>
+            <label style={{ display: 'block', fontSize: '0.85rem', color: '#94a3b8', marginBottom: '6px', fontWeight: '600' }}>كلمة المرور:</label>
             <input
-              id="password"
               type="password"
               placeholder="••••••••"
               value={password}
@@ -211,9 +197,8 @@ export default function LoginPage() {
           </div>
 
           <div style={{ textAlign: 'right' }}>
-            <label htmlFor="licenseKey" style={{ display: 'block', fontSize: '0.85rem', color: '#94a3b8', marginBottom: '6px', fontWeight: '600' }}>رمز الترخيص الحصري:</label>
+            <label style={{ display: 'block', fontSize: '0.85rem', color: '#94a3b8', marginBottom: '6px', fontWeight: '600' }}>رمز الترخيص الحصري:</label>
             <input
-              id="licenseKey"
               type="text"
               placeholder="أدخل رمز الترخيص المعمد"
               value={licenseKey}
@@ -228,9 +213,9 @@ export default function LoginPage() {
             </div>
           )}
 
-          {/* زر مستقل تماماً يعتمد علىonClick لمنع الـ Submit Refresh نهائياً */}
           <button 
-            onClick={handleLoginClick}
+            type="button"
+            onClick={executeMobileLogin}
             style={{ 
               width: '100%', 
               padding: '14px', 
