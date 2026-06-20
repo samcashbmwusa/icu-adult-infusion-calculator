@@ -2,6 +2,8 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+// استيراد الصورة برمجياً لتجنب مشاكل الامتداد والكاش تماماً
+import profileImg from '../public/profile.jpg'; 
 
 export default function LoginPage() {
   const router = useRouter();
@@ -18,6 +20,7 @@ export default function LoginPage() {
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
     
+    // التحقق الأصلي من الحقول الثلاثة لتفويض الدخول
     if (username.trim() !== '' && password.trim() !== '' && licenseKey.trim() !== '') {
       setError('');
       router.push('/dashboard');
@@ -41,10 +44,10 @@ export default function LoginPage() {
       color: '#f8fafc' 
     }} dir="rtl">
       
-      {/* 🖼️ تعديل الامتداد إلى .jpeg ليتوافق مع تفاصيل الصورة في 59.png مع الإطار المتوهج */}
+      {/* 🖼️ صورتك الشخصية مع إطار نيون متوهج قوي وملفت للانتباه (Glowing Frame) */}
       <div style={{ marginBottom: '28px', textAlign: 'center' }}>
         <img 
-          src="/profile.jpeg" 
+          src={profileImg.src} 
           alt="User Profile" 
           style={{ 
             width: '120px', 
@@ -57,7 +60,7 @@ export default function LoginPage() {
         />
       </div>
 
-      {/* 🔐 صندوق تسجيل الدخول */}
+      {/* 🔐 صندوق تسجيل الدخول المطور */}
       <div style={{ 
         maxWidth: '500px', 
         width: '100%', 
@@ -68,6 +71,7 @@ export default function LoginPage() {
         boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.5)' 
       }}>
         
+        {/* عنوان المنصة المضيء والنص القانوني */}
         <div style={{ marginBottom: '28px', textAlign: 'center' }}>
           <h1 style={{ 
             fontSize: '2.6rem', 
@@ -94,8 +98,10 @@ export default function LoginPage() {
           </p>
         </div>
 
+        {/* نموذج تسجيل الدخول بالثلاثة حقول الأصلية */}
         <form onSubmit={handleLogin} style={{ display: 'flex', flexDirection: 'column', gap: '18px' }}>
           
+          {/* اسم المستخدم */}
           <div style={{ textAlign: 'right' }}>
             <label htmlFor="username" style={{ display: 'block', fontSize: '0.85rem', color: '#94a3b8', marginBottom: '6px', fontWeight: '600' }}>اسم المستخدم:</label>
             <input
@@ -110,6 +116,7 @@ export default function LoginPage() {
             />
           </div>
 
+          {/* كلمة المرور */}
           <div style={{ textAlign: 'right' }}>
             <label htmlFor="password" style={{ display: 'block', fontSize: '0.85rem', color: '#94a3b8', marginBottom: '6px', fontWeight: '600' }}>كلمة المرور:</label>
             <input
@@ -124,6 +131,7 @@ export default function LoginPage() {
             />
           </div>
 
+          {/* رمز الترخيص */}
           <div style={{ textAlign: 'right' }}>
             <label htmlFor="licenseKey" style={{ display: 'block', fontSize: '0.85rem', color: '#94a3b8', marginBottom: '6px', fontWeight: '600' }}>رمز الترخيص الحصري:</label>
             <input
