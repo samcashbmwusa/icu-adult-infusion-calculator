@@ -42,23 +42,23 @@ export default function LoginPage() {
       overflowX: 'hidden'
     }} dir="rtl">
       
-      {/* 🧩 حاقن الحركات ثلاثية الأبعاد (3D Orbit Animations) */}
+      {/* 🧩 حاقن الأنيميشن ثلاثي الأبعاد المطور لضبط الدوران البيضاوي والعمق الخارجي */}
       <style dangerouslySetInnerHTML={{__html: `
         @keyframes rotateProfileGlow {
           0% { transform: rotate(0deg); }
           100% { transform: rotate(360deg); }
         }
-        @keyframes moonOrbit3D {
-          0% { transform: rotateX(70deg) rotateY(15deg) rotate(0deg); }
-          100% { transform: rotateX(70deg) rotateY(15deg) rotate(360deg); }
+        @keyframes cosmicOrbit {
+          0% { transform: rotateX(75deg) rotateY(20deg) rotate(0deg); }
+          100% { transform: rotateX(75deg) rotateY(20deg) rotate(360deg); }
         }
-        @keyframes moonDepth {
-          0%, 100% { z-index: 3; filter: drop-shadow(0 0 12px #38bdf8); }
-          50% { z-index: 1; filter: drop-shadow(0 0 2px #0284c7); opacity: 0.4; }
+        @keyframes cosmicDepth {
+          0%, 100% { z-index: 10; opacity: 1; filter: drop-shadow(0 0 16px #38bdf8); transform: scale(1.2); }
+          50% { z-index: 1; opacity: 0.3; filter: drop-shadow(0 0 4px #0284c7); transform: scale(0.8); }
         }
       `}} />
 
-      {/* 🖼️ حاوية الصورة الشخصية المتوهجة دوارنياً */}
+      {/* 🖼️ حاوية الصورة الشخصية الدائرية المتوهجة دوارنياً */}
       <div style={{ marginBottom: '28px', textAlign: 'center' }}>
         <div style={{
           position: 'relative',
@@ -109,42 +109,42 @@ export default function LoginPage() {
         
         <div style={{ marginBottom: '28px', textAlign: 'center' }}>
           
-          {/* 🌌 الفضاء الخاص بكوكب العنوان ومدار القمر الاصطناعي */}
+          {/* 🌌 الفضاء الحاضن للمدار ثلاثي الأبعاد المائل حول كلمة منصة دليلي */}
           <div style={{ 
             position: 'relative', 
             display: 'inline-block', 
-            padding: '12px 40px',
-            perspective: '1000px' // تفعيل البعد الثالث والعمق الفضائي
+            padding: '16px 48px',
+            perspective: '1200px'
           }}>
             
-            {/* 🪐 مدار القمر التخيلّي ثلاثي الأبعاد المائل حول كلمة منصة دليلي */}
+            {/* 🪐 المدار البيضاوي الكبير المائل بشكل صريح */}
             <div style={{
               position: 'absolute',
-              top: '-10%',
-              left: '-10%',
-              width: '120%',
-              height: '120%',
+              top: '-20%',
+              left: '-25%',
+              width: '150%',
+              height: '140%',
               borderRadius: '50%',
               transformStyle: 'preserve-3d',
-              animation: 'moonOrbit3D 6s linear infinite', // سرعة دوران القمر الهادئة
+              animation: 'cosicOrbit 5s linear infinite', // سرعة دوران هادئة وواضحة (5 ثوانٍ)
               pointerEvents: 'none'
             }}>
-              {/* الدائرة الصغيرة المتوهجة (القمر) المزودة بحركة عمق ديناميكية تفصل المرور الأمامي والخلفي */}
+              {/* 🌕 الدائرة الكبيرة الواضحة (القمر المتوهج) مع تباين العمق الأمامي والخلفي */}
               <div style={{
                 position: 'absolute',
                 top: '0',
                 left: '50%',
-                width: '10px',
-                height: '10px',
+                width: '16px', // تكبير حجم الدائرة لتصبح واضحة تماماً
+                height: '16px',
                 borderRadius: '50%',
                 backgroundColor: '#38bdf8',
-                boxShadow: '0 0 10px #38bdf8, 0 0 20px #0284c7',
+                boxShadow: '0 0 15px #38bdf8, 0 0 25px #38bdf8, 0 0 40px #0284c7',
                 transform: 'translate(-50%, -50%)',
-                animation: 'moonDepth 6s linear infinite'
+                animation: 'cosmicDepth 5s linear infinite'
               }} />
             </div>
 
-            {/* كوكب "منصة دليلي" المستقر بثبات في مركز المدار الفلكي */}
+            {/* العنوان الثابت في مركز المجرة (يمر المدار خلفه وأمامه برمجياً) */}
             <h1 style={{ 
               fontSize: '2.6rem', 
               fontWeight: '900', 
@@ -153,7 +153,7 @@ export default function LoginPage() {
               letterSpacing: '1px', 
               textShadow: '0 0 7px #fff, 0 0 15px rgba(56, 189, 248, 0.9), 0 0 30px rgba(56, 189, 248, 0.7)',
               position: 'relative',
-              zIndex: 2 // يقع في المنتصف ليمر القمر من خلفه ومن أمامه
+              zIndex: 5 // يقع برمجياً في المنتصف بين العمق الأمامي (10) والعمق الخلفي (1) للمدار
             }}>
               منصة دليلي
             </h1>
@@ -164,7 +164,7 @@ export default function LoginPage() {
             fontSize: '0.95rem',
             color: '#38bdf8',
             fontWeight: '600',
-            margin: '14px 0 16px 0',
+            margin: '18px 0 16px 0',
             letterSpacing: '0.5px'
           }}>
             تصميم وإعداد الممرض: سليمان بلال أحمد عوض — مستشفى الجامعة الأردنية
@@ -194,7 +194,7 @@ export default function LoginPage() {
               type="text"
               placeholder="أدخل اسم المستخدم"
               value={username}
-              onChange={(e) => setUsername(e.target.value)}
+              onChange={{e => setUsername(e.target.value)}}
               style={{ width: '100%', padding: '12px 14px', backgroundColor: '#020617', border: '1px solid #1e293b', borderRadius: '12px', color: '#ffffff', fontSize: '0.95rem', outline: 'none', boxSizing: 'border-box' }}
               onFocus={(e) => e.currentTarget.style.borderColor = '#38bdf8'}
               onBlur={(e) => e.currentTarget.style.borderColor = '#1e293b'}
@@ -208,7 +208,7 @@ export default function LoginPage() {
               type="password"
               placeholder="••••••••"
               value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={{e => setPassword(e.target.value)}}
               style={{ width: '100%', padding: '12px 14px', backgroundColor: '#020617', border: '1px solid #1e293b', borderRadius: '12px', color: '#ffffff', fontSize: '0.95rem', outline: 'none', boxSizing: 'border-box' }}
               onFocus={(e) => e.currentTarget.style.borderColor = '#38bdf8'}
               onBlur={(e) => e.currentTarget.style.borderColor = '#1e293b'}
@@ -220,9 +220,9 @@ export default function LoginPage() {
             <input
               id="licenseKey"
               type="text"
-              placeholder="أدخل رمز الترخيص المعتمد"
+              placeholder="أدخل رمز الترخيص المعمد"
               value={licenseKey}
-              onChange={(e) => setLicenseKey(e.target.value)}
+              onChange={{e => setLicenseKey(e.target.value)}}
               style={{ width: '100%', padding: '12px 14px', backgroundColor: '#020617', border: '1px solid #1e293b', borderRadius: '12px', color: '#ffffff', fontSize: '0.95rem', outline: 'none', boxSizing: 'border-box' }}
               onFocus={(e) => e.currentTarget.style.borderColor = '#38bdf8'}
               onBlur={(e) => e.currentTarget.style.borderColor = '#1e293b'}
