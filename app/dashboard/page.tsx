@@ -137,20 +137,31 @@ export default function DashboardPage() {
   return (
     <div style={{ backgroundColor: '#020617', minHeight: '100vh', padding: '40px 16px', fontFamily: 'sans-serif', color: '#f8fafc' }} dir="rtl">
       
-      {/* هيدر المنصة الرئيسي */}
-      <div style={{ maxWidth: '800px', margin: '0 auto 40px auto', textAlign: 'center' }}>
+      {/* هيدر المنصة الرئيسي المحدث بتأثير نيون متوهج قوي (Glowing Effect) */}
+      <div style={{ maxWidth: '900px', margin: '0 auto 40px auto', textAlign: 'center' }}>
         <h1 style={{ 
-          fontSize: '2.5rem', 
+          fontSize: '3rem', 
           fontWeight: '900', 
           color: '#ffffff', 
-          margin: '0 0 12px 0',
-          letterSpacing: '1px',
-          textShadow: '0 0 10px rgba(56, 189, 248, 0.6), 0 0 20px rgba(56, 189, 248, 0.3), 0 0 30px rgba(14, 165, 233, 0.2)'
+          margin: '0 0 16px 0',
+          letterSpacing: '1.5px',
+          textShadow: '0 0 7px #fff, 0 0 15px rgba(56, 189, 248, 0.9), 0 0 30px rgba(56, 189, 248, 0.7), 0 0 45px rgba(14, 165, 233, 0.5)'
         }}>
           منصة دليلي
         </h1>
-        <p style={{ fontSize: '1rem', color: '#94a3b8', margin: '0', fontWeight: '500' }}>
-          أهلاً وسهلاً بكم - مستشفى الجامعة الأردنية
+        <p style={{ 
+          fontSize: '0.95rem', 
+          color: '#cbd5e1', 
+          margin: '0 auto', 
+          fontWeight: '500', 
+          lineHeight: '1.7',
+          maxWidth: '700px',
+          borderRight: '3px solid #ef4444', 
+          paddingRight: '12px',
+          display: 'inline-block',
+          textAlign: 'right'
+        }}>
+          نظام دليلي يضم الأدوية، بروتوكولات، وإجراءات تمريضية - نظام محمي ويمنع تداوله أو إعادة استخدامه تحت المساءلة القانونية
         </p>
       </div>
 
@@ -213,7 +224,7 @@ export default function DashboardPage() {
       {/* 📁 شبكة الأقسام الأربعة المتناسقة */}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '24px', maxWidth: '1200px', margin: '0 auto' }}>
         
-        {/* كرت السياسات (تم تعديل الوصف هنا) */}
+        {/* كرت السياسات */}
         <div
           onClick={() => router.push('/policies')}
           style={{ backgroundColor: '#0f172a', border: '1px solid #1e293b', borderRadius: '20px', padding: '32px 24px', textAlign: 'center', cursor: 'pointer', transition: 'all 0.2s' }}
