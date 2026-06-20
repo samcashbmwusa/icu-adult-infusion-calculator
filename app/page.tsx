@@ -20,8 +20,8 @@ export default function LoginPage() {
 
     if (cleanUser !== '' && cleanPass !== '' && cleanKey !== '') {
       setError('');
-      // 🌟 خدعة كسر الكاش: إضافة وسم إصدار ديناميكي لإجبار الموبايل على الانتقال الفوري بدون ريفريش
-      window.location.href = '/dashboard?v=2026';
+      // 🚀 توجيه إلى المسار الجديد تماماً لكسر كاش الهاتف بشكل قاطع
+      window.location.href = '/panel';
     } else {
       setError('❌ يرجى إدخال اسم المستخدم، كلمة المرور، ورمز الترخيص بشكل صحيح.');
     }
@@ -171,7 +171,6 @@ export default function LoginPage() {
           </p>
         </div>
 
-        {/* حقول مستقلة تماماً خارج أي نطاق للـ Form */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '18px' }}>
           
           <div style={{ textAlign: 'right' }}>
