@@ -13,19 +13,36 @@ export default function LoginPage() {
     setMounted(true);
   }, []);
 
-  const handleMobileLogin = () => {
-    const cleanUser = username.trim();
-    const cleanPass = password.trim();
-    const cleanKey = licenseKey.trim();
+ const handleMobileLogin = () => {
+const cleanUser = username.trim();
+const cleanPass = password.trim();
+const cleanKey = licenseKey.trim();
 
-    if (cleanUser !== '' && cleanPass !== '' && cleanKey !== '') {
-      setError('');
-      // الانتقال المباشر والآمن تماماً بعد كسر الكاش
-      window.location.href = '/dashboard';
-    } else {
-      setError('❌ يرجى إدخال اسم المستخدم، كلمة المرور، ورمز الترخيص بشكل صحيح.');
-    }
-  };
+if (!cleanUser || !cleanPass || !cleanKey) {
+setError(
+'❌ يرجى إدخال اسم المستخدم، كلمة المرور، ورمز الترخيص بشكل صحيح.'
+);
+return;
+}
+
+setError('');
+
+const cookieParts = [
+'icu_auth=true',
+'Path=/',
+'Max-Age=43200',
+'SameSite=Lax',
+];
+
+if (window.location.protocol === 'https:') {
+cookieParts.push('Secure');
+}
+
+document.cookie = cookieParts.join('; ');
+
+window.location.replace('/dashboard');
+};
+
 
   if (!mounted) return null;
 
@@ -133,7 +150,7 @@ export default function LoginPage() {
 
           <div style={{ textAlign: 'right' }}>
             <label style={{ display: 'block', fontSize: '0.85rem', color: '#94a3b8', marginBottom: '6px', fontWeight: '600' }}>رمز الترخيص الحصري:</label>
-            <input type="text" placeholder="أدخل رمز الترخيص المعمد" value={licenseKey} onChange={(e) => setLicenseKey(e.target.value)} style={{ width: '100%', padding: '12px 14px', backgroundColor: '#020617', border: '1px solid #1e293b', borderRadius: '12px', color: '#ffffff', outline: 'none', boxSizing: 'border-box' }} />
+            <input type="text" placeholder="أدخل رمز الترخيص المعتمد" value={licenseKey} onChange={(e) => setLicenseKey(e.target.value)} style={{ width: '100%', padding: '12px 14px', backgroundColor: '#020617', border: '1px solid #1e293b', borderRadius: '12px', color: '#ffffff', outline: 'none', boxSizing: 'border-box' }} />
           </div>
 
           {error && <div style={{ color: '#f87171', fontSize: '0.85rem', fontWeight: 'bold', backgroundColor: '#7f1d1d20', padding: '10px', borderRadius: '10px', textAlign: 'center' }}>{error}</div>}
