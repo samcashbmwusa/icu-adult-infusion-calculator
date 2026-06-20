@@ -44,7 +44,7 @@ export default function DashboardPage() {
         }
       `}} />
 
-      {/* 📋 شريط التنقل العلوي القديم (Navbar) */}
+      {/* 📋 شريط التنقل العلوي (Navbar) */}
       <header style={{
         backgroundColor: '#0f172a',
         borderBottom: '1px solid #1e293b',
@@ -58,7 +58,7 @@ export default function DashboardPage() {
         zIndex: 50
       }}>
         
-        {/* 🔲 الإطار المضيء التتبعي الجديد حول كلمة "منصة دليلي" فقط */}
+        {/* 🔲 الإطار المضيء التتبعي حول كلمة "منصة دليلي" */}
         <div style={{ 
           position: 'relative', 
           display: 'inline-block', 
@@ -81,7 +81,7 @@ export default function DashboardPage() {
           </div>
         </div>
 
-        {/* معلومات المستخدم والمستشفى (القديمة) */}
+        {/* معلومات المستخدم والمستشفى */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
           <div style={{ textAlign: 'left' }}>
             <span style={{ display: 'block', fontSize: '0.85rem', color: '#38bdf8', fontWeight: '600' }}>مستشفى الجامعة الأردنية</span>
@@ -108,22 +108,22 @@ export default function DashboardPage() {
         </div>
       </header>
 
-      {/* 📊 الواجهة الرئيسية القديمة: شبكة المجلدات والصفحات المعتمدة بدقة */}
+      {/* 📊 الواجهة الرئيسية: شبكة الأقسام بالأشكال الجديدة */}
       <main style={{ padding: '40px 24px', maxWidth: '1200px', margin: '0 auto' }}>
         
         <div style={{ marginBottom: '32px' }}>
           <h1 style={{ fontSize: '1.8rem', fontWeight: '800', color: '#ffffff', marginBottom: '8px' }}>لوحة التحكم الرئيسية</h1>
-          <p style={{ color: '#94a3b8', fontSize: '0.95rem' }}>مرحباً بك في الأنظمة المعتمدة لقسم العناية الحثيثة. يرجى اختيار المجلد المطلوب:</p>
+          <p style={{ color: '#94a3b8', fontSize: '0.95rem' }}>مرحباً بك في الأنظمة المعتمدة لقسم العناية الحثيثة. يرجى اختيار القسم المطلوب:</p>
         </div>
 
-        {/* شبكة عرض المجلدات الأربعة التي تطابق مسارات مشروعك الفعلي */}
+        {/* شبكة عرض الأقسام */}
         <div style={{ 
           display: 'grid', 
           gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', 
           gap: '24px' 
         }}>
           
-          {/* مجلد 1: إجراءات تمريضية */}
+          {/* مجلد 1: إجراءات تمريضية (سماعة طبيب 🩺) */}
           <div 
             onClick={() => router.push('/procedures')}
             style={{ 
@@ -132,12 +132,12 @@ export default function DashboardPage() {
             onMouseEnter={(e) => { e.currentTarget.style.borderColor = '#38bdf8'; e.currentTarget.style.transform = 'translateY(-2px)'; }}
             onMouseLeave={(e) => { e.currentTarget.style.borderColor = '#1e293b'; e.currentTarget.style.transform = 'translateY(0)'; }}
           >
-            <div style={{ fontSize: '2.5rem', marginBottom: '16px' }}>📁</div>
+            <div style={{ fontSize: '2.5rem', marginBottom: '16px' }}>🩺</div>
             <h3 style={{ fontSize: '1.2rem', fontWeight: '700', color: '#ffffff', marginBottom: '8px' }}>إجراءات تمريضية</h3>
             <p style={{ color: '#64748b', fontSize: '0.85rem', lineHeight: '1.5' }}>النماذج التطبيقية والخطوات المعتمدة للعناية التمريضية المركزة داخل القسم.</p>
           </div>
 
-          {/* مجلد 2: الأدوية */}
+          {/* مجلد 2: الأدوية (حبة دواء 💊) */}
           <div 
             onClick={() => router.push('/medications')}
             style={{ 
@@ -146,12 +146,12 @@ export default function DashboardPage() {
             onMouseEnter={(e) => { e.currentTarget.style.borderColor = '#38bdf8'; e.currentTarget.style.transform = 'translateY(-2px)'; }}
             onMouseLeave={(e) => { e.currentTarget.style.borderColor = '#1e293b'; e.currentTarget.style.transform = 'translateY(0)'; }}
           >
-            <div style={{ fontSize: '2.5rem', marginBottom: '16px' }}>📁</div>
+            <div style={{ fontSize: '2.5rem', marginBottom: '16px' }}>💊</div>
             <h3 style={{ fontSize: '1.2rem', fontWeight: '700', color: '#ffffff', marginBottom: '8px' }}>الأدوية</h3>
             <p style={{ color: '#64748b', fontSize: '0.85rem', lineHeight: '1.5' }}>أدلة حاسبات المحاليل، خلط الأدوية عالية الخطورة، وبروتوكولات المعايرة المستمرة.</p>
           </div>
 
-          {/* مجلد 3: بروتوكولات وسياسات */}
+          {/* مجلد 3: بروتوكولات وسياسات (لوحة سياسات 📋) */}
           <div 
             onClick={() => router.push('/policies')}
             style={{ 
@@ -160,12 +160,12 @@ export default function DashboardPage() {
             onMouseEnter={(e) => { e.currentTarget.style.borderColor = '#38bdf8'; e.currentTarget.style.transform = 'translateY(-2px)'; }}
             onMouseLeave={(e) => { e.currentTarget.style.borderColor = '#1e293b'; e.currentTarget.style.transform = 'translateY(0)'; }}
           >
-            <div style={{ fontSize: '2.5rem', marginBottom: '16px' }}>📁</div>
+            <div style={{ fontSize: '2.5rem', marginBottom: '16px' }}>📋</div>
             <h3 style={{ fontSize: '1.2rem', fontWeight: '700', color: '#ffffff', marginBottom: '8px' }}>بروتوكولات وسياسات</h3>
             <p style={{ color: '#64748b', fontSize: '0.85rem', lineHeight: '1.5' }}>السياسات العامة لمستشفى الجامعة الأردنية والبروتوكولات الطبية المنظمة للعمل العناثي.</p>
           </div>
 
-          {/* مجلد 4: أوراق الأكثر استخدام */}
+          {/* مجلد 4: أوراق الأكثر استخدام (ورقة 📄) */}
           <div 
             onClick={() => router.push('/forms')}
             style={{ 
@@ -174,14 +174,14 @@ export default function DashboardPage() {
             onMouseEnter={(e) => { e.currentTarget.style.borderColor = '#38bdf8'; e.currentTarget.style.transform = 'translateY(-2px)'; }}
             onMouseLeave={(e) => { e.currentTarget.style.borderColor = '#1e293b'; e.currentTarget.style.transform = 'translateY(0)'; }}
           >
-            <div style={{ fontSize: '2.5rem', marginBottom: '16px' }}>📁</div>
+            <div style={{ fontSize: '2.5rem', marginBottom: '16px' }}>📄</div>
             <h3 style={{ fontSize: '1.2rem', fontWeight: '700', color: '#ffffff', marginBottom: '8px' }}>أوراق الأكثر استخدام</h3>
             <p style={{ color: '#64748b', fontSize: '0.85rem', lineHeight: '1.5' }}>مخططات المراقبة، أوراق الـ Intake/Output ونماذج التسليم اليومية السريعة والجاهزة للطباعة.</p>
           </div>
 
         </div>
 
-        {/* إضافة زر حاسبة المحاليل المباشر كخيار وصول سريع إضافي بالأسفل لتسهيل عملك */}
+        {/* حاسبة المحاليل المباشرة */}
         <div style={{ marginTop: '32px' }}>
           <button 
             onClick={() => router.push('/calculators')}
@@ -191,13 +191,13 @@ export default function DashboardPage() {
             onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#0284c735'}
             onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#0284c720'}
           >
-            🧮 الانتقال السريع والمباشر لحاسبة المحاليل الوريدية الوريدية المتقدمة
+            🧮 الانتقال السريع والمباشر لحاسبة المحاليل الوريدية المتقدمة
           </button>
         </div>
 
       </main>
 
-      {/* 📜 التذييل القانوني القديم دون أي تعديل */}
+      {/* 📜 التذييل القانوني */}
       <footer style={{ borderTop: '1px solid #1e293b', padding: '20px', marginTop: '40px', textAlign: 'center' }} dir="ltr">
         <p style={{ fontSize: '0.75rem', color: '#64748b', margin: '0' }}>
           Copyright © 2026 <span style={{ color: '#38bdf8' }}>R.N. Suliman Bilal Awad</span> — JUH Intensive Care Protocols. Secured System.
