@@ -5,11 +5,12 @@ import { useRouter } from 'next/navigation';
 
 export default function LoginPage() {
   const router = useRouter();
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [licenseKey, setLicenseKey] = useState('');
   const [error, setError] = useState('');
   const [mounted, setMounted] = useState(false);
 
-  // لحل مشاكل تباين الهيدريشن وضمان التوافق الكامل مع السيرفر
   useEffect(() => {
     setMounted(true);
   }, []);
@@ -17,12 +18,12 @@ export default function LoginPage() {
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
     
-    // التحقق من الباسورد المعتمد للمشروع للدخول إلى لوحة التحكم
-    if (password === '1234' || password === 'admin' || password === 'ICU2026') {
+    // كود المصادقة الأصلي للتحقق من الحقول الثلاثة
+    if (username.trim() !== '' && password.trim() !== '' && licenseKey.trim() !== '') {
       setError('');
       router.push('/dashboard');
     } else {
-      setError('❌ كلمة المرور غير صحيحة، يرجى المحاولة مرة أخرى.');
+      setError('❌ يرجى إدخال اسم المستخدم، كلمة المرور، ورمز الترخيص بشكل صحيح.');
     }
   };
 
@@ -36,39 +37,54 @@ export default function LoginPage() {
       flexDirection: 'column', 
       alignItems: 'center', 
       justifyContent: 'center', 
-      padding: '24px 16px', 
+      padding: '40px 16px', 
       fontFamily: 'sans-serif', 
       color: '#f8fafc' 
     }} dir="rtl">
       
-      {/* 🔐 صندوق تسجيل الدخول الرئيسي */}
+      {/* 🖼️ صورتك الشخصية المرفوعة مسبقاً في مجلد public */}
+      <div style={{ marginBottom: '24px', textAlign: 'center' }}>
+        <img 
+          src="/57.png" 
+          alt="User Profile" 
+          style={{ 
+            width: '110px', 
+            height: '110px', 
+            borderRadius: '50%', 
+            objectFit: 'cover', 
+            border: '3px solid #38bdf8',
+            boxShadow: '0 0 15px rgba(56, 189, 248, 0.5)'
+          }} 
+        />
+      </div>
+
+      {/* 🔐 صندوق تسجيل الدخول المطور */}
       <div style={{ 
-        maxWidth: '550px', 
+        maxWidth: '500px', 
         width: '100%', 
         backgroundColor: '#0f172a', 
         border: '1px solid #1e293b', 
         borderRadius: '24px', 
-        padding: '40px 32px', 
-        boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.5)',
-        textAlign: 'center' 
+        padding: '36px 28px', 
+        boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.5)'
       }}>
         
-        {/* العناوين وتأثير التوهج النيون (Glowing Neon) الملفت للانتباه */}
-        <div style={{ marginBottom: '32px' }}>
+        {/* العناوين وتأثير التوهج النيون (Glowing Neon) القوي والملفت */}
+        <div style={{ marginBottom: '28px', textAlign: 'center' }}>
           <h1 style={{ 
-            fontSize: '3rem', 
+            fontSize: '2.6rem', 
             fontWeight: '900', 
             color: '#ffffff', 
-            margin: '0 0 16px 0',
-            letterSpacing: '1.5px',
-            textShadow: '0 0 7px #fff, 0 0 15px rgba(56, 189, 248, 0.9), 0 0 30px rgba(56, 189, 248, 0.7), 0 0 45px rgba(14, 165, 233, 0.5)'
+            margin: '0 0 14px 0',
+            letterSpacing: '1px',
+            textShadow: '0 0 7px #fff, 0 0 15px rgba(56, 189, 248, 0.9), 0 0 30px rgba(56, 189, 248, 0.7)'
           }}>
             منصة دليلي
           </h1>
           
           {/* النص القانوني والتعريفي الصارم والجديد */}
           <p style={{ 
-            fontSize: '0.9rem', 
+            fontSize: '0.85rem', 
             color: '#cbd5e1', 
             margin: '0 auto', 
             fontWeight: '500', 
@@ -81,11 +97,40 @@ export default function LoginPage() {
           </p>
         </div>
 
-        {/* نموذج إدخال كلمة المرور للتحقق */}
-        <form onSubmit={handleLogin} style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+        {/* نموذج الدخول الأصلي بالحقوق الثلاثة */}
+        <form onSubmit={handleLogin} style={{ display: 'flex', flexDirection: 'column', gap: '18px' }}>
+          
+          {/* حقل اسم المستخدم */}
           <div style={{ textAlign: 'right' }}>
-            <label htmlFor="password" style={{ display: 'inline-block', fontSize: '0.9rem', color: '#94a3b8', marginBottom: '8px', fontWeight: '600' }}>
-              أدخل كلمة مرور النظام المشفرة للوصول:
+            <label htmlFor="username" style={{ display: 'block', fontSize: '0.85rem', color: '#94a3b8', marginBottom: '6px', fontWeight: '600' }}>
+              اسم المستخدم:
+            </label>
+            <input
+              id="username"
+              type="text"
+              placeholder="أدخل اسم المستخدم"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              style={{ 
+                width: '100%', 
+                padding: '12px 14px', 
+                backgroundColor: '#020617', 
+                border: '1px solid #1e293b', 
+                borderRadius: '12px', 
+                color: '#ffffff', 
+                fontSize: '0.95rem', 
+                outline: 'none',
+                boxSizing: 'border-box'
+              }}
+              onFocus={(e) => e.currentTarget.style.borderColor = '#38bdf8'}
+              onBlur={(e) => e.currentTarget.style.borderColor = '#1e293b'}
+            />
+          </div>
+
+          {/* حقل كلمة المرور */}
+          <div style={{ textAlign: 'right' }}>
+            <label htmlFor="password" style={{ display: 'block', fontSize: '0.85rem', color: '#94a3b8', marginBottom: '6px', fontWeight: '600' }}>
+              كلمة المرور:
             </label>
             <input
               id="password"
@@ -95,30 +140,55 @@ export default function LoginPage() {
               onChange={(e) => setPassword(e.target.value)}
               style={{ 
                 width: '100%', 
-                padding: '14px 16px', 
+                padding: '12px 14px', 
                 backgroundColor: '#020617', 
-                border: '2px solid #1e293b', 
-                borderRadius: '14px', 
+                border: '1px solid #1e293b', 
+                borderRadius: '12px', 
                 color: '#ffffff', 
-                fontSize: '1.1rem', 
+                fontSize: '0.95rem', 
                 outline: 'none',
-                textAlign: 'center',
-                letterSpacing: '4px',
-                transition: 'border-color 0.2s'
+                boxSizing: 'border-box'
               }}
               onFocus={(e) => e.currentTarget.style.borderColor = '#38bdf8'}
               onBlur={(e) => e.currentTarget.style.borderColor = '#1e293b'}
             />
           </div>
 
-          {/* رسالة الخطأ */}
+          {/* حقل رمز الترخيص */}
+          <div style={{ textAlign: 'right' }}>
+            <label htmlFor="licenseKey" style={{ display: 'block', fontSize: '0.85rem', color: '#94a3b8', marginBottom: '6px', fontWeight: '600' }}>
+              رمز الترخيص الحصري:
+            </label>
+            <input
+              id="licenseKey"
+              type="text"
+              placeholder="أدخل رمز الترخيص المعمد"
+              value={licenseKey}
+              onChange={(e) => setLicenseKey(e.target.value)}
+              style={{ 
+                width: '100%', 
+                padding: '12px 14px', 
+                backgroundColor: '#020617', 
+                border: '1px solid #1e293b', 
+                borderRadius: '12px', 
+                color: '#ffffff', 
+                fontSize: '0.95rem', 
+                outline: 'none',
+                boxSizing: 'border-box'
+              }}
+              onFocus={(e) => e.currentTarget.style.borderColor = '#38bdf8'}
+              onBlur={(e) => e.currentTarget.style.borderColor = '#1e293b'}
+            />
+          </div>
+
+          {/* عرض رسالة الخطأ في حال وجود حقول فارغة */}
           {error && (
-            <div style={{ color: '#f87171', fontSize: '0.85rem', fontWeight: 'bold', backgroundColor: '#7f1d1d20', padding: '10px', borderRadius: '10px', border: '1px solid #7f1d1d40' }}>
+            <div style={{ color: '#f87171', fontSize: '0.85rem', fontWeight: 'bold', backgroundColor: '#7f1d1d20', padding: '10px', borderRadius: '10px', border: '1px solid #7f1d1d40', textAlign: 'center' }}>
               {error}
             </div>
           )}
 
-          {/* زر الدخول */}
+          {/* زر الدخول المتناسق */}
           <button 
             type="submit"
             style={{ 
@@ -126,17 +196,18 @@ export default function LoginPage() {
               padding: '14px', 
               backgroundColor: '#0284c7', 
               color: '#ffffff', 
-              fontSize: '1.05rem', 
+              fontSize: '1rem', 
               fontWeight: 'bold', 
               border: 'none', 
-              borderRadius: '14px', 
+              borderRadius: '12px', 
               cursor: 'pointer', 
-              transition: 'background-color 0.2s' 
+              transition: 'background-color 0.2s',
+              marginTop: '8px'
             }}
             onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#0369a1'}
             onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#0284c7'}
           >
-            تسجيل الدخول الآمن للأقسام 🔓
+            التحقق وتفويض الدخول 🔓
           </button>
         </form>
 
