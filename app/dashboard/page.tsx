@@ -69,10 +69,6 @@ export default function DashboardPage() {
           0%, 75% { top: 100%; height: 0%; }
           100% { top: 0%; height: 100%; }
         }
-        @keyframes rotateGlow {
-          0% { transform: rotate(0deg); }
-          100% { transform: rotate(360deg); }
-        }
       `}} />
 
       {/* 📋 شريط التنقل العلوي الآمن (Navbar) */}
@@ -114,7 +110,7 @@ export default function DashboardPage() {
 
         {/* معلومات المستخدم وزر الخروج */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
-          <div style={{ textAlign: 'left', display: 'none', sm: 'block' }}>
+          <div style={{ textAlign: 'left' }}>
             <span style={{ display: 'block', fontSize: '0.85rem', color: '#38bdf8', fontWeight: '600' }}>مستشفى الجامعة الأردنية</span>
             <span style={{ display: 'block', fontSize: '0.75rem', color: '#64748b' }}>قسم العناية الحثيثة ICU</span>
           </div>
