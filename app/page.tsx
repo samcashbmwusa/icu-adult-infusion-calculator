@@ -9,32 +9,47 @@ export default function LoginPage() {
   const [error, setError] = useState('');
 
   const handleMobileLogin = () => {
-    const isValidLogin =
-      username.trim() === 'admin' &&
-      password.trim() === 'CCU2026' &&
-      licenseKey.trim() === 'JUH-001';
+  const cleanUser = username.trim();
+  const cleanPass = password.trim();
+  const cleanKey = licenseKey.trim();
 
-    if (!isValidLogin) {
-      setError('❌ اسم المستخدم أو كلمة المرور أو رمز الترخيص غير صحيح.');
-      return;
-    }
+  let ward = '';
 
-    setError('');
+  if (cleanPass === 'CCU2026') {
+    ward = 'ccu';
+  } else if (cleanPass === 'ICU2026') {
+    ward = 'icu';
+  } else if (cleanPass === 'ER2026') {
+    ward = 'er';
+  }
 
-    const cookieParts = [
-      'icu_auth=true',
-      'Path=/',
-      'Max-Age=43200',
-      'SameSite=Lax',
-    ];
+  const isValidLogin =
+    cleanUser === 'admin' &&
+    cleanKey === 'JUH-001' &&
+    ward !== '';
 
-    if (window.location.protocol === 'https:') {
-      cookieParts.push('Secure');
-    }
+  if (!isValidLogin) {
+    setError('❌ اسم المستخدم أو كلمة المرور أو رمز الترخيص غير صحيح.');
+    return;
+  }
 
-    document.cookie = cookieParts.join('; ');
-    window.location.replace('/dashboard');
-  };
+  setError('');
+
+  const cookieParts = [
+    'Path=/',
+    'Max-Age=43200',
+    'SameSite=Lax',
+  ];
+
+  if (window.location.protocol === 'https:') {
+    cookieParts.push('Secure');
+  }
+
+  document.cookie = ['icu_auth=true', ...cookieParts].join('; ');
+  document.cookie = [`icu_ward=${ward}`, ...cookieParts].join('; ');
+
+  window.location.replace('/dashboard');
+};
 
   return (
     <div
